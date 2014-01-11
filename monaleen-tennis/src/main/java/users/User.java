@@ -1,5 +1,10 @@
 package users;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public abstract class User {
 	
 	String name, password, grade, gender, email, member_type;
@@ -18,7 +23,8 @@ public abstract class User {
 		return name;
 	}
 
-	public void setName(String name) {
+	@Autowired
+	public void setName(@Value("${jdbc.user}")String name) {
 		this.name = name;
 	}
 
@@ -26,7 +32,8 @@ public abstract class User {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	@Autowired
+	public void setPassword(@Value("${jdbc.user}")String password) {
 		this.password = password;
 	}
 
