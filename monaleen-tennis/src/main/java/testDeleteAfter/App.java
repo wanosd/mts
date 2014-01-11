@@ -1,17 +1,20 @@
 package testDeleteAfter;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import users.*;
 
 public class App {
 
 	public static void main(String[] args) {
-		ApplicationContext context = new FileSystemXmlApplicationContext("beans.xml"); 
+		ApplicationContext context = new ClassPathXmlApplicationContext("beans/beans.xml"); 
 
-		User user = (Member) context.getBean("member");
-		user.toString();
+		User member = (Member) context.getBean("member");
+		member.setName("Chris");
+		System.out.println(member.toString());
+		
+		((ClassPathXmlApplicationContext)context).close();
 	}
 
 }

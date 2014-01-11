@@ -2,9 +2,17 @@ package users;
 
 public abstract class User {
 	
-	String name, password, gender, email, member_type;
+	String name, password, grade, gender, email, member_type;
 	String ad_line1, ad_line2, ad_city, ad_county;
 	String contact_num, em_con_name, em_con_num;
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 
 	public String getName() {
 		return name;
