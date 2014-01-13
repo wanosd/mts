@@ -20,6 +20,10 @@ public class UserDAO {
 	
 	private NamedParameterJdbcTemplate jdbc; 
 	
+	public UserDAO() {
+		System.out.println("Loaded UserDAO");
+	}
+	
 	@Autowired
 	public void setDataSource(DataSource jdbc) {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
@@ -38,6 +42,7 @@ public class UserDAO {
 	    return jdbc.query("select * from users", new RowMapper<User>(){
 			public User mapRow(ResultSet rs, int row) throws SQLException {
 				User user = new Member();
+				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));	
 				user.setEmail(rs.getString("email"));	

@@ -11,6 +11,23 @@ public abstract class User {
 	String ad_line1, ad_line2, ad_city, ad_county;
 	String contact_num, em_con_name, em_con_num;
 	State status = new Inactive();
+	int id;
+
+	public State getStatus() {
+		return status;
+	}
+
+	public void setStatus(State status) {
+		this.status = status;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getGrade() {
 		return grade;
