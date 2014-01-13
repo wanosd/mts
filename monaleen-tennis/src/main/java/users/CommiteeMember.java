@@ -1,5 +1,5 @@
 package users;
 
-public class CommiteeMember extends User {
+public class CommiteeMember implements State {
 
 }

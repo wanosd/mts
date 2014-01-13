@@ -10,6 +10,7 @@ public abstract class User {
 	String name, password, grade, gender, email, member_type;
 	String ad_line1, ad_line2, ad_city, ad_county;
 	String contact_num, em_con_name, em_con_num;
+	State status = new Inactive();
 
 	public String getGrade() {
 		return grade;
