@@ -22,6 +22,11 @@ public class UserService {
 		return usersDAO.getUsers();
 	}
 
+	public void create(Member member) {
+		usersDAO.createUser(member);
+		
+	}
+
 	
 
 	

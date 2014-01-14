@@ -8,5 +8,6 @@
 </head>
 <body>
 You registered. etc
+<a href="${pageContext.request.contextPath}/members">Home</a>
 </body>
 </html>

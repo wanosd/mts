@@ -1,0 +1,20 @@
+@CHARSET "ISO-8859-1";
+
+.formtable {
+	width: 400px;
+	padding: 10px;
+	border: 1px solid red;
+}
+
+input [type=text]{
+	width: 100px;
+}
+
+.select{
+	width: 100px;
+}
+
+.error{
+	font-size: x-small;
+	color: red;
+}

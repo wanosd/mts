@@ -1,5 +1,9 @@
 package users;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,9 +11,28 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class User {
 	
-	String name, password, grade, gender, email, member_type;
-	String ad_line1, ad_line2, ad_city, ad_county;
+	
+	@Size(min=5, max=45, message="Named must be between 5 and 45 characters")
+	String name;
+	
+	String password;
+	String grade;
+	String gender; 
+	
+	@NotNull
+	@Pattern(regexp=".+\\@.+\\..+", message="This does not appear to be a valid email address")
+	String email;
+	
+	String member_type;
+	
+	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
+	String ad_line1;
+	
+	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
+	String ad_line2, ad_city, ad_county;
+	
 	String contact_num, em_con_name, em_con_num;
+	
 	State status = new Inactive();
 	int id;
 
