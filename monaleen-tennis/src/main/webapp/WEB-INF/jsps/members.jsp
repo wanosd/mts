@@ -18,7 +18,7 @@
 	<c:forEach var="row" items="${users}">
     <tr><td>${row.name}</td>
     <td>${row.grade}</td>
-    <td><a href = "mailto:${row.email}?subject="Monaleen Tennis Club Contact">Email</a></td>
+    <td><a href = "mailto:${row.username}">Email</a></td>
     <td>${row.member_type}</td>
     <td>${row.contact_num}</td></tr>
 	</c:forEach>

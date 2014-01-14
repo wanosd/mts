@@ -15,7 +15,7 @@
 <table class="formtable">
 <tr><td>Name</td><td><sf:input name = "name" path="name" type="text"/><br/><sf:errors path="name" cssClass="error"></sf:errors></td></tr>
 <tr><td>Password</td><td><sf:input name = "password" path="password" type="password"/><br/><sf:errors path="password" cssClass="error"></sf:errors></td></tr>
-<tr><td>Email</td><td><sf:input name = "email" path="email" type="text"/><br/><sf:errors path="email" cssClass="error"></sf:errors></td></tr>
+<tr><td>Email</td><td><sf:input name = "username" path="username" type="text"/><br/><sf:errors path="username" cssClass="error"></sf:errors></td></tr>
 <tr><td>Gender</td><td><sf:select name="gender" path="gender" class="select"><option value = "M">Male</option><option value = "F">Female</option></sf:select></td></tr>
 <tr><td>Membership Type</td><td><sf:select name="member_type" path="member_type"><option value = "Senior">Senior</option><option value = "Junior">Junior</option><option value = "Student">Student</option></sf:select></td></tr>
 <tr><td>Grade</td><td><sf:select name="grade" path="grade"><option value = "Graded">Graded</option><option value = "Intermediate">Intermediate</option><option value = "Beginner">Beginner</option></sf:select></td></tr>

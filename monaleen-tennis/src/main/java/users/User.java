@@ -21,7 +21,7 @@ public abstract class User {
 	
 	@NotNull
 	@Pattern(regexp=".+\\@.+\\..+", message="This does not appear to be a valid email address")
-	String email;
+	String username;
 	
 	String member_type;
 	
@@ -32,9 +32,22 @@ public abstract class User {
 	String ad_line2, ad_city, ad_county;
 	
 	String contact_num, em_con_name, em_con_num;
+
+	int id;
+	
+	boolean enabled = false;
 	
 	State status = new Inactive();
-	int id;
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+
 
 	public State getStatus() {
 		return status;
@@ -86,12 +99,12 @@ public abstract class User {
 		this.gender = gender;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getMember_type() {
@@ -161,7 +174,7 @@ public abstract class User {
 	@Override
 	public String toString() {
 		return "User [name=" + name + ", password=" + password + ", gender="
-				+ gender + ", email=" + email + ", member_type=" + member_type
+				+ gender + ", username=" + username + ", member_type=" + member_type
 				+ ", ad_line1=" + ad_line1 + ", ad_line2=" + ad_line2
 				+ ", ad_city=" + ad_city + ", ad_county=" + ad_county
 				+ ", contact_num=" + contact_num + ", em_con_name="

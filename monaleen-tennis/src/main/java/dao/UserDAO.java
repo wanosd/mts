@@ -32,7 +32,7 @@ public class UserDAO {
 	
 	public boolean createUser(User user){
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user); 
-		return jdbc.update("insert into users (name, password, email, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num) values (:name, :password, :email, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num)", params) == 1;
+		return jdbc.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)", params) == 1;
 	}
 	
 	/*
@@ -43,7 +43,7 @@ public class UserDAO {
 			public User mapRow(ResultSet rs, int row) throws SQLException {
 				User user = new Member();
 				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));	
+				user.setUsername(rs.getString("username"));	
 				user.setGrade(rs.getString("grade"));
 				user.setContact_num(rs.getString("contact_num"));
 				user.setMember_type(rs.getString("member_type"));
@@ -65,7 +65,7 @@ public class UserDAO {
 				User user = new Member();
 				user.setName(rs.getString("name"));
 				user.setPassword(rs.getString("password"));	
-				user.setEmail(rs.getString("email"));	
+				user.setUsername(rs.getString("username"));	
 				user.setGender(rs.getString("gender"));	
 				return user;
 			}
@@ -78,8 +78,8 @@ public class UserDAO {
 	 */
 	public void changeUserEmailAddress(String email, String name){
 		MapSqlParameterSource params = new MapSqlParameterSource(); 
-		params.addValue("email", email);
+		params.addValue("username", email);
 		params.addValue("name", name);
-		jdbc.update("update users set email = :email where name = :name", params);
+		jdbc.update("update users set username = :email where name = :name", params);
 	}
 }
