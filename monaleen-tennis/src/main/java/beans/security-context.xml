@@ -14,17 +14,23 @@
 					password="sorin" />
 			</security:user-service>
 		</security:authentication-provider>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select email, password from users" />
+		</security:authentication-provider>
 	</security:authentication-manager>
 
 
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/static/**" access="permitAll" />
+		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/members" access="isAuthenticated()" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/createmembers" access="permitAll" />
 		<security:intercept-url pattern="/register" access="permitAll" />
 		<security:intercept-url pattern="/registerSuccess" access="permitAll" />
 		<security:intercept-url pattern="/**" access="denyAll" />
-		<security:form-login />
+		<security:form-login login-page="/login"
+			authentication-failure-url="/login?error=true" />
 	</security:http>
 </beans>

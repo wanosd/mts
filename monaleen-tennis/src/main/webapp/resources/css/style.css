@@ -23,3 +23,8 @@ table.members{
 	padding: 10px;
 	border: 1px solid grey;
 }
+
+p.errorLogin{
+	color: red;
+	font-size: small;
+}
