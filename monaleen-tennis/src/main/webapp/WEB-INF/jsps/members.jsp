@@ -6,18 +6,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href= "${pageContext.request.contextPath }/static/css/style.css" rel="stylesheet" type="text/css">
 <title>Monaleen Tennis Club - Members</title>
 </head>
 <body>
 	Members Page Welcome
 	
 	<h2>Results</h2>
-	<table>
-	<tr><td>ID</td><td>Name</td><td>Gender</td></tr>
+	<table class="members">
+	<tr><td>Name</td><td>Grade</td><td>Email</td><td>Member Type</td><td>Contact Number</td></tr>
 	<c:forEach var="row" items="${users}">
-    <tr><td>${row.id}</td>
-    <td>${row.name}</td>
-    <td>${row.gender}</td></tr>
+    <tr><td>${row.name}</td>
+    <td>${row.grade}</td>
+    <td><a href = "mailto:${row.email}?subject="Monaleen Tennis Club Contact">Email</a></td>
+    <td>${row.member_type}</td>
+    <td>${row.contact_num}</td></tr>
 	</c:forEach>
 	</table>
 	

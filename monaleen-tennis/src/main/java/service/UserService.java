@@ -27,6 +27,11 @@ public class UserService {
 		
 	}
 
+	public void throwTestException() {
+		usersDAO.getUserByName("tommy");
+		
+	}
+
 	
 
 	

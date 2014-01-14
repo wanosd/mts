@@ -18,3 +18,8 @@ input [type=text]{
 	font-size: x-small;
 	color: red;
 }
+
+table.members{
+	padding: 10px;
+	border: 1px solid grey;
+}

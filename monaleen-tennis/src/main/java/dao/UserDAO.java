@@ -42,11 +42,11 @@ public class UserDAO {
 	    return jdbc.query("select * from users", new RowMapper<User>(){
 			public User mapRow(ResultSet rs, int row) throws SQLException {
 				User user = new Member();
-				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
-				user.setPassword(rs.getString("password"));	
 				user.setEmail(rs.getString("email"));	
-				user.setGender(rs.getString("gender"));	
+				user.setGrade(rs.getString("grade"));
+				user.setContact_num(rs.getString("contact_num"));
+				user.setMember_type(rs.getString("member_type"));
 				return user;
 			}
 		});
