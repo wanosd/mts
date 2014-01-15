@@ -34,6 +34,7 @@ public class MembersController {
 		return "members";
 	}
 	
+	
 	@RequestMapping("/createmembers")
 	public String createMembers(Model model){
 		model.addAttribute("member", new Member());	

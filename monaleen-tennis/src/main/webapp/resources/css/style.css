@@ -28,3 +28,13 @@ p.errorLogin{
 	color: red;
 	font-size: small;
 }
+
+.error{
+	font-size: small;
+	color: red;
+}
+
+.valid{
+	font-size: small;
+	color: green;
+}
