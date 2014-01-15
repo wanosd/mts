@@ -82,4 +82,8 @@ public class UserDAO {
 		params.addValue("name", name);
 		jdbc.update("update users set username = :email where name = :name", params);
 	}
+
+	public boolean exists(String username) {
+		return jdbc.queryForObject("select count(*) from users where username = :username", new MapSqlParameterSource("username", username), Integer.class) > 0;
+	}
 }

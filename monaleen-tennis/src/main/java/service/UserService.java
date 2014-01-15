@@ -32,6 +32,10 @@ public class UserService {
 		
 	}
 
+	public boolean exists(String username) {
+		return usersDAO.exists(username);
+	}
+
 	
 
 	

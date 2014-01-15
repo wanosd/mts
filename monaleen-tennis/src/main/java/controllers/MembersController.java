@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,9 +50,19 @@ public class MembersController {
 			if (result.hasErrors()){
 				return "createmembers";
 			}	
-			userService.create(member);
-			return "registerSuccess";
-	} 
+			
+			if (userService.exists(member.getUsername())){
+				result.rejectValue("username", "Duplicate Key", "This email address has already been used");
+				return "createmembers"; 
+			}
+			
+			else
+				{
+					userService.create(member);
+
+					return "registerSuccess";			
+				}
+			} 
 
 	@Autowired
 	public void setUserService(UserService userService) {

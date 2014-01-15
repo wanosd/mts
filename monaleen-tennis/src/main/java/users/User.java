@@ -31,7 +31,10 @@ public abstract class User {
 	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
 	String ad_line2, ad_city, ad_county;
 	
-	String contact_num, em_con_name, em_con_num;
+	@Pattern(regexp="08[35679]([0-9]{7})", message="Number must be in the format 083, 085, 086, 087, 089 and 7 additional numbers eg 0851234567")
+	String contact_num;
+	
+	String em_con_name, em_con_num;
 
 	int id;
 	
@@ -46,8 +49,6 @@ public abstract class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
-
 
 	public State getStatus() {
 		return status;
