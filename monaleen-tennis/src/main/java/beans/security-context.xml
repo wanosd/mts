@@ -7,14 +7,6 @@
 
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="chris" authorities="admin"
-					password="chris" />
-				<security:user name="sorin" authorities="admin"
-					password="sorin" />
-			</security:user-service>
-		</security:authentication-provider>
-		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select username,password, enabled from users where username = ?" />
 		</security:authentication-provider>
@@ -24,6 +16,7 @@
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/static/**" access="permitAll" />
 		<security:intercept-url pattern="/admin" access="hasRole('admin')" />
+		<security:intercept-url pattern="/approveMembers" access="hasRole('admin')" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/loggedout" access="permitAll" />

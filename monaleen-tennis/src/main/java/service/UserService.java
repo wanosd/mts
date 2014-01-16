@@ -11,7 +11,7 @@ import dao.UserDAO;
 @Service("userService")
 public class UserService {
 	
-	private UserDAO usersDAO;
+	private UserDAO usersDAO; 
 	
 	@Autowired
 	public void setUsersDAO(UserDAO usersDAO) {
@@ -27,6 +27,9 @@ public class UserService {
 		
 	}
 
+	/*
+	 * Testing Only. Can be removed
+	 */
 	public void throwTestException() {
 		usersDAO.getUserByName("tommy");
 		
@@ -35,8 +38,9 @@ public class UserService {
 	public boolean exists(String username) {
 		return usersDAO.exists(username);
 	}
-
 	
+	public List<User> getPendingUsers(){
+		return usersDAO.getPendingUsers();
+	}
 
-	
 }

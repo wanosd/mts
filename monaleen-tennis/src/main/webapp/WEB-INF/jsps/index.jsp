@@ -16,7 +16,9 @@
 		<a href="${pageContext.request.contextPath}/members">View Members</a>
 	</p>
 	<p>
-		<a href="${pageContext.request.contextPath}/createmembers">Register</a>
+		<sec:authorize access="!isAuthenticated()">
+			<a href="${pageContext.request.contextPath}/createmembers">Register</a>
+		</sec:authorize>
 	</p>
 	<p>
 		<sec:authorize access="!isAuthenticated()">

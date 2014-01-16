@@ -29,7 +29,6 @@ public class UserDAO {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 	
-	
 	public boolean createUser(User user){
 		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user); 
 		return jdbc.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)", params) == 1;
@@ -50,6 +49,24 @@ public class UserDAO {
 				return user;
 			}
 		});
+	}
+	
+	public List<User> getPendingUsers() {
+		// bad sql, not parameterised, but going to be replaced with Hibernate
+		// query anyway
+		return jdbc.query("select * from users where enabled = 0",
+				new RowMapper<User>() {
+					public User mapRow(ResultSet rs, int row)
+							throws SQLException {
+						User user = new Member();
+						user.setName(rs.getString("name"));
+						user.setUsername(rs.getString("username"));
+						user.setGrade(rs.getString("grade"));
+						user.setContact_num(rs.getString("contact_num"));
+						user.setMember_type(rs.getString("member_type"));
+						return user;
+					}
+				});
 	}
 	
 	/*
@@ -86,4 +103,5 @@ public class UserDAO {
 	public boolean exists(String username) {
 		return jdbc.queryForObject("select count(*) from users where username = :username", new MapSqlParameterSource("username", username), Integer.class) > 0;
 	}
+
 }
