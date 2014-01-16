@@ -15,5 +15,10 @@ public class LoginController {
 	public String showLogOut(){
 		return "loggedout";
 	}
+	
+	@RequestMapping("/denied")
+	public String showDenied(){
+		return "accessdenied";
+	}
 
 }

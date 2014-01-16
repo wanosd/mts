@@ -38,3 +38,7 @@ p.errorLogin{
 	font-size: small;
 	color: green;
 }
+
+.reg-logintable{
+	align: right;
+}

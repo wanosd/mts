@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registration Successful</title>
+<title>Insert title here</title>
 </head>
 <body>
-You registered. etc
-<a href="${pageContext.request.contextPath}/">Home</a>
+De-de-de-DENIED!
 </body>
 </html>

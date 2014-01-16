@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import users.Member;
 import users.User;
@@ -19,6 +21,9 @@ import users.User;
 public class UserDAO {
 	
 	private NamedParameterJdbcTemplate jdbc; 
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public UserDAO() {
 		System.out.println("Loaded UserDAO");
@@ -29,9 +34,28 @@ public class UserDAO {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 	
-	
+	@Transactional
 	public boolean createUser(User user){
-		BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user); 
+		//BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user); 
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("username", user.getUsername());
+		params.addValue("name", user.getName());
+		params.addValue("password", passwordEncoder.encode(user.getPassword()));
+		params.addValue("gender", user.getGender());
+		params.addValue("member_type", user.getMember_type());
+		params.addValue("grade", user.getGrade());
+		params.addValue("ad_line1", user.getAd_line1());
+		params.addValue("ad_line2", user.getAd_line2());
+		params.addValue("ad_city", user.getAd_city());
+		params.addValue("ad_county", user.getAd_county());
+		params.addValue("contact_num", user.getContact_num());
+		params.addValue("em_con_name", user.getEm_con_name());
+		params.addValue("em_con_num", user.getEm_con_num());
+		params.addValue("role", "ROLE_MEMBER");
+		
+		
+		jdbc.update("insert into authorities (username, authority) values (:username, :role)", params);
+		
 		return jdbc.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)", params) == 1;
 	}
 	
@@ -39,7 +63,7 @@ public class UserDAO {
 	 * Method to get a list of all users in the database
 	 */
 	public List<User> getUsers(){
-	    return jdbc.query("select * from users", new RowMapper<User>(){
+	    return jdbc.query("select * from users where enabled = 1", new RowMapper<User>(){
 			public User mapRow(ResultSet rs, int row) throws SQLException {
 				User user = new Member();
 				user.setName(rs.getString("name"));

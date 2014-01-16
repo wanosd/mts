@@ -30,21 +30,21 @@ public class MembersController {
 		
 		List<User> userList = userService.getCurrentMembers();
 		model.addAttribute("users", userList);
-		
 		return "members";
 	}
 	
 	@RequestMapping("/admin")
 	public String showAdmin() {
-
+		userService.exists("test"); 
 		return "admin";
 	}
 	
 	@RequestMapping("/approveMembers")
 	public String showPendingMembers(Model model) {
-
-		List<User> toApprove = userService.getPendingMembers();
-		model.addAttribute("toApprove", toApprove);
+		
+			List<User> toApprove = userService.getPendingMembers();
+			model.addAttribute("toApprove", toApprove);
+		
 		return "approveMembers";
 	}
 	

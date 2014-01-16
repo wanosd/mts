@@ -10,31 +10,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Home Page
-
-	<p>
-		<a href="${pageContext.request.contextPath}/members">View Members</a>
-	</p>
-	<p>
-		<a href="${pageContext.request.contextPath}/createmembers">Register</a>
-	</p>
-	<p>
-		<sec:authorize access="!isAuthenticated()">
-			<a href="<c:url value ='/login' />">Log In</a>
-		</sec:authorize>
-	</p>
-	
-	<p>
-		<sec:authorize access="isAuthenticated()">
-			<a href="<c:url value ='/j_spring_security_logout' />">Log Out</a>
-		</sec:authorize>
-	</p>
-
-	<p>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<a href="${pageContext.request.contextPath}/admin">Admin</a>
-		</sec:authorize>
-	</p>
-
+	<table align="right">
+	<tr>
+	<td>
+	<sec:authorize access="!isAuthenticated()">
+	<a href="${pageContext.request.contextPath}/createmembers">Register</a> / 
+	<a href="<c:url value ='/login' />">Log In</a>
+	</sec:authorize>
+	<sec:authorize access="isAuthenticated()">
+	<a href="<c:url value ='/j_spring_security_logout' />">Log Out</a>
+	</sec:authorize>
+	</td>
+	<td><sec:authorize access="hasRole('ROLE_ADMIN')">
+	<a href="${pageContext.request.contextPath}/admin">Admin</a>
+	</sec:authorize>
+	</td>
+	</tr>
+	</table></br>
+	<h1>Tennis Club Links</h1>
+	<hr>
+	<sec:authorize access="isAuthenticated()">
+	<a href="${pageContext.request.contextPath}/members">View Members</a> * 
+	</sec:authorize>
+	<a href="">Membership</a> * 	<a href="">Tournaments</a> * 	<a href="">Training</a> * 	<a href="">FAQ/Contact</a>
+		
 </body>
 </html>
