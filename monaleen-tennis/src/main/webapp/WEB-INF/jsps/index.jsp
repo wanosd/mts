@@ -16,9 +16,7 @@
 		<a href="${pageContext.request.contextPath}/members">View Members</a>
 	</p>
 	<p>
-		<sec:authorize access="!isAuthenticated()">
-			<a href="${pageContext.request.contextPath}/createmembers">Register</a>
-		</sec:authorize>
+		<a href="${pageContext.request.contextPath}/createmembers">Register</a>
 	</p>
 	<p>
 		<sec:authorize access="!isAuthenticated()">
@@ -33,7 +31,7 @@
 	</p>
 
 	<p>
-		<sec:authorize access="hasRole('admin')">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<a href="${pageContext.request.contextPath}/admin">Admin</a>
 		</sec:authorize>
 	</p>
