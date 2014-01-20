@@ -77,6 +77,23 @@ public class UserDAO {
 	}
 	
 	/*
+	 * Method to get a list of all users in the database
+	 */
+	public List<User> getAllUsers(){
+	    return jdbc.query("select * from users", new RowMapper<User>(){
+			public User mapRow(ResultSet rs, int row) throws SQLException {
+				User user = new Member();
+				user.setName(rs.getString("name"));
+				user.setUsername(rs.getString("username"));	
+				user.setGrade(rs.getString("grade"));
+				user.setContact_num(rs.getString("contact_num"));
+				user.setMember_type(rs.getString("member_type"));
+				return user;
+			}
+		});
+	}
+	
+	/*
 	 * Method to search for a user by name
 	 */
 	public User getUserByName(String name){
