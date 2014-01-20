@@ -4,8 +4,61 @@
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
-	<definition name="home" template="/WEB-INF/templates/default.jsp">
-		
+	<definition name="users.base" template="/WEB-INF/templates/default.jsp">
+		<put-attribute name="title" value="Monaleen Tennis Club - Home Page"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp"></put-attribute>
 	</definition>
 
+	<definition name="index" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Home Page"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/index.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="denied" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Access Denied"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/denied.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="admin" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Admin"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/admin.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="login" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Login"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/login.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="loggedout" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Login"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/loggedout.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="members" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Members"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/members.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="approveMembers" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Approve Members"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/approveMembers.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="createmembers" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Member Registration"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createmembers.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="registerSuccess" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Registration Successful"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/registerSuccess.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="error" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Error"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/error.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>
