@@ -12,14 +12,16 @@
 
 	<context:component-scan base-package="dao"></context:component-scan>
 	<context:annotation-config></context:annotation-config>
+	
+	<beans profile="production">
 	<jee:jndi-lookup jndi-name="jdbc/mtc" id="dataSource"
 		expected-type="javax.sql.DataSource">
 	</jee:jndi-lookup>
-	
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
 	<tx:annotation-driven />
+	</beans>
+	
 </beans>
