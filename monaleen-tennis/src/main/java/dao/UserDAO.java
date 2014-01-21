@@ -43,31 +43,12 @@ public class UserDAO {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 	
+	//Start of actual Hibernate queries
+	
 	@Transactional
-	public boolean createUser(User user) {
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("username", user.getUsername());
-		params.addValue("name", user.getName());
-		params.addValue("password", passwordEncoder.encode(user.getPassword()));
-		params.addValue("gender", user.getGender());
-		params.addValue("member_type", user.getMember_type());
-		params.addValue("grade", user.getGrade());
-		params.addValue("ad_line1", user.getAd_line1());
-		params.addValue("ad_line2", user.getAd_line2());
-		params.addValue("ad_city", user.getAd_city());
-		params.addValue("ad_county", user.getAd_county());
-		params.addValue("contact_num", user.getContact_num());
-		params.addValue("em_con_name", user.getEm_con_name());
-		params.addValue("em_con_num", user.getEm_con_num());
-		params.addValue("role", "ROLE_MEMBER");
-
-		jdbc.update(
-				"insert into authorities (username, authority) values (:username, :role)",
-				params);
-
-		return jdbc
-				.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)",
-						params) == 1;
+	public void createUser(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		session().save(user);
 	}
 
 	/*

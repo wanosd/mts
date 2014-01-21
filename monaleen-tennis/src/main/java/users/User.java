@@ -22,16 +22,17 @@ public class User {
 	@Id
 	int id;
 	
-	@NotNull
-	@Pattern(regexp=".+\\@.+\\..+", message="This does not appear to be a valid email address")
+	@NotNull(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Pattern(regexp=".+\\@.+\\..+", message="This does not appear to be a valid email address", groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name="username")
 	String username;
 	
-	@Size(min=5, max=45, message="Named must be between 5 and 45 characters")
+	@Size(min=5, max=45, message="Named must be between 5 and 45 characters",groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name="name")
 	String name;
 	
 	@Column(name="password")
+	@Size(min=5, max=15, message="Password must be between 5 and 45 characters", groups={FormValidationGroup.class})
 	String password;
 	
 	@Column(name="gender")
@@ -43,11 +44,11 @@ public class User {
 	@Column(name="grade")
 	String grade;
 	
-	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
+	@Size(min=5, max=45, message="Address be between 5 and 45 characters", groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name="ad_line1")
 	String ad_line1;
 	
-	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
+	@Size(min=5, max=45, message="Address be between 5 and 45 characters", groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name="ad_line2")
 	String ad_line2;
 	
@@ -57,7 +58,7 @@ public class User {
 	@Column(name="ad_county")
 	String ad_county;
 	
-	@Pattern(regexp="08[35679]([0-9]{7})", message="Number must be in the format 083, 085, 086, 087, 089 and 7 additional numbers eg 0851234567")
+	@Pattern(regexp="08[35679]([0-9]{7})", message="Number must be in the format 083, 085, 086, 087, 089 and 7 additional numbers eg 0851234567", groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name="contact_num")
 	String contact_num;
 	
@@ -67,11 +68,15 @@ public class User {
 	@Column(name="em_con_num")
 	String em_con_num;
 
+	@Column(name="enabled")
 	boolean enabled;
+
+	@Column(name="authority")
+	String authority;
 	
 	public User(){}
 	
-	public User(String username, String password, String name, String gender, String grade, String member_type, String ad_line1, String ad_line2, String ad_city, String ad_county, String contact_num, String em_con_name, String em_con_num) {
+	public User(String username, String password, String name, String gender, String grade, String member_type, String ad_line1, String ad_line2, String ad_city, String ad_county, String contact_num, String em_con_name, String em_con_num, boolean enabled, String authority) {
 		this.name = name;
 		this.password = password;
 		this.username = username;
@@ -85,6 +90,8 @@ public class User {
 		this.contact_num = contact_num;
 		this.em_con_name = em_con_name;
 		this.em_con_num = em_con_name;	
+		this.enabled = enabled;
+		this.authority = authority;
 	}
 	
 	public boolean isEnabled() {
@@ -209,6 +216,14 @@ public class User {
 		this.em_con_num = em_con_num;
 	}
 	
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	
 	
 
 	@Override
@@ -239,13 +254,16 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", password=" + password + ", gender="
-				+ gender + ", username=" + username + ", member_type=" + member_type
+		return "User [id=" + id + ", username=" + username + ", name=" + name
+				+ ", password=" + password + ", gender=" + gender
+				+ ", member_type=" + member_type + ", grade=" + grade
 				+ ", ad_line1=" + ad_line1 + ", ad_line2=" + ad_line2
 				+ ", ad_city=" + ad_city + ", ad_county=" + ad_county
 				+ ", contact_num=" + contact_num + ", em_con_name="
-				+ em_con_name + ", em_con_num=" + em_con_num + "]";
+				+ em_con_name + ", em_con_num=" + em_con_num + ", enabled="
+				+ enabled + ", authority=" + authority + "]";
 	}
+
 
 	
 

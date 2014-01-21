@@ -24,6 +24,7 @@ public class UserRowMapper implements RowMapper<User> {
 		user.setEm_con_name(rs.getString("em_con_name"));
 		user.setEm_con_num(rs.getString("em_con_num"));
 		user.setEnabled(rs.getBoolean("enabled"));
+		user.setAuthority(rs.getString("authority"));
 		return user;
 	}
 
