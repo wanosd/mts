@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.UserService;
-import users.Member;
 import users.User;
 
 @Controller
@@ -52,7 +50,7 @@ public class MembersController {
 	@RequestMapping("/createmembers")
 	public String createMembers(Model model) {
 		logger.info("Showing Create Members Page....");
-		model.addAttribute("member", new Member());
+		model.addAttribute("member", new User());
 		return "createmembers";
 	}
 
@@ -75,7 +73,7 @@ public class MembersController {
 	 * Method will only take Post requests Registers user to database
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String doRegister(Model model, @Valid Member member,
+	public String doRegister(Model model, @Valid User member,
 			BindingResult result) {
 
 		logger.info("Showing Registration Page....");
@@ -84,7 +82,7 @@ public class MembersController {
 			return "createmembers";
 		}
 
-		if (userService.exists(member.getUsername())) {
+		if (userService.exists(member.getUsername())) { 
 			result.rejectValue("username", "Duplicate Key",
 					"This email address has already been used");
 			return "createmembers";

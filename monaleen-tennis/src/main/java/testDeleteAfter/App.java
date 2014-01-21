@@ -33,7 +33,6 @@ public class App {
 			System.out.println(e.getClass());
 		}
 		
-		userDAO.createUser(Member.createMember("Michelle", "password", "email", "F", null, null, null, null, null, null, null, null, null));
 		
 		
 		((ClassPathXmlApplicationContext)context).close();

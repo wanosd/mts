@@ -9,7 +9,7 @@ import users.*;
 public class UserRowMapper implements RowMapper<User> {
 
 	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-		User user = new Member();
+		User user = new User();
 		user.setId(rs.getInt("id"));
 		user.setName(rs.getString("name"));
 		user.setUsername(rs.getString("username"));

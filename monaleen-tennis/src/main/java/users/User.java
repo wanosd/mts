@@ -1,5 +1,11 @@
 package users;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -9,38 +15,77 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public abstract class User {
+@Entity
+@Table(name="users")
+public class User {
 	
-	
-	@Size(min=5, max=45, message="Named must be between 5 and 45 characters")
-	String name;
-	
-	String password;
-	String grade;
-	String gender; 
+	@Id
+	int id;
 	
 	@NotNull
 	@Pattern(regexp=".+\\@.+\\..+", message="This does not appear to be a valid email address")
+	@Column(name="username")
 	String username;
 	
+	@Size(min=5, max=45, message="Named must be between 5 and 45 characters")
+	@Column(name="name")
+	String name;
+	
+	@Column(name="password")
+	String password;
+	
+	@Column(name="gender")
+	String gender;
+
+	@Column(name="member_type")
 	String member_type;
 	
+	@Column(name="grade")
+	String grade;
+	
 	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
+	@Column(name="ad_line1")
 	String ad_line1;
 	
 	@Size(min=5, max=45, message="Address be between 5 and 45 characters")
-	String ad_line2, ad_city, ad_county;
+	@Column(name="ad_line2")
+	String ad_line2;
+	
+	@Column(name="ad_city")
+	String ad_city;
+	
+	@Column(name="ad_county")
+	String ad_county;
 	
 	@Pattern(regexp="08[35679]([0-9]{7})", message="Number must be in the format 083, 085, 086, 087, 089 and 7 additional numbers eg 0851234567")
+	@Column(name="contact_num")
 	String contact_num;
 	
-	String em_con_name, em_con_num;
+	@Column(name="em_con_name")
+	String em_con_name;
+	
+	@Column(name="em_con_num")
+	String em_con_num;
 
-	int id;
+	boolean enabled;
 	
-	boolean enabled = false;
+	public User(){}
 	
-	State status = new Inactive();
+	public User(String username, String password, String name, String gender, String grade, String member_type, String ad_line1, String ad_line2, String ad_city, String ad_county, String contact_num, String em_con_name, String em_con_num) {
+		this.name = name;
+		this.password = password;
+		this.username = username;
+		this.gender = gender;
+		this.grade = grade; 
+		this.member_type = member_type;
+		this.ad_line1 = ad_line1;
+		this.ad_line2 = ad_line2;
+		this.ad_city = ad_city;
+		this.ad_county = ad_county;
+		this.contact_num = contact_num;
+		this.em_con_name = em_con_name;
+		this.em_con_num = em_con_name;	
+	}
 	
 	public boolean isEnabled() {
 		return enabled;
@@ -48,14 +93,6 @@ public abstract class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public State getStatus() {
-		return status;
-	}
-
-	public void setStatus(State status) {
-		this.status = status;
 	}
 
 	public int getId() {

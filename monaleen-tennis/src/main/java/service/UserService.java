@@ -29,8 +29,8 @@ public class UserService {
 		return usersDAO.getPendingUsers();
 	}
 
-	public void create(Member member) {
-		usersDAO.createUser(member);
+	public void create(User user) {
+		usersDAO.createUser(user);
 	}
 
 	public boolean exists(String username) {
