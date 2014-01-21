@@ -29,6 +29,7 @@
 		<security:intercept-url pattern="/register" access="permitAll" />
 		<security:intercept-url pattern="/registerSuccess" access="permitAll" />
 	    <security:intercept-url pattern="/members" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/editdetails" access="isAuthenticated()" />
 		<security:intercept-url pattern="/**" access="denyAll" />
 		<security:form-login login-page="/login" authentication-failure-url="/login?error=true" />
 		<security:logout logout-success-url="/loggedout" />

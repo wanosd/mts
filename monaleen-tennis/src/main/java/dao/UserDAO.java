@@ -90,6 +90,15 @@ public class UserDAO {
 		return jdbc.queryForObject("select * from users where name = :name",
 				new MapSqlParameterSource("name", name), new UserRowMapper());
 	}
+	
+	/*
+	 * Method to search for a user by username
+	 */
+	public User getUserByUserName(String username) {
+
+		return jdbc.queryForObject("select * from users where username = :username",
+				new MapSqlParameterSource("username", username), new UserRowMapper());
+	}
 
 	/*
 	 * Method to allow a user to change their current email address Needs to be

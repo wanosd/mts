@@ -18,6 +18,9 @@
 <sec:authorize access="isAuthenticated()">
 	<a href="${pageContext.request.contextPath}/members">View Members</a> * 
 </sec:authorize>
+<sec:authorize access="isAuthenticated()">
+	<a href="${pageContext.request.contextPath}/editdetails">Edit Details</a> * 
+</sec:authorize>
 <a href="">Membership</a>
 *
 <a href="">Tournaments</a>

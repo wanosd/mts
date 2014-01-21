@@ -61,4 +61,9 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/error.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="editdetails" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Edit Details"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/editDetails.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

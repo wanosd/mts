@@ -31,13 +31,16 @@ public class UserService {
 
 	public void create(Member member) {
 		usersDAO.createUser(member);
-		
 	}
 
 	public boolean exists(String username) {
 		return usersDAO.exists(username);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	public User getUserByUsername(String username){
+		return usersDAO.getUserByUserName(username);
+	}
 	
 
 	
