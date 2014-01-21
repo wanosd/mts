@@ -1,6 +1,7 @@
 package controllers;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,7 +15,8 @@ public class HomeController {
 	@RequestMapping("/")
 	public String showHome() {
 
-		logger.info("Showing Home Page....");
+		final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Showing Home Page...." + currentUser);
 		return "index";
 	}
 }

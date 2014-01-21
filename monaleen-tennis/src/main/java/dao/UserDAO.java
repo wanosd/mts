@@ -1,10 +1,12 @@
 package dao;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -14,29 +16,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import controllers.HomeController;
 import users.Member;
 import users.User;
 
 @Component("userDAO")
 public class UserDAO {
-	
-	private NamedParameterJdbcTemplate jdbc; 
-	
+
+	private NamedParameterJdbcTemplate jdbc;
+	private static Logger logger = Logger.getLogger(UserDAO.class);
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	public UserDAO() {
 		System.out.println("Loaded UserDAO");
 	}
-	
+
 	@Autowired
 	public void setDataSource(DataSource jdbc) {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
-	
+
 	@Transactional
-	public boolean createUser(User user){
-		//BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user); 
+	public boolean createUser(User user) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("username", user.getUsername());
 		params.addValue("name", user.getName());
@@ -52,93 +55,62 @@ public class UserDAO {
 		params.addValue("em_con_name", user.getEm_con_name());
 		params.addValue("em_con_num", user.getEm_con_num());
 		params.addValue("role", "ROLE_MEMBER");
-		
-		
-		jdbc.update("insert into authorities (username, authority) values (:username, :role)", params);
-		
-		return jdbc.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)", params) == 1;
+
+		jdbc.update(
+				"insert into authorities (username, authority) values (:username, :role)",
+				params);
+
+		return jdbc
+				.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)",
+						params) == 1;
 	}
-	
+
 	/*
 	 * Method to get a list of all users in the database
 	 */
-	public List<User> getUsers(){
-	    return jdbc.query("select * from users where enabled = 1", new RowMapper<User>(){
-			public User mapRow(ResultSet rs, int row) throws SQLException {
-				User user = new Member();
-				user.setName(rs.getString("name"));
-				user.setUsername(rs.getString("username"));	
-				user.setGrade(rs.getString("grade"));
-				user.setContact_num(rs.getString("contact_num"));
-				user.setMember_type(rs.getString("member_type"));
-				return user;
-			}
-		});
+	public List<User> getUsers() {
+		logger.info("Selecting All Enabled Members....");
+		return jdbc.query("select * from users where enabled = 1",
+				new UserRowMapper());
 	}
-	
+
 	/*
 	 * Method to get a list of all users in the database
 	 */
-	public List<User> getAllUsers(){
-	    return jdbc.query("select * from users", new RowMapper<User>(){
-			public User mapRow(ResultSet rs, int row) throws SQLException {
-				User user = new Member();
-				user.setName(rs.getString("name"));
-				user.setUsername(rs.getString("username"));	
-				user.setGrade(rs.getString("grade"));
-				user.setContact_num(rs.getString("contact_num"));
-				user.setMember_type(rs.getString("member_type"));
-				return user;
-			}
-		});
+	public List<User> getAllUsers() {
+		logger.info("Selecting All Members....");
+		return jdbc.query("select * from users", new UserRowMapper());
 	}
-	
+
 	/*
 	 * Method to search for a user by name
 	 */
-	public User getUserByName(String name){
-		
-		MapSqlParameterSource params = new MapSqlParameterSource(); 
-		params.addValue("name", name);
-		
-	    return jdbc.queryForObject("select * from users where name = :name", params, new RowMapper<User>(){
-			public User mapRow(ResultSet rs, int row) throws SQLException {
-				User user = new Member();
-				user.setName(rs.getString("name"));
-				user.setPassword(rs.getString("password"));	
-				user.setUsername(rs.getString("username"));	
-				user.setGender(rs.getString("gender"));	
-				return user;
-			}
-		});
+	public User getUserByName(String name) {
+
+		return jdbc.queryForObject("select * from users where name = :name",
+				new MapSqlParameterSource("name", name), new UserRowMapper());
 	}
-	
+
 	/*
-	 * Method to allow a user to change their current email address
-	 * Needs to be properly error checked in that the name should not be used (perhaps Id or what not)
+	 * Method to allow a user to change their current email address Needs to be
+	 * properly error checked in that the name should not be used (perhaps Id or
+	 * what not)
 	 */
-	public void changeUserEmailAddress(String email, String name){
-		MapSqlParameterSource params = new MapSqlParameterSource(); 
+	public void changeUserEmailAddress(String email, String name) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("username", email);
 		params.addValue("name", name);
-		jdbc.update("update users set username = :email where name = :name", params);
+		jdbc.update("update users set username = :email where name = :name",
+				params);
 	}
 
 	public boolean exists(String username) {
-		return jdbc.queryForObject("select count(*) from users where username = :username", new MapSqlParameterSource("username", username), Integer.class) > 0;
+		return jdbc.queryForObject(
+				"select count(*) from users where username = :username",
+				new MapSqlParameterSource("username", username), Integer.class) > 0;
 	}
 
 	public List<User> getPendingUsers() {
-		return jdbc.query("select * from users where enabled != 1", new RowMapper<User>(){
-			public User mapRow(ResultSet rs, int row) throws SQLException {
-				User user = new Member();
-				user.setName(rs.getString("name"));
-				user.setUsername(rs.getString("username"));	
-				user.setGrade(rs.getString("grade"));
-				user.setContact_num(rs.getString("contact_num"));
-				user.setMember_type(rs.getString("member_type"));
-				return user;
-			}
-		});
+		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
 	}
 }
