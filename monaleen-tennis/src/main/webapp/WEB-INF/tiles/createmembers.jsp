@@ -45,7 +45,7 @@ function canSubmit(){
 }
 
 $(document).ready(onLoad);
-
+regis
 </script>
 
 <sf:form id="details" method="post" action="${pageContext.request.contextPath}/register" commandName="member">

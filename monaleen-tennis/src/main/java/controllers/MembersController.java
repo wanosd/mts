@@ -2,9 +2,7 @@ package controllers;
 
 import java.security.Principal;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import service.UserService;
-import users.FormValidationGroup;
-import users.User;
+import users.*;
+
 
 @Controller
 public class MembersController {
@@ -31,6 +28,14 @@ public class MembersController {
 		model.addAttribute("users", userList);
 		return "members";
 	}
+	
+	@RequestMapping("/registerSuccess")
+	public String showRegSuccess() {
+		logger.info("Showing Reg Success Page....");
+		return "registerSuccess";
+	}
+
+	
 
 	@RequestMapping("/admin")
 	public String showAdmin() {
@@ -75,7 +80,7 @@ public class MembersController {
 	 * Method will only take Post requests Registers user to database
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String doRegister(Model model, @Valid User member, BindingResult result) {
+	public String doRegister(Model model, @Validated(FormValidationGroup.class)User member, BindingResult result) {
 
 		logger.info("Showing Registration Page....");
 		
@@ -90,8 +95,14 @@ public class MembersController {
 		}
 
 		else {
-			userService.create(member);
-			return "registerSuccess";
+			try{
+				userService.create(member);
+				return "registerSuccess";
+			}catch (Exception e){
+				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
+				return "error";
+			}
+			
 		}
 	}
 
