@@ -106,10 +106,20 @@ public class UserDAO {
 
 	public boolean exists(String username) {
 		Criteria crit = session().createCriteria(User.class);
-		crit.add(Restrictions.eq("username", username)); // Restrictions.idEq for primary key integer
+		crit.add(Restrictions.eq("username", username)); 
 		User user = (User) crit.uniqueResult();
 		return user != null;
 	}
+	
+	public void enableMember(String username) {
+		Criteria crit = session().createCriteria(User.class);
+		crit.add(Restrictions.eq("username", username)); // Restrictions.idEq for primary key integer
+		User user = (User) crit.uniqueResult();
+		user.setEnabled(true);
+		session().saveOrUpdate(user);
+		logger.info("User Enabled");
+	}
+
 
 	public List<User> getPendingUsers() {
 		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());

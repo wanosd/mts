@@ -42,6 +42,11 @@ public class UserService {
 		return usersDAO.getUserByUserName(username);
 	}
 	
+	@Secured("ROLE_ADMIN")
+	public void enableUser(String username){
+		usersDAO.enableMember(username);
+	}
+	
 
 	
 
