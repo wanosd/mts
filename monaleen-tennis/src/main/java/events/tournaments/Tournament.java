@@ -15,7 +15,7 @@ import events.Event;
 
 @Entity
 @Table(name="tournament")
-public class Tournament extends Event {
+public class Tournament implements Event {
 	
 	@Id
 	@GeneratedValue
