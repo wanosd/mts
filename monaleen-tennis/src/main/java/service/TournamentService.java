@@ -1,7 +1,9 @@
 package service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+
 
 
 import dao.TournamentDAO;
@@ -13,11 +15,11 @@ public class TournamentService {
 	private TournamentDAO tournamentDAO;
 	
 	@Autowired
-	public void setTournamentDAO(TournamentDAO tournamentDAO){
+	public void setTournamentDAO(TournamentDAO tournamentDAO) {
 		this.tournamentDAO = tournamentDAO;
 	}
-	
-	//Need to annotate to ROLE ADMIN later
+
+	@Secured("ROLE_ADMIN")
 	public void create(Tournament t) {
 		tournamentDAO.createTournament(t);
 	}

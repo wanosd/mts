@@ -19,7 +19,7 @@ import events.Event;
 @Entity
 @Table(name="tournament")
 public class Tournament implements Event {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
@@ -97,6 +97,15 @@ public class Tournament implements Event {
 
 	public void setTournamentStyle(String tournamentStyle) {
 		this.tournamentStyle = tournamentStyle;
+	}
+	
+	@Override
+	public String toString() {
+		return "Tournament [id=" + id + ", eligible=" + eligible
+				+ ", tournamentName=" + tournamentName + ", tournamentGender="
+				+ tournamentGender + ", tournamentType=" + tournamentType
+				+ ", tournamentCategory=" + tournamentCategory
+				+ ", tournamentStyle=" + tournamentStyle + "]";
 	}
 	
 	

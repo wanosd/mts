@@ -40,11 +40,14 @@ public class TournamentController {
 			return "createTournament";
 		} else {
 			try {
+				logger.info(t.toString());
 				tournamentService.create(t);
 				logger.info("Tournament Created");
 				return "tournamentSuccess";
 			} catch (Exception e) {
 				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
+				System.out.println("ERROR!!!!!!!!!!!" + e.getCause());
+				System.out.println("ERROR!!!!!!!!!!!" + e.getLocalizedMessage());
 				return "error";
 			}
 		}

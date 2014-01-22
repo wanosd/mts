@@ -33,6 +33,7 @@
 				<list>
 					<value>users</value>
 					<value>dao</value>
+					<value>events.tournaments</value>
 				</list>
 			</property>
 		</bean>

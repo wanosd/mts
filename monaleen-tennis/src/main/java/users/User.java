@@ -2,6 +2,7 @@ package users;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class User {
 	
 	@Id
+	@GeneratedValue
 	int id;
 	
 	@NotNull(groups={PersistenceValidationGroup.class, FormValidationGroup.class})

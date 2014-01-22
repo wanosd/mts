@@ -2,6 +2,7 @@ package test.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -14,8 +15,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import users.User;
+import dao.TournamentDAO;
 import dao.UserDAO;
+import events.tournaments.Tournament;
 
 
 @ActiveProfiles("dev")
@@ -29,6 +33,9 @@ public class HibernateTests {
 	private UserDAO userDAO;
 	
 	@Autowired
+	private TournamentDAO tournamentDAO;
+	
+	@Autowired
 	private DataSource dataSource;
 	
 	private User user1 = new User("chris@email.com", "Chris", "password", "M", "Student", "Beginner", "123 Fake St", "123 Fake St", "Faketown", "Fakecity", "0857040183", "Michelle", "085123", true, "ROLE_ADMIN");
@@ -36,6 +43,7 @@ public class HibernateTests {
 	private User user3 = new User("frank@email.com", "Frank", "2password", "M", "Senior", "Graded", "1 Fake St", "1 Fake St", "Faketown", "Fakecity", "0857040183", "Michelle", "085123", true, "ROLE_MEMBER");
 	private User user4 = new User("tom@email.com", "Tom", "3password", "M", "Senior", "Intermediate", "12 Fake St", "12 Fake St", "Faketown", "Fakecity", "0857040183", "Michelle", "085123", true, "ROLE_MEMBER");
 
+	private Tournament tour1 = new Tournament();
 	
 	@Before
 	public void init(){
@@ -53,7 +61,7 @@ public class HibernateTests {
 		
 	}
 	
-	@Test
+	@Test 
 	public void testCreateRetrieve(){
 		userDAO.createUser(user1);
 		
@@ -67,6 +75,12 @@ public class HibernateTests {
 		
 		List<User> users2 = userDAO.getAllUsers();
 		assertEquals("Number of users should be four", 4, users2.size());
+	}
+	
+	@Test
+	public void testTournamentCreate(){
+
+				
 	}
 	
 	
