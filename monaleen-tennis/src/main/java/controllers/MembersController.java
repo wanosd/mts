@@ -2,15 +2,19 @@ package controllers;
 
 import java.security.Principal;
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.UserService;
 import users.*;
 
@@ -80,7 +84,7 @@ public class MembersController {
 	 * Method will only take Post requests Registers user to database
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String doRegister(Model model, @Validated(FormValidationGroup.class)User member, BindingResult result) {
+	public String doRegister(Model model, @Validated(FormValidationGroup.class) @ModelAttribute("member") User member, BindingResult result) {
 
 		logger.info("Showing Registration Page....");
 		
