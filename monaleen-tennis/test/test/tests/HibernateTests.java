@@ -45,6 +45,15 @@ public class HibernateTests {
 	}
 	
 	@Test
+	public void testExists(){
+		
+		userDAO.createUser(user1);
+		assertTrue("User should exist", userDAO.exists(user1.getUsername()));
+		assertFalse("User should not exist", userDAO.exists("jkljfksakfjahghdsopjclkhfkjafhkjdshFHajhgouwe"));
+		
+	}
+	
+	@Test
 	public void testCreateRetrieve(){
 		userDAO.createUser(user1);
 		

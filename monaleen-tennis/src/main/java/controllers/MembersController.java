@@ -100,6 +100,7 @@ public class MembersController {
 
 		else {
 			try{
+				member.setAuthority("ROLE_MEMBER");
 				userService.create(member);
 				return "registerSuccess";
 			}catch (Exception e){
