@@ -42,11 +42,18 @@ public class TournamentController {
 			try {
 				tournamentService.create(t);
 				logger.info("Tournament Created");
-				return "/";
+				return "tournamentSuccess";
 			} catch (Exception e) {
 				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
 				return "error";
 			}
 		}
+	}
+	
+	@RequestMapping("/tournamentSuccess")
+	public String tournamentSuccess() {
+		logger.info("Showing Tournament Success Page....");
+
+		return "tournamentSuccess";
 	}
 }
