@@ -141,12 +141,10 @@ public class UserDAO {
 		params.addValue("em_con_num", user.getEm_con_num());
 		params.addValue("role", "ROLE_MEMBER");
 
-		jdbc.update(
-				"insert into authorities (username, authority) values (:username, :role)",
-				params);
+	
 
 		return jdbc
-				.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false)",
+				.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled. authority) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false, :role)",
 						params) == 1;
 	}
 

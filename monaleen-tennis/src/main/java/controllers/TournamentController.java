@@ -14,40 +14,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import events.tournaments.Tournament;
 import service.TournamentService;
 import users.FormValidationGroup;
-import users.User;
-
 
 @Controller
 public class TournamentController {
-	
+
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	private TournamentService tournamentService;
-	
+
 	@RequestMapping("/createTournament")
 	public String createTournament(Model model) {
 		logger.info("Showing Create Tournament Page....");
 		model.addAttribute("tournament", new Tournament());
 		return "createTournament";
 	}
-	
-	@RequestMapping(value = "/registerTournament", method = RequestMethod.POST)
-	public String doCreateTournament(Model model, @Valid @ModelAttribute("tournament") Tournament t, BindingResult result) {
 
-		logger.info("Showing Registration Page....");
-		
+	@RequestMapping(value = "/registerTournament", method = RequestMethod.POST)
+	public String doCreateTournament(Model model,
+			@Validated(FormValidationGroup.class) @ModelAttribute("tournament") Tournament t,
+			BindingResult result) {
+
+		logger.info("Showing Tournament Registration Page....");
+		logger.info(result.getAllErrors());
+
 		if (result.hasErrors()) {
 			return "createTournament";
-		}
-
-			try{
+		} else {
+			try {
 				tournamentService.create(t);
 				logger.info("Tournament Created");
 				return "/";
-			}catch (Exception e){
+			} catch (Exception e) {
 				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
 				return "error";
 			}
-			
 		}
 	}
-
+}

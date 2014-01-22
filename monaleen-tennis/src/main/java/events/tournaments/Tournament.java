@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
+import users.FormValidationGroup;
+import users.PersistenceValidationGroup;
 import users.User;
 import events.Event;
 
@@ -25,11 +28,16 @@ public class Tournament implements Event {
 	@JoinColumn(name="id")
 	private List<User> eligible; // Contains a list of eligible members 
 	
-	private String tournamentName = "default tournament"; // Specified the name of the tournament
+	@Size(min=5, max=45, message="Tournament Name must be between 5 and 60 characters",groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	private String tournamentName; // Specified the name of the tournament
+	
 	private String tournamentGender = "MIXED"; // Specifies where a tournament is M(ale), F(emale) or MIXED;
+	
 	private String tournamentType = "S"; // Specifies S(ingles) or D(oubles)
+	
 	private String tournamentCategory = "O"; // Specifies Member_Type to be S(enior) only, J(unior) only, or O(pen) Tournament
-	private String tournamentStyle = null; // Specfies type of Tournament to be  (L)adder/(L)eague, (B)ucket or (G)roup - Probably change this to a class later on.
+	
+	private String tournamentStyle = "L"; // Specfies type of Tournament to be  (L)adder/(L)eague, (B)ucket or (G)roup - Probably change this to a class later on.
 	
 	public Tournament(){
 		this.eligible = new ArrayList<User>();
