@@ -32,7 +32,7 @@ public class User {
 	String name;
 	
 	@Column(name="password")
-	@Size(min=5, max=15, message="Password must be between 5 and 45 characters", groups=FormValidationGroup.class)
+	@Size(min=5, max=15, message="Password must be between 5 and 15 characters", groups=FormValidationGroup.class)
 	String password;
 	
 	@Column(name="gender")

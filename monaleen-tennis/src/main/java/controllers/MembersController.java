@@ -25,6 +25,7 @@ import users.*;
 public class MembersController {
 
 	private UserService userService;
+	
 	private static Logger logger = Logger.getLogger(MembersController.class);
 
 	@RequestMapping("/members")

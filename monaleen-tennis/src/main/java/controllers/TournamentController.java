@@ -3,6 +3,7 @@ package controllers;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import events.tournaments.Tournament;
 import service.TournamentService;
+import service.UserService;
 import users.FormValidationGroup;
 
 @Controller
@@ -41,6 +43,7 @@ public class TournamentController {
 		} else {
 			try {
 				logger.info(t.toString());
+				
 				tournamentService.create(t);
 				logger.info("Tournament Created");
 				return "tournamentSuccess";
@@ -59,4 +62,11 @@ public class TournamentController {
 
 		return "tournamentSuccess";
 	}
+
+	@Autowired
+	public void setTournamentService(TournamentService tournamentService) {
+		this.tournamentService = tournamentService;
+	}
+	
+
 }
