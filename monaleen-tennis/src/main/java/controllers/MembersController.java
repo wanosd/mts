@@ -22,12 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import service.UserService;
 import users.*;
 
-
 @Controller
 public class MembersController {
 
 	private UserService userService;
-	
+
 	private static Logger logger = Logger.getLogger(MembersController.class);
 
 	@RequestMapping("/members")
@@ -37,7 +36,7 @@ public class MembersController {
 		model.addAttribute("users", userList);
 		return "members";
 	}
-	
+
 	@RequestMapping("/approveFinalize")
 	public String approveMembers(Model model, HttpServletRequest request) {
 		logger.info("Moving to approveFinalize and back to approveMembers");
@@ -46,14 +45,12 @@ public class MembersController {
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
 	}
-	
+
 	@RequestMapping("/registerSuccess")
 	public String showRegSuccess() {
 		logger.info("Showing Reg Success Page....");
 		return "registerSuccess";
 	}
-
-	
 
 	@RequestMapping("/admin")
 	public String showAdmin() {
@@ -78,73 +75,70 @@ public class MembersController {
 		return "createmembers";
 	}
 
-	@RequestMapping("/editdetails")
-	public String editDetails(Model model, Principal p) {
-		
-		logger.info("Showing Edit Details Page....");
-		if (p != null) {
-			String username = p.getName();
-			User user = userService.getUserByUsername(username);
-			model.addAttribute("member", user);
-			return "editdetails";
-		} else {
-			return "/";
-		}
-
-	}
-
 	/*
 	 * Method will only take Post requests Registers user to database
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String doRegister(Model model, @Validated(FormValidationGroup.class) @ModelAttribute("member") User member, BindingResult result) {
+	public String doRegister(
+			Model model,
+			@Validated(FormValidationGroup.class) @ModelAttribute("member") User member,
+			BindingResult result) {
 
 		logger.info("Showing Registration Page....");
-		
+
 		if (result.hasErrors()) {
 			return "createmembers";
 		}
 
-		if (userService.exists(member.getUsername())) { 
+		if (userService.exists(member.getUsername())) {
 			result.rejectValue("username", "Duplicate Key",
 					"This email address has already been used");
 			return "createmembers";
 		}
 
 		else {
-			try{
+			try {
 				member.setAuthority("ROLE_MEMBER");
 				userService.create(member);
 				return "registerSuccess";
-			}catch (Exception e){
-				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
+			} catch (Exception e) {
+				logger.info("ERROR!!!!!!!!!!!" + e.getClass());
 				return "error";
 			}
-			
+
 		}
 	}
-	
+
 	@RequestMapping("/profile")
 	public String editProfile(Model model) {
 		logger.info("Showing Edit Profile Page.....");
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
 		User user = userService.getUserByUsername(auth.getName());
 		model.addAttribute("member", user);
 		return "profile";
 	}
-	
-	@RequestMapping(value="/profileUpdated", method = RequestMethod.POST)
-	public String doEditProfile(Model model, @Validated(FormValidationGroup.class) @ModelAttribute("member") User member, BindingResult result){
-		logger.info("Showing Edit Profile Page.....");
-		try{
-			userService.editProfile(member);
-			return "profileUpdated";
-		}catch (Exception e){
-			logger.info("Database update failed. Cause: " + e.getClass());
+
+	@RequestMapping(value = "/profileUpdated", method = RequestMethod.POST)
+	public String doEditProfile(
+			Model model,
+			/**@Validated(FormValidationGroup.class)**/ @ModelAttribute("member") User member,
+			BindingResult result) {
+		logger.info("Showing Profile Updated.....");
+		if (result.hasErrors()) {
+			logger.info("Errors found in BindingResult object....");
+			return "profile";
+		} else {
+			try {
+				logger.info("About to  update user");
+				userService.editProfile(member);
+				logger.info("User Updated");
+				return "profileUpdated";
+			} catch (Exception e) {
+				logger.info("Database update failed. Cause: " + e.getClass());
+				return "error";
+			}
 		}
-		
-		return null;
-		
 	}
 
 	@Autowired
