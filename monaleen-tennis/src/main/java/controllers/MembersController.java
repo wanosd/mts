@@ -122,13 +122,21 @@ public class MembersController {
 	@RequestMapping(value = "/profileUpdated", method = RequestMethod.POST)
 	public String doEditProfile(
 			Model model,
-			/**@Validated(FormValidationGroup.class)**/ @ModelAttribute("member") User member,
+			@ModelAttribute("member") User member,
 			BindingResult result) {
 		logger.info("Showing Profile Updated.....");
 		if (result.hasErrors()) {
 			logger.info("Errors found in BindingResult object....");
 			return "profile";
-		} else {
+		} 
+		
+		if (userService.exists(member.getUsername())) {
+			result.rejectValue("username", "Duplicate Key",
+					"This email address has already been used");
+			return "profile";
+		}
+		
+		else {
 			try {
 				logger.info("About to  update user");
 				userService.editProfile(member);
