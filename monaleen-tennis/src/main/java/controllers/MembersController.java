@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -120,6 +122,29 @@ public class MembersController {
 			}
 			
 		}
+	}
+	
+	@RequestMapping("/profile")
+	public String editProfile(Model model) {
+		logger.info("Showing Edit Profile Page.....");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.getUserByUsername(auth.getName());
+		model.addAttribute("member", user);
+		return "profile";
+	}
+	
+	@RequestMapping(value="/profileUpdated", method = RequestMethod.POST)
+	public String doEditProfile(Model model, @Validated(FormValidationGroup.class) @ModelAttribute("member") User member, BindingResult result){
+		logger.info("Showing Edit Profile Page.....");
+		try{
+			userService.editProfile(member);
+			return "profileUpdated";
+		}catch (Exception e){
+			logger.info("Database update failed. Cause: " + e.getClass());
+		}
+		
+		return null;
+		
 	}
 
 	@Autowired

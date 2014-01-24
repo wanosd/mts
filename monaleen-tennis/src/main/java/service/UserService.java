@@ -47,6 +47,11 @@ public class UserService {
 		usersDAO.enableMember(username);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	public void editProfile(User formUser){
+		usersDAO.changeUserDetails(formUser);
+	}
+	
 
 	
 

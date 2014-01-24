@@ -76,4 +76,14 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/tournamentSuccess.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="profile" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Edit Profile"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/profile.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="profileUpdated" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Profile  Updated"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/profileUpdated.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

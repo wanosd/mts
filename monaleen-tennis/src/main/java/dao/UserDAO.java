@@ -12,6 +12,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -77,9 +79,10 @@ public class UserDAO {
 	 * Method to search for a user by name
 	 */
 	public User getUserByName(String name) {
-
-		return jdbc.queryForObject("select * from users where name = :name",
-				new MapSqlParameterSource("name", name), new UserRowMapper());
+		Criteria crit = session().createCriteria(User.class);
+		crit.add(Restrictions.eq("name", name)); 
+		User user = (User) crit.uniqueResult();
+		return user;
 	}
 	
 	/*
@@ -96,12 +99,22 @@ public class UserDAO {
 	 * properly error checked in that the name should not be used (perhaps Id or
 	 * what not)
 	 */
-	public void changeUserEmailAddress(String email, String name) {
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("username", email);
-		params.addValue("name", name);
-		jdbc.update("update users set username = :email where name = :name",
-				params);
+	public void changeUserDetails(User formUser) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Criteria crit = session().createCriteria(User.class);
+		System.out.println("USER RETRIEVED : " + formUser.toString());
+		crit.add(Restrictions.eq("username", auth.getName())); // Restrictions.idEq for primary key integer
+		User user = (User) crit.uniqueResult();
+		user.setAd_line1(formUser.getAd_line1());
+		user.setAd_line2(formUser.getAd_line2());
+		user.setAd_city(formUser.getAd_city());
+		user.setAd_county(formUser.getAd_county());
+		user.setContact_num(formUser.getContact_num());
+		user.setEm_con_name(formUser.getEm_con_name());
+		user.setEm_con_num(formUser.getEm_con_num());
+		System.out.println("USER BEING UPDATED RETRIEVED : " + user.toString());
+		session().saveOrUpdate(user);
+		logger.info("User Profile Changed");
 	}
 
 	public boolean exists(String username) {
