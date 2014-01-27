@@ -60,10 +60,10 @@ public class UserDAO {
 	/*
 	 * Method to get a list of all users in the database
 	 */
+	@SuppressWarnings("unchecked")
 	public List<User> getUsers() {
 		logger.info("Selecting All Enabled Members....");
-		return jdbc.query("select * from users where enabled = 1",
-				new UserRowMapper());
+		return session().createQuery("from User where enabled = '1'").list();
 	}
 
 	/*
@@ -89,9 +89,10 @@ public class UserDAO {
 	 * Method to search for a user by username
 	 */
 	public User getUserByUserName(String username) {
-
-		return jdbc.queryForObject("select * from users where username = :username",
-				new MapSqlParameterSource("username", username), new UserRowMapper());
+		Criteria crit = session().createCriteria(User.class);
+		crit.add(Restrictions.eq("username", username)); 
+		User user = (User) crit.uniqueResult();
+		return user;
 	}
 
 	/*
@@ -133,14 +134,10 @@ public class UserDAO {
 		logger.info("User Enabled");
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public List<User> getPendingUsers() {
-		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
+		return session().createQuery("from User where enabled = '0'").list();
 	}
-	
-	
-	
-	
 	
 	/**
 	 * The following code is left in for comparative purposes to compare JDBC to Hibernate. They will only be used in a Test Class at a later stage and are left in the code for this purpose alone
