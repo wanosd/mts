@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import users.User;
 import events.tournaments.Tournament;
 
 @Repository
@@ -34,4 +37,9 @@ public class TournamentDAO {
 		session().save(t);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Tournament> listOpenTournaments(){
+			logger.info("Selecting All Open Tournaments....");
+			return session().createQuery("from Tournament").list();
+	}
 }

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -43,7 +45,7 @@ public class TournamentController {
 		} else {
 			try {
 				logger.info(t.toString());
-				
+				t.getRegistered().add("Mister Mister");
 				tournamentService.create(t);
 				logger.info("Tournament Created");
 				return "tournamentSuccess";
@@ -59,8 +61,18 @@ public class TournamentController {
 	@RequestMapping("/tournamentSuccess")
 	public String tournamentSuccess() {
 		logger.info("Showing Tournament Success Page....");
-
 		return "tournamentSuccess";
+	}
+	
+	@RequestMapping("/tournaments")
+	public String showTournaments(Model model){
+		logger.info("Showing Tournament Display page....");
+		List<Tournament> tournament = tournamentService.getCurrentTournaments();
+		List<String> reg = tournament.get(0).getRegistered();
+		model.addAttribute("tournaments", tournament);
+		model.addAttribute("reg", reg);
+		
+		return "tournaments";
 	}
 
 	@Autowired

@@ -3,6 +3,8 @@ package events.tournaments;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,9 +26,9 @@ public class Tournament implements Event {
 	@GeneratedValue
 	private int id;
 	
-	@OneToMany
-	@JoinColumn(name="id")
-	private List<User> eligible; // Contains a list of eligible members 
+	@ElementCollection
+	@CollectionTable (name = "tournament_eligible", joinColumns=@JoinColumn(name="id"))
+	private List<String> username; // Contains a list of eligible members 
 	
 	@Size(min=5, max=45, message="Tournament Name must be between 5 and 60 characters",groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	private String tournamentName; // Specified the name of the tournament
@@ -39,8 +41,14 @@ public class Tournament implements Event {
 	
 	private String tournamentStyle = "L"; // Specfies type of Tournament to be  (L)adder/(L)eague, (B)ucket or (G)roup - Probably change this to a class later on.
 	
+	//private String registrationOpen;
+	
 	public Tournament(){
-		this.eligible = new ArrayList<User>();
+		this.username = new ArrayList<String>();
+	}
+	
+	public void register(String toRegister){
+		username.add(toRegister);
 	}
 
 	public int getId() {
@@ -51,12 +59,12 @@ public class Tournament implements Event {
 		this.id = id;
 	}
 
-	public List<User> getEligible() {
-		return eligible;
+	public List<String> getRegistered() {
+		return username;
 	}
 
-	public void setEligible(List<User> eligible) {
-		this.eligible = eligible;
+	public void setRegistered(List<String> e) {
+		this.username = e;
 	}
 
 	public String getTournamentName() {
@@ -101,7 +109,7 @@ public class Tournament implements Event {
 	
 	@Override
 	public String toString() {
-		return "Tournament [id=" + id + ", eligible=" + eligible
+		return "Tournament [id=" + id + ", eligible=" + username
 				+ ", tournamentName=" + tournamentName + ", tournamentGender="
 				+ tournamentGender + ", tournamentType=" + tournamentType
 				+ ", tournamentCategory=" + tournamentCategory

@@ -23,7 +23,7 @@
 </sec:authorize>
 <a href="">Membership</a>
 *
-<a href="">Tournaments</a>
+<a href="${pageContext.request.contextPath}/tournaments">Tournaments</a>
 *
 <a href="">Training</a>
 *
