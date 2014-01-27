@@ -41,7 +41,7 @@ public class Tournament implements Event {
 	
 	private String tournamentStyle = "L"; // Specfies type of Tournament to be  (L)adder/(L)eague, (B)ucket or (G)roup - Probably change this to a class later on.
 	
-	//private String registrationOpen;
+	private boolean registrationOpen;
 	
 	public Tournament(){
 		this.username = new ArrayList<String>();
@@ -59,11 +59,11 @@ public class Tournament implements Event {
 		this.id = id;
 	}
 
-	public List<String> getRegistered() {
+	public List<String> getUsername() {
 		return username;
 	}
 
-	public void setRegistered(List<String> e) {
+	public void setUsername(List<String> e) {
 		this.username = e;
 	}
 
@@ -107,6 +107,15 @@ public class Tournament implements Event {
 		this.tournamentStyle = tournamentStyle;
 	}
 	
+	
+	public boolean isRegistrationOpen() {
+		return registrationOpen;
+	}
+
+	public void setRegistrationOpen(boolean registrationOpen) {
+		this.registrationOpen = registrationOpen;
+	}
+
 	@Override
 	public String toString() {
 		return "Tournament [id=" + id + ", eligible=" + username

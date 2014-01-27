@@ -19,7 +19,7 @@
 	<a href="${pageContext.request.contextPath}/members">View Members</a> * 
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
-	<a href="${pageContext.request.contextPath}/editdetails">Edit Details</a> * 
+	<a href="${pageContext.request.contextPath}/profile">Edit Details</a> * 
 </sec:authorize>
 <a href="">Membership</a>
 *
