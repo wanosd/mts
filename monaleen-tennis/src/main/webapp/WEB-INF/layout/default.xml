@@ -86,7 +86,7 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/profileUpdated.jsp"></put-attribute>
 	</definition>
 	
-		<definition name="tournaments" extends="users.base">
+	<definition name="tournaments" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Tournaments"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/tournaments.jsp"></put-attribute>
 	</definition>

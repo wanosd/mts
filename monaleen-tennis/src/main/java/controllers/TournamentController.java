@@ -2,10 +2,14 @@ package controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,7 +75,16 @@ public class TournamentController {
 		logger.info("Showing Tournament Display page....");
 		List<Tournament> tournament = tournamentService.getCurrentTournaments();
 		model.addAttribute("tournaments", tournament);
-		
+		return "tournaments";
+	}
+	
+	@RequestMapping("/tournamentRegister")
+	public String registerForTournament(Model model, HttpServletRequest request){
+		logger.info("Registering for Tournament....");
+		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
+		tournamentService.register(t);
+		List<Tournament> tournament = tournamentService.getCurrentTournaments();
+		model.addAttribute("tournaments", tournament);
 		return "tournaments";
 	}
 

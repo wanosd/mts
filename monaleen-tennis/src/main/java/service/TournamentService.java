@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
-
-
-
 import users.User;
 import dao.TournamentDAO;
 import events.tournaments.Tournament;
@@ -17,7 +14,7 @@ import events.tournaments.Tournament;
 public class TournamentService {
 
 	private TournamentDAO tournamentDAO;
-	
+
 	@Autowired
 	public void setTournamentDAO(TournamentDAO tournamentDAO) {
 		this.tournamentDAO = tournamentDAO;
@@ -27,10 +24,16 @@ public class TournamentService {
 	public void create(Tournament t) {
 		tournamentDAO.createTournament(t);
 	}
-	
-	public List<Tournament> getCurrentTournaments(){
+
+	public List<Tournament> getCurrentTournaments() {
 		return tournamentDAO.listOpenTournaments();
 	}
-	
-	
+
+	public void register(Tournament t) {
+		tournamentDAO.registerForTournament(t);
+	}
+
+	public Tournament getTournamentById(String id) {
+		return tournamentDAO.getTournament(id);
+	}
 }
