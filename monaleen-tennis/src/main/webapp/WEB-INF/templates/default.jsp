@@ -19,9 +19,15 @@
 <tiles:insertAttribute name="header"></tiles:insertAttribute>
 </div>
 
+<div class="links">
+<tiles:insertAttribute name="links"></tiles:insertAttribute>
+</div>
+<hr/>
+
 <div class="content">
 <tiles:insertAttribute name="content"></tiles:insertAttribute>
 </div>
+
 <hr/>
 <div class="footer">
 <tiles:insertAttribute name="footer"></tiles:insertAttribute>
