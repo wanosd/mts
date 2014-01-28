@@ -16,14 +16,13 @@
 		</tr>
 		<c:forEach var="row" items="${toApprove}">
 			<tr>
-				<td>${row.name}</td>
+				<td><input type="hidden" value="${row.username}" name="username" />${row.name}</td>
 				<td>${row.grade}</td>
-				<td><input type="hidden" value="${row.username}" name="username"/><a href="mailto:${row.username}">Email</a></td>
+				<td><a href="mailto:${row.username}">Email</a></td>
 				<td>${row.member_type}</td>
 				<td>${row.contact_num}</td>
-				<td><input value="Approve" type="submit" />
+				<td><input value="Approve" type="submit" name="${row.username}"	/>
 			</tr>
 		</c:forEach>
 	</table>
-
 </sf:form>

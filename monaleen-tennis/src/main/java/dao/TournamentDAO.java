@@ -56,9 +56,9 @@ public class TournamentDAO {
 	
 	public void registerForTournament(Tournament tour){
 			logger.info("Registering for Tournament....");
+			logger.info("ID " + tour.getId());
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			//code needs to go here to ensure user isn't already registered
-			session().initialize(tour);
 			tour.getUsername().add(auth.getName());
 			session().saveOrUpdate(tour);
 	}

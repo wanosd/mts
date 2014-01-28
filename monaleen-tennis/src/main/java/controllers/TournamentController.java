@@ -81,6 +81,8 @@ public class TournamentController {
 	@RequestMapping("/tournamentRegister")
 	public String registerForTournament(Model model, HttpServletRequest request){
 		logger.info("Registering for Tournament....");
+		logger.info("Parameter ID is : " + request.getParameter("tournamentID"));
+		
 		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
 		tournamentService.register(t);
 		List<Tournament> tournament = tournamentService.getCurrentTournaments();

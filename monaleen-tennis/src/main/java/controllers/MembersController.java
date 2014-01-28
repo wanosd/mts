@@ -39,12 +39,15 @@ public class MembersController {
 
 	@RequestMapping("/approveFinalize")
 	public String approveMembers(Model model, HttpServletRequest request) {
+		String test = "Test String";
+		test = request.getParameter("username");
 		logger.info("Moving to approveFinalize and back to approveMembers");
-		userService.enableUser(request.getParameter("username"));
+		logger.info("Username is: " + test);
+		//userService.enableUser(request.getParameter("submit"));
 		List<User> toApprove = userService.getPendingMembers();
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
-	}
+	} 
 
 	@RequestMapping("/registerSuccess")
 	public String showRegSuccess() {
