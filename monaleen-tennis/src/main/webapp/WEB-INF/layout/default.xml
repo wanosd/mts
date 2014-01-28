@@ -91,4 +91,14 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/tournaments.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="createNews" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Create News"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createNews.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="news" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - News"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/news.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

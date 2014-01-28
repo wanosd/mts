@@ -25,6 +25,8 @@
 *
 <a href="${pageContext.request.contextPath}/tournaments">Tournaments</a>
 *
+<a href="${pageContext.request.contextPath}/news">News</a>
+*
 <a href="">Training</a>
 *
 <a href="">FAQ/Contact</a>

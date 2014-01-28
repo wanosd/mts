@@ -4,7 +4,7 @@
 <li>Block Member - This page will list all members who are accepted, but could be blocked for non payment, leaving club etc. Exclude admin categories</li>
 <li><a href="${pageContext.request.contextPath}/createTournament">Create Tournament</a></li>
 <li>Delete Tournament</li>
-<li>Add News Story</li>
+<li><a href="${pageContext.request.contextPath}/createNews">Add News Story</a></li>
 <li>Remove New Story</li>
 <li>Add Event</li>
 <li>Remove Event</li>
