@@ -133,6 +133,15 @@ public class UserDAO {
 		session().saveOrUpdate(user);
 		logger.info("User Enabled");
 	}
+	
+	public void disableMember(String username) {
+		Criteria crit = session().createCriteria(User.class);
+		crit.add(Restrictions.eq("username", username)); // Restrictions.idEq for primary key integer
+		User user = (User) crit.uniqueResult();
+		user.setEnabled(false);
+		session().saveOrUpdate(user);
+		logger.info("User Disabled");
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<User> getPendingUsers() {

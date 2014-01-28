@@ -1,7 +1,7 @@
 <h2>Stuff Admin needs to do</h2>
 <ul>
 <li><a href="${pageContext.request.contextPath}/approveMembers">Approve Member</a> - This page should bring up a list of all members who have registered but do not have access to the site)</li>
-<li>Block Member - This page will list all members who are accepted, but could be blocked for non payment, leaving club etc. Exclude admin categories</li>
+<li><a href="${pageContext.request.contextPath}/blockMembers">Block Member</a> - This page will list all members who are accepted, but could be blocked for non payment, leaving club etc. Exclude admin categories</li>
 <li><a href="${pageContext.request.contextPath}/createTournament">Create Tournament</a></li>
 <li>Delete Tournament</li>
 <li><a href="${pageContext.request.contextPath}/createNews">Add News Story</a></li>

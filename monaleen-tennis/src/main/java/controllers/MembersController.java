@@ -1,14 +1,9 @@
 package controllers;
 
-import java.security.Principal;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,16 +13,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.WebUtils;
 
 import service.UserService;
-import users.*;
+import users.FormValidationGroup;
+import users.User;
 
 @Controller
 public class MembersController {
 
 	private UserService userService;
-
 	private static Logger logger = Logger.getLogger(MembersController.class);
 
 	@RequestMapping("/members")
@@ -37,19 +31,6 @@ public class MembersController {
 		model.addAttribute("users", userList);
 		return "members";
 	}
-
-	@RequestMapping("/approveFinalize")
-	public String approveMembers(Model model, HttpServletRequest request) {
-		String test = "Test String";
-		test = request.getParameter("username");
-		boolean t = WebUtils.hasSubmitParameter(request, "username");
-		logger.info("Moving to approveFinalize and back to approveMembers");
-		logger.info("Username is: " + test + "Param Exists: " + t);
-		userService.enableUser(request.getParameter("username"));
-		List<User> toApprove = userService.getPendingMembers();
-		model.addAttribute("toApprove", toApprove);
-		return "approveMembers";
-	} 
 
 	@RequestMapping("/registerSuccess")
 	public String showRegSuccess() {
@@ -66,13 +47,41 @@ public class MembersController {
 
 	@RequestMapping("/approveMembers")
 	public String showPendingMembers(Model model) {
-
 		logger.info("Showing Pending Members Page....");
 		List<User> toApprove = userService.getPendingMembers();
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
 	}
+	
+	@RequestMapping("/approveFinalize")
+	public String approveMembers(Model model, HttpServletRequest request) {
+		logger.info("Moving to approveFinalize and back to approveMembers");
+		userService.enableUser(request.getParameter("username"));
+		List<User> toApprove = userService.getPendingMembers();
+		model.addAttribute("toApprove", toApprove);
+		return "approveMembers";
+	} 
 
+	@RequestMapping("/blockMembers")
+	public String showActiveMembers(Model model) {
+		logger.info("Showing Pending Members Page....");
+		List<User> toBlock = userService.getCurrentMembers();
+		toBlock = removeLoggedIn(toBlock);
+		model.addAttribute("toBlock", toBlock);
+		return "blockMembers";
+	}
+	
+	@RequestMapping("/blockFinalize")
+	public String blockMembers(Model model, HttpServletRequest request) {
+		logger.info("Moving to blockFinalize and back to blockMembers");
+		userService.disableUser(request.getParameter("username"));
+		List<User> toBlock = userService.getCurrentMembers();
+		toBlock = removeLoggedIn(toBlock);
+		model.addAttribute("toBlock", toBlock);
+		return "blockMembers";
+	} 
+	
+	
 	@RequestMapping("/createmembers")
 	public String createMembers(Model model) {
 		logger.info("Showing Create Members Page....");
@@ -151,6 +160,24 @@ public class MembersController {
 				logger.info("Database update failed. Cause: " + e.getClass());
 				return "error";
 			}
+		}
+	}
+	
+	public List<User> removeLoggedIn(List<User> users){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		User temp = null;
+		for (int i = 0; i < users.size(); i++){
+			if (users.get(i).getUsername().equals(username)){
+				temp = users.get(i);
+			}
+		}
+		
+		if (temp != null){
+			users.remove(temp);
+			return users;
+		}else{
+			return users;
 		}
 	}
 
