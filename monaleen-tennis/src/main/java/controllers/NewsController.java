@@ -58,7 +58,7 @@ public class NewsController {
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				n.setAuthor(auth.getName());
 				newsService.createNews(n);
-				return "news";
+				return "index";
 				
 			}catch(Exception e){
 				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
