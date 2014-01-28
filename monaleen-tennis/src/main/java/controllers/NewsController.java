@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import news.News;
@@ -33,6 +34,7 @@ public class NewsController {
 	public String displayNews(Model model) {
 		logger.info("Showing News Page....");
 		List<News> news = newsService.getAllNews();
+		Collections.reverse(news); // reverses so latest entry is first
 		model.addAttribute("news", news);
 		return "news";
 	}
