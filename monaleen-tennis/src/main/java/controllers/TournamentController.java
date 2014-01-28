@@ -49,9 +49,6 @@ public class TournamentController {
 		} else {
 			try {
 				logger.info(t.toString());
-				t.getUsername().add("Mister Mister");
-				t.getUsername().add("Mister Mister2");
-				t.getUsername().add("Mister Mister3");
 				tournamentService.create(t);
 				logger.info("Tournament Created");
 				return "tournamentSuccess";
@@ -84,10 +81,30 @@ public class TournamentController {
 		logger.info("Parameter ID is : " + request.getParameter("tournamentID"));
 		
 		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
-		tournamentService.register(t);
-		List<Tournament> tournament = tournamentService.getCurrentTournaments();
-		model.addAttribute("tournaments", tournament);
-		return "tournaments";
+		if (!checkRegistered(t)){
+			tournamentService.register(t);
+			List<Tournament> tournament = tournamentService.getCurrentTournaments();
+			model.addAttribute("tournaments", tournament);
+			return "tournaments";
+		}
+		else
+			return "alreadyReg";
+	}
+	
+	@RequestMapping("/alreadyReg")
+	public String duplicateReg() {
+		return "alreadyReg";
+	}
+
+	private boolean checkRegistered(Tournament t) {
+		List<String> users = t.getUsername();
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		for (String s : users){
+			if (s.equals(name)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Autowired

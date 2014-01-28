@@ -15,7 +15,6 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/static/**" access="permitAll" />
 		<security:intercept-url pattern="/createmembers" access="permitAll" />
@@ -40,6 +39,7 @@
 	    <security:intercept-url pattern="/members" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/editdetails" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/tournamentRegister" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/alreadyReg" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/profile" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/profileUpdated" access="isAuthenticated()" />
 		<security:intercept-url pattern="/**" access="denyAll" />

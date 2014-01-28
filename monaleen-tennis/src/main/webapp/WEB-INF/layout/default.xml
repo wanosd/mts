@@ -102,6 +102,10 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/news.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="alreadyReg" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Already Registered"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/alreadyReg.jsp"></put-attribute>
+	</definition>
 		
 	<definition name="blockMembers" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Block Member"></put-attribute>
