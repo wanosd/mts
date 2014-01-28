@@ -15,14 +15,20 @@
 			<td>Contact Number</td>
 		</tr>
 		<c:forEach var="row" items="${toApprove}">
-			<tr>
-				<td><input type="hidden" value="${row.username}" name="username" />${row.name}</td>
-				<td>${row.grade}</td>
-				<td><a href="mailto:${row.username}">Email</a></td>
-				<td>${row.member_type}</td>
-				<td>${row.contact_num}</td>
-				<td><input value="Approve" type="submit" name="${row.username}"	/>
-			</tr>
+			<sf:form method="post" action="${pageContext.request.contextPath}/approveFinalize" commandName="toApprove">
+				<tr>
+					<td><input type="hidden" value="${row.username}"
+						name="username" />${row.name}</td>
+					<td>${row.grade}</td>
+					<td><a href="mailto:${row.username}">Email</a></td>
+					<td>${row.member_type}</td>
+					<td>${row.contact_num}</td>
+					<td><input value="Approve" type="submit"
+						name="${row.username}" />
+			</sf:form>
+
 		</c:forEach>
 	</table>
 </sf:form>
+
+

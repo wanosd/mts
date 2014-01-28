@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.WebUtils;
 
 import service.UserService;
 import users.*;
@@ -41,9 +42,10 @@ public class MembersController {
 	public String approveMembers(Model model, HttpServletRequest request) {
 		String test = "Test String";
 		test = request.getParameter("username");
+		boolean t = WebUtils.hasSubmitParameter(request, "username");
 		logger.info("Moving to approveFinalize and back to approveMembers");
-		logger.info("Username is: " + test);
-		//userService.enableUser(request.getParameter("submit"));
+		logger.info("Username is: " + test + "Param Exists: " + t);
+		userService.enableUser(request.getParameter("username"));
 		List<User> toApprove = userService.getPendingMembers();
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";

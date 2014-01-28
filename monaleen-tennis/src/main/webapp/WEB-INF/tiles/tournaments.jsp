@@ -16,6 +16,7 @@ Tournament Page
 			<td>Style</td>
 		</tr>
 		<c:forEach var="row" items="${tournaments}">
+			<sf:form method="post" action="${pageContext.request.contextPath}/tournamentRegister" commandName="tournament">
 			<tr>
 				<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.id}</td>
 				<td>${row.tournamentName}</td>
@@ -25,6 +26,7 @@ Tournament Page
 				<td>${row.tournamentStyle}</td>
 				<td><input value="Register" type="submit" /></td>
 			</tr>
+			</sf:form>
 		</c:forEach>
 	</table>
 </sf:form>
