@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="links">
 	<ul class="linkslist">
+		<li><a href="${pageContext.request.contextPath}/">Home</a></li>
 		<li><sec:authorize access="isAuthenticated()">
-				<a href="${pageContext.request.contextPath}/members">View
-					Members</a>
+				<a href="${pageContext.request.contextPath}/members">Members</a>
 			</sec:authorize></li>
 		<li><sec:authorize access="isAuthenticated()">
 				<a href="${pageContext.request.contextPath}/profile">Edit
