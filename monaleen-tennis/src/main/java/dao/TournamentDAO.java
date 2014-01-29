@@ -40,12 +40,24 @@ public class TournamentDAO {
 	public void createTournament(Tournament t) {
 		session().save(t);
 	}
+	
+	public void updateTournament(Tournament t){
+		session().saveOrUpdate(t);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Tournament> listOpenTournaments(){
 			logger.info("Selecting All Open Tournaments....");
-			return session().createQuery("from Tournament").list();
+			return session().createQuery("from Tournament where registrationOpen = '1'").list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Tournament> listClosedTournaments(){
+		logger.info("Selecting All Open Tournaments....");
+		return session().createQuery("from Tournament where registrationOpen = '0'").list();
+}
+	
+	
 	
 	public Tournament getTournament(String id){
 		Criteria crit = session().createCriteria(Tournament.class);

@@ -28,6 +28,11 @@ public class TournamentService {
 	public List<Tournament> getCurrentTournaments() {
 		return tournamentDAO.listOpenTournaments();
 	}
+	
+	@Secured("ROLE_ADMIN")
+	public List<Tournament> getClosedTournaments(){
+		return tournamentDAO.listClosedTournaments();
+	}
 
 	public void register(Tournament t) {
 		tournamentDAO.registerForTournament(t);
@@ -35,5 +40,9 @@ public class TournamentService {
 
 	public Tournament getTournamentById(String id) {
 		return tournamentDAO.getTournament(id);
+	}
+	
+	public void updateTournament(Tournament t){
+		tournamentDAO.updateTournament(t);
 	}
 }

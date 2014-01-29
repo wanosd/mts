@@ -112,4 +112,9 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/blockMember.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="tournamentStatus" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Tournament Status"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/tournamentStatus.jsp"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

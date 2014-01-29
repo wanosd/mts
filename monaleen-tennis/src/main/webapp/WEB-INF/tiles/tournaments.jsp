@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 Tournament Page
-<sf:form id="details" method="post"
-	action="${pageContext.request.contextPath}/tournamentRegister"
-	commandName="tournament">
 	<table class="members">
 		<tr>
 			<td>ID</td>
@@ -29,4 +26,3 @@ Tournament Page
 			</sf:form>
 		</c:forEach>
 	</table>
-</sf:form>

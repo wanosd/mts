@@ -116,6 +116,8 @@ public class Tournament implements Event {
 	public void setRegistrationOpen(boolean registrationOpen) {
 		this.registrationOpen = registrationOpen;
 	}
+	
+	
 
 	@Override
 	public String toString() {

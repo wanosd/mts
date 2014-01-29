@@ -75,6 +75,32 @@ public class TournamentController {
 		return "tournaments";
 	}
 	
+	@RequestMapping("/tournamentStatus")
+	public String showTournamentStatus(Model model){
+		logger.info("Showing Tournament Status page....");
+		List<Tournament> tournamentEnabled = tournamentService.getCurrentTournaments();
+		List<Tournament> tournamentDisabled = tournamentService.getClosedTournaments();
+		model.addAttribute("tournamentEnabled", tournamentEnabled);
+		model.addAttribute("tournamentDisabled", tournamentDisabled);
+		return "tournamentStatus";
+	}
+	
+	@RequestMapping("/tourStatusChange")
+	public String changeTourStatus(Model model, HttpServletRequest request){
+		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
+		if (t.isRegistrationOpen()){
+			t.setRegistrationOpen(false);
+			tournamentService.updateTournament(t);
+			return showTournamentStatus(model);
+		}else{
+			t.setRegistrationOpen(true);
+			tournamentService.updateTournament(t);
+			return showTournamentStatus(model);
+		}
+		
+	}
+	
+	
 	@RequestMapping("/tournamentRegister")
 	public String registerForTournament(Model model, HttpServletRequest request){
 		logger.info("Registering for Tournament....");
