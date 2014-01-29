@@ -11,6 +11,12 @@
 				<a href="${pageContext.request.contextPath}/profile">Edit
 					Details</a>
 			</sec:authorize></li>
+			<li><sec:authorize access="!isAuthenticated()">
+				<a href="${pageContext.request.contextPath}/register">Register</a>
+			</sec:authorize></li>
+			<li><sec:authorize access="!isAuthenticated()">
+				<a href="${pageContext.request.contextPath}/">Blank Page</a>
+			</sec:authorize></li>
 		<li><a href="">Membership</a></li>
 		<li><a href="${pageContext.request.contextPath}/tournaments">Tournaments</a></li>
 		<li><a href="${pageContext.request.contextPath}/news">News</a></li>
