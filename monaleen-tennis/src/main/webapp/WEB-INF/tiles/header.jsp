@@ -1,8 +1,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-Monaleen GAA Tennis Club
+<div class="header">
 
 <sec:authorize access="!isAuthenticated()">
 	<a href="${pageContext.request.contextPath}/createmembers" class="register">Register</a>
@@ -15,3 +14,4 @@ Monaleen GAA Tennis Club
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<a href="${pageContext.request.contextPath}/admin" class="admin">Admin</a>
 </sec:authorize>
+</div>
