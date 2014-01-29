@@ -2,7 +2,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<a href="" class="title">Monaleen GAA Tennis Club</a>
+Monaleen GAA Tennis Club
 
 <sec:authorize access="!isAuthenticated()">
 	<a href="${pageContext.request.contextPath}/createmembers" class="register">Register</a>
@@ -14,4 +14,4 @@
 </sec:authorize>
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<a href="${pageContext.request.contextPath}/admin" class="admin">Admin</a>
-</sec:authorize></br>
+</sec:authorize>
