@@ -45,4 +45,8 @@ public class TournamentService {
 	public void updateTournament(Tournament t){
 		tournamentDAO.updateTournament(t);
 	}
+
+	public void unregister(Tournament t) {
+		tournamentDAO.unregisterForTournament(t);
+	}
 }

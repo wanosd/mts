@@ -41,6 +41,7 @@
 	    <security:intercept-url pattern="/members" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/editdetails" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/tournamentRegister" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/tournamentUnregister" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/alreadyReg" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/profile" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/profileUpdated" access="isAuthenticated()" />

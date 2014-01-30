@@ -70,8 +70,16 @@ public class TournamentDAO {
 			logger.info("Registering for Tournament....");
 			logger.info("ID " + tour.getId());
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			//code needs to go here to ensure user isn't already registered
 			tour.getUsername().add(auth.getName());
 			session().saveOrUpdate(tour);
+	}
+
+	public void unregisterForTournament(Tournament tour) {
+		logger.info("Registering for Tournament....");
+		logger.info("ID " + tour.getId());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		tour.getUsername().remove(auth.getName());
+		session().saveOrUpdate(tour);
+		
 	}
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,18 +71,14 @@ public class TournamentController {
 	@RequestMapping("/tournaments")
 	public String showTournaments(Model model){
 		logger.info("Showing Tournament Display page....");
-		List<Tournament> tournament = tournamentService.getCurrentTournaments();
-		model.addAttribute("tournaments", tournament);
+		model = tournamentRegStatus(model);
 		return "tournaments";
 	}
 	
 	@RequestMapping("/tournamentStatus")
 	public String showTournamentStatus(Model model){
 		logger.info("Showing Tournament Status page....");
-		List<Tournament> tournamentEnabled = tournamentService.getCurrentTournaments();
-		List<Tournament> tournamentDisabled = tournamentService.getClosedTournaments();
-		model.addAttribute("tournamentEnabled", tournamentEnabled);
-		model.addAttribute("tournamentDisabled", tournamentDisabled);
+		
 		return "tournamentStatus";
 	}
 	
@@ -105,16 +102,30 @@ public class TournamentController {
 	public String registerForTournament(Model model, HttpServletRequest request){
 		logger.info("Registering for Tournament....");
 		logger.info("Parameter ID is : " + request.getParameter("tournamentID"));
-		
+		model = tournamentRegStatus(model);
 		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
 		if (!checkRegistered(t)){
 			tournamentService.register(t);
-			List<Tournament> tournament = tournamentService.getCurrentTournaments();
-			model.addAttribute("tournaments", tournament);
+			model = tournamentRegStatus(model);
 			return "tournaments";
 		}
 		else
-			return "alreadyReg";
+			return "error";
+	}
+	
+	@RequestMapping("/tournamentUnregister")
+	public String unregisterForTournament(Model model, HttpServletRequest request){
+		logger.info("Unregistering for Tournament....");
+		logger.info("Parameter ID is : " + request.getParameter("tournamentID"));
+		model = tournamentRegStatus(model);
+		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
+		if (checkRegistered(t)){
+			tournamentService.unregister(t);
+			model = tournamentRegStatus(model);
+			return "tournaments";
+		}
+		else
+			return "error";
 	}
 	
 	@RequestMapping("/alreadyReg")
@@ -138,5 +149,21 @@ public class TournamentController {
 		this.tournamentService = tournamentService;
 	}
 	
+	public Model tournamentRegStatus(Model model){
+		List<Tournament> tournament = tournamentService.getCurrentTournaments();
+		List <Tournament> unregTour = new ArrayList<Tournament>();
+		List <Tournament> regTour = new ArrayList<Tournament>();
+		for (int i = 0; i < tournament.size(); i++){
+			if(checkRegistered(tournament.get(i))){
+				regTour.add(tournament.get(i));
+			}
+			else{
+				unregTour.add(tournament.get(i));
+			}
+		}
+		model.addAttribute("unregTour", unregTour);
+		model.addAttribute("regTour", regTour);
+		return model;
+	}
 
 }
