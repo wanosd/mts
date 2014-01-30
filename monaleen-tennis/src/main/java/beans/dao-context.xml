@@ -34,6 +34,7 @@
 					<value>dao</value>
 					<value>events.tournaments</value>
 						<value>news</value>
+						<value>timetable</value>
 				</list>
 			</property>
 		</bean>

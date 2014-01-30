@@ -17,6 +17,6 @@ public class ErrorHandler {
 	@ExceptionHandler(AccessDeniedException.class)
 	public String handleAccessException(AccessDeniedException e) {
 		System.out.println(e.getCause() + " @@@@ " + e.getClass());
-		return "denied";
+		return "error";
 	}
 }

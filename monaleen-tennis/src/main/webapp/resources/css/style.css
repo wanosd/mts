@@ -29,6 +29,14 @@ p.errorLogin {
 	font-size: small;
 }
 
+a.adminLink {
+	font-size: small;
+}
+
+li.admin{
+	
+}
+
 .error {
 	font-size: small;
 	color: red;
@@ -74,7 +82,7 @@ div.links {
 	height: 40px;
 }
 
-div.admin{
+div.admin {
 	position: relative;
 	text-align: center;
 	width: 100%;
@@ -87,32 +95,29 @@ ul.linkslist {
 	padding: 0;
 	overflow: hidden;
 	width: 100%;
-	white-space:nowrap; 
-	
+	white-space: nowrap;
 }
 
-li
-{
-float:left;
-width: 12.5%;
-background-color:#008500;
+li {
+	float: left;
+	width: 12.5%;
+	background-color: #008500;
+}
 
+a:link,a:visited {
+	display: block;
+	width: 120px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #008500;
+	text-align: center;
+	padding: 4px;
+	text-decoration: none;
+	text-transform: uppercase;
 }
-a:link,a:visited
-{
-display:block;
-width:120px;
-font-weight:bold;
-color:#FFFFFF;
-background-color:#008500;
-text-align:center;
-padding:4px;
-text-decoration:none;
-text-transform:uppercase;
-}
-a:hover,a:active
-{
-background-color:#7A991A;
+
+a:hover,a:active {
+	background-color: #7A991A;
 }
 
 a.login {

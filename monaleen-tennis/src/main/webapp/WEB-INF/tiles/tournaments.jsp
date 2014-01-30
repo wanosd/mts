@@ -24,6 +24,7 @@ Tournament Page
 				<td>${row.tournamentType}</td>
 				<td>${row.tournamentCategory}</td>
 				<td>${row.tournamentStyle}</td>
+				<td>${row.username}</td>
 				<td><input value="Unregister" type="submit" /></td>
 			</tr>
 		</sf:form>

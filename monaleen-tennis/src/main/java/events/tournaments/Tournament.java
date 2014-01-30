@@ -117,8 +117,6 @@ public class Tournament implements Event {
 		this.registrationOpen = registrationOpen;
 	}
 	
-	
-
 	@Override
 	public String toString() {
 		return "Tournament [id=" + id + ", eligible=" + username
