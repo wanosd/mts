@@ -51,8 +51,22 @@ public class TimetableController {
 			t.getSaturday().add("Saturday" + i);
 			t.getSunday().add("Sunday" + i);
 		}
-		timetableService.create(t);
-		return "/";
+		t = (MonaleenTTV1) timetableService.getTimetables().get(0);
+		List<String> monday = t.getMonday();
+		List<String> tuesday = t.getTuesday();
+		List<String> wednesday = t.getWednesday();
+		List<String> thursday = t.getThursday();
+		List<String> friday = t.getFriday();
+		List<String> saturday = t.getSaturday();
+		List<String> sunday = t.getSunday();
+		model.addAttribute("monday", monday);
+		model.addAttribute("tuesday", tuesday);
+		model.addAttribute("wednesday", wednesday);
+		model.addAttribute("thursday", thursday);
+		model.addAttribute("friday", friday);
+		model.addAttribute("saturday", saturday);
+		model.addAttribute("sunday", sunday);
+		return "timetable";
 	}
 
 	@RequestMapping(value = "/gettimetable", method = RequestMethod.GET, produces = "application/json")

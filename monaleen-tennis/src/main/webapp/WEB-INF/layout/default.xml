@@ -117,4 +117,8 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/tournamentStatus.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="timetable" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Timetable"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/timetable.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

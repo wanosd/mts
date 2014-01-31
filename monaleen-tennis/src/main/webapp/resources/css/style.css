@@ -24,6 +24,12 @@ table.members {
 	border: 1px solid grey;
 }
 
+table.timetable {
+	border: 1px black;
+	padding: 10px;
+	vertical-align: bottom;
+}
+
 p.errorLogin {
 	color: red;
 	font-size: small;
@@ -33,7 +39,7 @@ a.adminLink {
 	font-size: small;
 }
 
-li.admin{
+li.admin {
 	
 }
 
