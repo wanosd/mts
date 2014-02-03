@@ -171,6 +171,13 @@ public class MonaleenTTV1 implements Timetable {
 	public void setEndTime(int endTime) {
 		this.endTime = endTime;
 	}
+
+	@Override
+	public String toString() {
+		return "MonaleenTTV1 [id=" + id + ", name=" + name + ", slots=" + slots
+				+ ", startTime=" + startTime + ", endTime=" + endTime + "]";
+	}
+	
 	
 	
 	
