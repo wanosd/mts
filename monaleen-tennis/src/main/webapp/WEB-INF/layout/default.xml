@@ -121,4 +121,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Timetable"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/timetable.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="checkRegistered" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Check Registered"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/checkRegistered.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

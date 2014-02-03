@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 Tournament Page
-<table class="members">
+<table class = m>
 	<tr>
 		<td>ID</td>
 		<td>Name</td>
@@ -24,12 +24,17 @@ Tournament Page
 				<td>${row.tournamentType}</td>
 				<td>${row.tournamentCategory}</td>
 				<td>${row.tournamentStyle}</td>
-				<td>${row.username}</td>
+				<td><a href="${pageContext.request.contextPath}/checkRegistered?id=${row.id}">Registered Members</a>
 				<td><input value="Unregister" type="submit" /></td>
 			</tr>
+			<tr>
+				<c:forEach var="registered" items="${row.username}">
+				<td>${registered}, </td>
+				</c:forEach>
+				</tr>
 		</sf:form>
 	</c:forEach>
-
+		
 </table>
 
 <hr />
@@ -54,6 +59,9 @@ Tournament Page
 				<td>${row.tournamentType}</td>
 				<td>${row.tournamentCategory}</td>
 				<td>${row.tournamentStyle}</td>
+				<c:forEach var = "unregistered" items="${row.username}">
+				<td>${unregistered}</td>
+				</c:forEach>
 				<td><input value="Register" type="submit" /></td>
 			</tr>
 		</sf:form>

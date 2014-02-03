@@ -33,10 +33,11 @@ public class TimetableController {
 		TimetableController.logger = logger;
 	}
 
-	private static Logger logger = Logger.getLogger(MembersController.class);
+	private static Logger logger = Logger.getLogger(TimetableController.class);
 
 	@RequestMapping("/timetable")
 	public String showTimetable(Model model) {
+		logger.info("Showing Timetable page....");
 		MonaleenTTV1 t = new MonaleenTTV1();
 		t.setName("Test Timetable");
 		t.setSlots(9);
@@ -69,9 +70,4 @@ public class TimetableController {
 		return "timetable";
 	}
 
-	@RequestMapping(value = "/gettimetable", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> getTimetable(Principal principal) {
-		return null;
-	}
 }

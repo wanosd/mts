@@ -78,7 +78,10 @@ public class TournamentController {
 	@RequestMapping("/tournamentStatus")
 	public String showTournamentStatus(Model model){
 		logger.info("Showing Tournament Status page....");
-		
+		List<Tournament> tournamentEnabled = tournamentService.getCurrentTournaments();
+		List<Tournament> tournamentDisabled = tournamentService.getClosedTournaments();
+		model.addAttribute("tournamentEnabled", tournamentEnabled);
+		model.addAttribute("tournamentDisabled", tournamentDisabled);
 		return "tournamentStatus";
 	}
 	
@@ -131,6 +134,16 @@ public class TournamentController {
 	@RequestMapping("/alreadyReg")
 	public String duplicateReg() {
 		return "alreadyReg";
+	}
+	
+	@RequestMapping("checkRegistered")
+	public String checkRegistered(Model model, HttpServletRequest request){
+		Tournament t = tournamentService.getTournamentById(request.getParameter("id"));
+		logger.info("ID of T: " + request.getParameter("id") );
+		logger.info("Size of List: " + t.getUsername().size() );
+		List<String> registered = t.getUsername();
+		model.addAttribute("registered", registered);
+		return "checkRegistered";
 	}
 
 	private boolean checkRegistered(Tournament t) {
