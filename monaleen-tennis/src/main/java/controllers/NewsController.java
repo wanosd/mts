@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.NewsService;
+import service.UserService;
+import users.User;
 
 @Controller
 public class NewsController {
@@ -24,11 +27,19 @@ public class NewsController {
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	
 	private NewsService newsService;
+	
+	private UserService userService;
 
 	@Autowired
 	public void setNewsService(NewsService newsService) {
 		this.newsService = newsService;
 	}
+	
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	
 	
 	@RequestMapping("/news")
 	public String displayNews(Model model) {
@@ -56,7 +67,7 @@ public class NewsController {
 		}else{
 			try{
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-				n.setAuthor(auth.getName());
+				n.setAuthor(sortEmailtoName(auth.getName()));
 				newsService.createNews(n);
 				return "index";
 				
@@ -67,7 +78,10 @@ public class NewsController {
 				return "error";
 			}
 		}
-		
+	}
+	
+	public String sortEmailtoName(String email) {
+		return userService.getUserByUsername(email).getName();
 		
 	}
 }

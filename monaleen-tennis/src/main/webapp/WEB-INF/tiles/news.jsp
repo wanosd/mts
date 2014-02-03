@@ -7,10 +7,9 @@
 	<c:forEach var="row" items="${news}">
 	<table>
 	
-    <tr><td><i>Title:</i></td><td>${row.summary}</td>
-    <tr><td><i>Story</i></td></tr>
+    <tr><td><u>${row.summary}</u></td>
     <tr><td>${row.content}</td></tr>
-    <tr><td><a href = "mailto:${row.author}">${row.author}</a></td></tr>
+    <tr><td><i>${row.author}</i></td></tr>
 	</table>
 	<hr/>
 	</c:forEach>

@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td>Content</td>
-			<td><sf:input name="content" path="content"
+			<td><sf:textarea name="content" path="content"
 					type="text" /><br />
 			<sf:errors path="content" cssClass="error"></sf:errors></td>
 		</tr>

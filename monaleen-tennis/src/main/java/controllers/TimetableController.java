@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,9 +25,9 @@ import users.User;
 
 @Controller
 public class TimetableController {
-	
+
 	private TimetableService timetableService;
-	
+
 	@Autowired
 	public void setTimetableService(TimetableService timetableService) {
 		this.timetableService = timetableService;
@@ -43,7 +47,7 @@ public class TimetableController {
 		t.setSlots(9);
 		t.setStartTime(1);
 		t.setEndTime(2);
-		for (int i = 0; i < t.getSlots(); i++){
+		for (int i = 0; i < t.getSlots(); i++) {
 			t.getMonday().add("Monday" + i);
 			t.getTuesday().add("Tuesday" + i);
 			t.getWednesday().add("Wednesday" + i);
@@ -68,6 +72,26 @@ public class TimetableController {
 		model.addAttribute("saturday", saturday);
 		model.addAttribute("sunday", sunday);
 		return "timetable";
+	}
+
+	@RequestMapping("/createTimetable")
+	public String createTimetablePage(Model model,
+			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
+		model.addAttribute("timetable", t);
+		return "createTimetable";
+	}
+
+	@RequestMapping(value = "/timetableDefaults", method = RequestMethod.POST)
+	public String timetableDefaults(Model model, HttpServletRequest request,
+			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
+		logger.info("TIMETABLE SLOTS " + t.getSlots());
+		model.addAttribute("count", t.getSlots());
+		/**
+		 * <c:forEach begin="0" end="10" varStatus="loop"> 
+		 * Index: ${loop.index}<br/>
+		 * </c:forEach>
+		 */
+		return "fillTimetable";
 	}
 
 }

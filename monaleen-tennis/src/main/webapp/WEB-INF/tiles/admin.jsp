@@ -6,9 +6,10 @@
 <a href="${pageContext.request.contextPath}/createTournament" class="adminLink">Create Tournament</a>
 <a href="${pageContext.request.contextPath}/tournamentStatus" class="adminLink">Enable/Disable Tournament</a>
 <a href="${pageContext.request.contextPath}/createNews" class="adminLink">Add News Story</a>
+<a href="${pageContext.request.contextPath}/createTimetable" class="adminLink">Create Timetable</a>
 Remove New Story
 Add Event
-Remove Event<
+Remove Event
 Change Default Timetable
 Add Event to Timetable
 
