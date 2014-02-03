@@ -33,6 +33,7 @@
 		<security:intercept-url pattern="/saveNewsStory" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/timetableDefaults" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/fillTimetable" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/finalizeTimetable" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/accessdenied" access="permitAll" />
