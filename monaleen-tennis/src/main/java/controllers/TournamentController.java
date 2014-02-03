@@ -23,12 +23,14 @@ import events.tournaments.Tournament;
 import service.TournamentService;
 import service.UserService;
 import users.FormValidationGroup;
+import users.User;
 
 @Controller
 public class TournamentController {
 
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	private TournamentService tournamentService;
+	private UserService userService;
 
 	@RequestMapping("/createTournament")
 	public String createTournament(Model model) {
@@ -38,7 +40,8 @@ public class TournamentController {
 	}
 
 	@RequestMapping(value = "/registerTournament", method = RequestMethod.POST)
-	public String doCreateTournament(Model model,
+	public String doCreateTournament(
+			Model model,
 			@Validated(FormValidationGroup.class) @ModelAttribute("tournament") Tournament t,
 			BindingResult result) {
 
@@ -56,101 +59,108 @@ public class TournamentController {
 			} catch (Exception e) {
 				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
 				System.out.println("ERROR!!!!!!!!!!!" + e.getCause());
-				System.out.println("ERROR!!!!!!!!!!!" + e.getLocalizedMessage());
+				System.out
+						.println("ERROR!!!!!!!!!!!" + e.getLocalizedMessage());
 				return "error";
 			}
 		}
 	}
-	
+
 	@RequestMapping("/tournamentSuccess")
 	public String tournamentSuccess() {
 		logger.info("Showing Tournament Success Page....");
 		return "tournamentSuccess";
 	}
-	
+
 	@RequestMapping("/tournaments")
-	public String showTournaments(Model model){
+	public String showTournaments(Model model) {
 		logger.info("Showing Tournament Display page....");
 		model = tournamentRegStatus(model);
 		return "tournaments";
 	}
-	
+
 	@RequestMapping("/tournamentStatus")
-	public String showTournamentStatus(Model model){
+	public String showTournamentStatus(Model model) {
 		logger.info("Showing Tournament Status page....");
-		List<Tournament> tournamentEnabled = tournamentService.getCurrentTournaments();
-		List<Tournament> tournamentDisabled = tournamentService.getClosedTournaments();
+		List<Tournament> tournamentEnabled = tournamentService
+				.getCurrentTournaments();
+		List<Tournament> tournamentDisabled = tournamentService
+				.getClosedTournaments();
 		model.addAttribute("tournamentEnabled", tournamentEnabled);
 		model.addAttribute("tournamentDisabled", tournamentDisabled);
 		return "tournamentStatus";
 	}
-	
+
 	@RequestMapping("/tourStatusChange")
-	public String changeTourStatus(Model model, HttpServletRequest request){
-		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
-		if (t.isRegistrationOpen()){
+	public String changeTourStatus(Model model, HttpServletRequest request) {
+		Tournament t = tournamentService.getTournamentById(request
+				.getParameter("tournamentID"));
+		if (t.isRegistrationOpen()) {
 			t.setRegistrationOpen(false);
 			tournamentService.updateTournament(t);
 			return showTournamentStatus(model);
-		}else{
+		} else {
 			t.setRegistrationOpen(true);
 			tournamentService.updateTournament(t);
 			return showTournamentStatus(model);
 		}
-		
+
 	}
-	
-	
+
 	@RequestMapping("/tournamentRegister")
-	public String registerForTournament(Model model, HttpServletRequest request){
+	public String registerForTournament(Model model, HttpServletRequest request) {
 		logger.info("Registering for Tournament....");
 		logger.info("Parameter ID is : " + request.getParameter("tournamentID"));
 		model = tournamentRegStatus(model);
-		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
-		if (!checkRegistered(t)){
+		Tournament t = tournamentService.getTournamentById(request
+				.getParameter("tournamentID"));
+		if (!checkRegistered(t)) {
 			tournamentService.register(t);
 			model = tournamentRegStatus(model);
 			return "tournaments";
-		}
-		else
+		} else
 			return "error";
 	}
-	
+
 	@RequestMapping("/tournamentUnregister")
-	public String unregisterForTournament(Model model, HttpServletRequest request){
+	public String unregisterForTournament(Model model,
+			HttpServletRequest request) {
 		logger.info("Unregistering for Tournament....");
 		logger.info("Parameter ID is : " + request.getParameter("tournamentID"));
 		model = tournamentRegStatus(model);
-		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
-		if (checkRegistered(t)){
+		Tournament t = tournamentService.getTournamentById(request
+				.getParameter("tournamentID"));
+		if (checkRegistered(t)) {
 			tournamentService.unregister(t);
 			model = tournamentRegStatus(model);
 			return "tournaments";
-		}
-		else
+		} else
 			return "error";
 	}
-	
+
 	@RequestMapping("/alreadyReg")
 	public String duplicateReg() {
 		return "alreadyReg";
 	}
-	
+
 	@RequestMapping("checkRegistered")
-	public String checkRegistered(Model model, HttpServletRequest request){
-		Tournament t = tournamentService.getTournamentById(request.getParameter("id"));
-		logger.info("ID of T: " + request.getParameter("id") );
-		logger.info("Size of List: " + t.getUsername().size() );
+	public String checkRegistered(Model model, HttpServletRequest request) {
+		Tournament t = tournamentService.getTournamentById(request
+				.getParameter("id"));
+		logger.info("ID of T: " + request.getParameter("id"));
+		logger.info("Size of List: " + t.getUsername().size());
 		List<String> registered = t.getUsername();
+		registered = sortEmailtoName(registered);
 		model.addAttribute("registered", registered);
 		return "checkRegistered";
 	}
 
 	private boolean checkRegistered(Tournament t) {
 		List<String> users = t.getUsername();
-		String name = SecurityContextHolder.getContext().getAuthentication().getName();
-		for (String s : users){
-			if (s.equals(name)){
+		String name = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		for (String s : users) {
+			if (s.equals(name)) {
 				return true;
 			}
 		}
@@ -161,22 +171,40 @@ public class TournamentController {
 	public void setTournamentService(TournamentService tournamentService) {
 		this.tournamentService = tournamentService;
 	}
-	
-	public Model tournamentRegStatus(Model model){
+
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public Model tournamentRegStatus(Model model) {
 		List<Tournament> tournament = tournamentService.getCurrentTournaments();
-		List <Tournament> unregTour = new ArrayList<Tournament>();
-		List <Tournament> regTour = new ArrayList<Tournament>();
-		for (int i = 0; i < tournament.size(); i++){
-			if(checkRegistered(tournament.get(i))){
+		List<Tournament> unregTour = new ArrayList<Tournament>();
+		List<Tournament> regTour = new ArrayList<Tournament>();
+		for (int i = 0; i < tournament.size(); i++) {
+			if (checkRegistered(tournament.get(i))) {
 				regTour.add(tournament.get(i));
-			}
-			else{
+			} else {
 				unregTour.add(tournament.get(i));
 			}
 		}
 		model.addAttribute("unregTour", unregTour);
 		model.addAttribute("regTour", regTour);
 		return model;
+	}
+
+	public List<String> sortEmailtoName(List<String> list) {
+		logger.info("Convert List Size: " + list.size());
+		List<String> finalList = new ArrayList<String>();
+		List<User> users = userService.getCurrentMembers();
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < users.size(); j++) {
+				if (list.get(i).equals(users.get(j).getUsername())) {
+					finalList.add(users.get(j).getName());
+				}
+			}
+		}
+		return finalList;
 	}
 
 }
