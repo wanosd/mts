@@ -2,7 +2,35 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+ <script type="text/javascript">
+
+$(document).ready(function() {
+    $('#tabs').tabs({
+        load: function(event, ui) {
+            $(ui.panel).delegate('a', 'click', function(event) {
+                $(ui.panel).load(this.href);
+                event.preventDefault();
+            });
+        }
+    });
+
+    $("#tabs").bind('tabsselect', function(event, ui) {
+        window.location.href=ui.tab;
+    });
+
+});
+
+</script>
+
+<div id="tabs">
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/"><span>Active Tournaments</span></a></li>
+            <li><a href="conference.jsp"><span>Open for Registration</span></a></li>
+            <li><a href="companies.jsp"><span>Previous Tournaments</span></a></li>
+        </ul>
+</div>
 Tournament Page
+</br>
 <table class = m>
 	<tr>
 		<td>ID</td>
