@@ -24,7 +24,6 @@
 					<td><input value="Suspend" type="submit"
 						name="${row.username}" />
 			</sf:form>
-
 		</c:forEach>
 	</table>
 

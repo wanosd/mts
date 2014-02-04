@@ -29,9 +29,9 @@ $(document).ready(function() {
             <li><a href="companies.jsp"><span>Previous Tournaments</span></a></li>
         </ul>
 </div>
-Tournament Page
-</br>
-<table class = m>
+
+<div id="tables" align="justify">Tournament Page
+<table class = "members">
 	<tr>
 		<td>ID</td>
 		<td>Name</td>
@@ -87,3 +87,4 @@ Tournament Page
 		</sf:form>
 	</c:forEach>
 </table>
+</div>
