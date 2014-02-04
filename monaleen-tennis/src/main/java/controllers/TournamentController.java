@@ -57,10 +57,6 @@ public class TournamentController {
 				logger.info("Tournament Created");
 				return "tournamentSuccess";
 			} catch (Exception e) {
-				System.out.println("ERROR!!!!!!!!!!!" + e.getClass());
-				System.out.println("ERROR!!!!!!!!!!!" + e.getCause());
-				System.out
-						.println("ERROR!!!!!!!!!!!" + e.getLocalizedMessage());
 				return "error";
 			}
 		}
@@ -86,8 +82,13 @@ public class TournamentController {
 				.getCurrentTournaments();
 		List<Tournament> tournamentDisabled = tournamentService
 				.getClosedTournaments();
+		List<Tournament> tournamentStarted = tournamentService.getStartedTournaments();
+		List<Tournament> tournamentUnstarted = tournamentService.getUnstartedTournaments();
 		model.addAttribute("tournamentEnabled", tournamentEnabled);
 		model.addAttribute("tournamentDisabled", tournamentDisabled);
+		model.addAttribute("tournamentStarted", tournamentStarted);
+		model.addAttribute("tournamentUnstarted", tournamentUnstarted);
+		
 		return "tournamentStatus";
 	}
 
@@ -104,7 +105,21 @@ public class TournamentController {
 			tournamentService.updateTournament(t);
 			return showTournamentStatus(model);
 		}
-
+	}
+	
+	@RequestMapping("/tourStartChange")
+	public String changeTourStart(Model model, HttpServletRequest request) {
+		Tournament t = tournamentService.getTournamentById(request
+				.getParameter("tournamentID"));
+		if (t.isTournamentStarted()) {
+			t.setTournamentStarted(false);
+			tournamentService.updateTournament(t);
+			return showTournamentStatus(model);
+		} else {
+			t.setTournamentStarted(true);
+			tournamentService.updateTournament(t);
+			return showTournamentStatus(model);
+		}
 	}
 
 	@RequestMapping("/tournamentRegister")
@@ -154,6 +169,8 @@ public class TournamentController {
 		model.addAttribute("registered", registered);
 		return "checkRegistered";
 	}
+	
+	@RequestMapping("changeRegistration")
 
 	private boolean checkRegistered(Tournament t) {
 		List<String> users = t.getUsername();

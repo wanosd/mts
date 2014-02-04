@@ -21,13 +21,13 @@ import events.tournaments.Tournament;
 @Transactional
 @Component("tournamentDAO")
 public class TournamentDAO {
-	
+
 	private static Logger logger = Logger.getLogger(TournamentDAO.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	public Session session(){
+
+	public Session session() {
 		logger.info("Session Factory returning current session.....");
 		return sessionFactory.getCurrentSession();
 	}
@@ -35,51 +35,68 @@ public class TournamentDAO {
 	public TournamentDAO() {
 		logger.info("Tournament DAO Created.....");
 	}
-	
+
 	@Transactional
 	public void createTournament(Tournament t) {
 		session().save(t);
 	}
-	
-	public void updateTournament(Tournament t){
+
+	public void updateTournament(Tournament t) {
 		session().saveOrUpdate(t);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Tournament> listOpenTournaments(){
-			logger.info("Selecting All Open Tournaments....");
-			return session().createQuery("from Tournament where registrationOpen = '1'").list();
+	public List<Tournament> listOpenTournaments() {
+		logger.info("Selecting All Open Tournaments....");
+		return session()
+				.createQuery(
+						"from Tournament where registrationOpen = '1' and tournamentStarted ='0'")
+				.list();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Tournament> listClosedTournaments(){
+	public List<Tournament> listStartedTournaments() {
 		logger.info("Selecting All Open Tournaments....");
-		return session().createQuery("from Tournament where registrationOpen = '0'").list();
-}
-	
-	
-	
-	public Tournament getTournament(String id){
-		Criteria crit = session().createCriteria(Tournament.class);
-		crit.add(Restrictions.eq("id", Integer.valueOf(id))); 
-		return (Tournament) crit.uniqueResult();
+		return session().createQuery("from Tournament where tournamentStarted ='1'").list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Tournament> listUnstartedTournaments() {
+		logger.info("Selecting All Unstarted Tournaments....");
+		return session().createQuery("from Tournament where tournamentStarted ='0'").list();
 	}
 	
-	
-	public void registerForTournament(Tournament tour){
-			logger.info("Registering for Tournament....");
-			logger.info("ID " + tour.getId());
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			tour.getUsername().add(auth.getName());
-			session().saveOrUpdate(tour);
+	@SuppressWarnings("unchecked")
+	public List<Tournament> listClosedTournaments() {
+		logger.info("Selecting All Open Tournaments....");
+		return session()
+				.createQuery(
+						"from Tournament where registrationOpen = '0' and tournamentStarted = '0'")
+				.list();
+	}
+
+	public Tournament getTournament(String id) {
+		Criteria crit = session().createCriteria(Tournament.class);
+		crit.add(Restrictions.eq("id", Integer.valueOf(id)));
+		return (Tournament) crit.uniqueResult();
+	}
+
+	public void registerForTournament(Tournament tour) {
+		logger.info("Registering for Tournament....");
+		logger.info("ID " + tour.getId());
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		tour.getUsername().add(auth.getName());
+		session().saveOrUpdate(tour);
 	}
 
 	public void unregisterForTournament(Tournament tour) {
 		logger.info("Registering for Tournament....");
 		logger.info("ID " + tour.getId());
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
 		tour.getUsername().remove(auth.getName());
 		session().saveOrUpdate(tour);
-		
+
 	}
 }

@@ -34,6 +34,7 @@ public class TournamentService {
 		return tournamentDAO.listClosedTournaments();
 	}
 
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
 	public void register(Tournament t) {
 		tournamentDAO.registerForTournament(t);
 	}
@@ -48,5 +49,13 @@ public class TournamentService {
 
 	public void unregister(Tournament t) {
 		tournamentDAO.unregisterForTournament(t);
+	}
+	
+	public List<Tournament> getStartedTournaments(){
+		return tournamentDAO.listStartedTournaments();
+	}
+	
+	public List<Tournament> getUnstartedTournaments(){
+		return tournamentDAO.listUnstartedTournaments();
 	}
 }

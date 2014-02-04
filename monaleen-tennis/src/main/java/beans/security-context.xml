@@ -41,6 +41,7 @@
 		<security:intercept-url pattern="/register" access="permitAll" />
 		<security:intercept-url pattern="/registerTournament" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/tournamentStatus" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/tourStartChange" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/registerSuccess" access="permitAll" />
 		<security:intercept-url pattern="/tournamentSuccess" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/createNews" access="permitAll" />
