@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import users.User;
 import events.*;
 import events.tournaments.Tournament;
 
@@ -33,6 +34,11 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	public void createNewEvent(I_Event e){
 		logger.info("Creating new event....");
 		session().save(e);
+	}
+	
+	public void deleteEvent(I_Event e){
+		logger.info("Deleting event....");
+		session().delete(e);
 	}
 	
 	public I_Event getEventById(int id){
@@ -63,6 +69,13 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 		Criteria crit = session().createCriteria(Event.class);
 		crit.add(Restrictions.eq("name", name));
 		return (Event) crit.uniqueResult();
+	}
+
+	public boolean exists(String e) {
+		Criteria crit = session().createCriteria(Event.class);
+		crit.add(Restrictions.eq("name", e)); 
+		Event event = (Event) crit.uniqueResult();
+		return event != null;
 	}
 	
 	

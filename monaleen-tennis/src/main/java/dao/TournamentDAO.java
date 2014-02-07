@@ -13,8 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import users.User;
 import events.tournaments.Tournament;
 
 @Repository
@@ -47,6 +45,11 @@ public class TournamentDAO {
 	
 	public void deleteTournament(Tournament t){
 		session().delete(t);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Tournament> listAllTournaments(){
+		return session().createQuery("from Tournament").list();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -20,15 +20,13 @@ import service.UserService;
 import events.Event;
 import events.tournaments.Tournament;
 
-
-
 @Controller("eventController")
 public class EventController {
-	
+
 	private EventService eventService;
-	
+
 	private UserService userService;
-	
+
 	private static Logger logger = Logger.getLogger(EventController.class);
 
 	@RequestMapping("/createEvent")
@@ -42,27 +40,36 @@ public class EventController {
 	public String saveEvent(Model model, @ModelAttribute("event") Event e,
 			BindingResult result) {
 		logger.info("Event Save Method....");
-		if (result.hasErrors()){
+		if (result.hasErrors()) {
 			return "createEvent";
 		}
-		e.setAuthor(userService.emailToName(SecurityContextHolder.getContext().getAuthentication().getName()));
-		e.setEnabled(false);
-		eventService.createEvent(e);
-		return viewEvent(model);
+
+		if (eventService.exists(e.getName())) {
+			result.rejectValue("name", "Duplicate Key",
+					"This Event Name has already been used.");
+			return "createEvent";
+		} else {
+			e.setAuthor(userService.emailToName(SecurityContextHolder
+					.getContext().getAuthentication().getName()));
+			e.setEnabled(false);
+			eventService.createEvent(e);
+			return viewEvent(model);
+		}
 	}
-	
+
 	@RequestMapping("/viewEvents")
-	public String viewEvent(Model model){
+	public String viewEvent(Model model) {
 		List<Event> eventsDisabled = eventService.listDisabledEvents();
 		List<Event> eventsEnabled = eventService.listEnabledEvents();
-		model.addAttribute("eventsEnabled", eventsEnabled );
+		model.addAttribute("eventsEnabled", eventsEnabled);
 		model.addAttribute("eventsDisabled", eventsDisabled);
 		return "viewEvents";
 	}
-	
+
 	@RequestMapping("/changeEventStatus")
-	public String changeEventStatus(Model model, HttpServletRequest request){
-		Event e = (Event) eventService.getEventById(Integer.valueOf(request.getParameter("eventID")));
+	public String changeEventStatus(Model model, HttpServletRequest request) {
+		Event e = (Event) eventService.getEventById(Integer.valueOf(request
+				.getParameter("eventID")));
 		if (e.isEnabled()) {
 			e.setEnabled(false);
 			eventService.updateEvent(e);
@@ -83,8 +90,5 @@ public class EventController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
-	
 
-	
 }

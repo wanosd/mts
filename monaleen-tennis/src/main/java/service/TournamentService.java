@@ -33,6 +33,11 @@ public class TournamentService {
 	public List<Tournament> getClosedTournaments(){
 		return tournamentDAO.listClosedTournaments();
 	}
+	
+	@Secured("ROLE_ADMIN")
+	public List<Tournament> getAllTournaments(){
+		return tournamentDAO.listAllTournaments();
+	}
 
 	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
 	public void register(Tournament t) {

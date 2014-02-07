@@ -56,11 +56,14 @@ public class TournamentController {
 		} 
 		
 		if (tournamentService.exists(t.getTournamentName())){
+			if (eventService.exists(t.getTournamentName())){
+				result.rejectValue("tournamentName", "Duplicate Key",
+						"An event of this name already exists");
+			}
 			result.rejectValue("tournamentName", "Duplicate Key",
-					"This Tournament Name has already been used.");
+					"A tournament of this name already exists");
 			return "createTournament";
 		}
-		
 		else {
 			try {
 				logger.info(t.toString());
@@ -172,11 +175,19 @@ public class TournamentController {
 	}
 	
 	@RequestMapping("/deleteTournament")
+	public String deletePage(Model model){
+		List<Tournament> tour = tournamentService.getAllTournaments();
+		model.addAttribute("tour", tour);
+		return "deleteTournament";
+	}
+	
+	@RequestMapping("/confirmDelete")
 	public String deleteTournament(Model model, HttpServletRequest request){
 		Tournament t = tournamentService.getTournamentById(request
 				.getParameter("tournamentID"));
 		tournamentService.deleteTournament(t);
-		return "deletedSuccess";
+		eventService.deleteEvent(eventService.getEventIdByName(t.getTournamentName()));
+		return "deleteTournament";
 	}
 
 	@RequestMapping("/alreadyReg")

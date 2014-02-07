@@ -26,6 +26,10 @@ public class EventService {
 		eventDAO.updateEvent(e);
 	}
 	
+	public void deleteEvent(I_Event e){
+		eventDAO.deleteEvent(e);
+	}
+	
 	public List<Event> listEnabledEvents(){
 		return eventDAO.getEnabledEvents();
 	}
@@ -40,6 +44,10 @@ public class EventService {
 	
 	public I_Event getEventIdByName(String name){
 		return eventDAO.getEventID(name);
+	}
+	
+	public boolean exists(String e){
+		return eventDAO.exists(e);
 	}
 	
 	

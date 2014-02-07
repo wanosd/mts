@@ -5,6 +5,7 @@
 <a href="${pageContext.request.contextPath}/blockMembers" class="adminLink">Block Member</a> - This page will list all members who are accepted, but could be blocked for non payment, leaving club etc. Exclude admin categories
 <a href="${pageContext.request.contextPath}/createTournament" class="adminLink">Create Tournament</a>
 <a href="${pageContext.request.contextPath}/tournamentStatus" class="adminLink">Enable/Disable Tournament</a>
+<a href="${pageContext.request.contextPath}/deleteTournament" class="adminLink">Delete Tournament</a>
 <a href="${pageContext.request.contextPath}/createNews" class="adminLink">Add News Story</a>
 <a href="${pageContext.request.contextPath}/createTimetable" class="adminLink">Create Timetable</a>
 Remove New Story
