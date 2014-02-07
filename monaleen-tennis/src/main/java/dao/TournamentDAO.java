@@ -44,6 +44,10 @@ public class TournamentDAO {
 	public void updateTournament(Tournament t) {
 		session().saveOrUpdate(t);
 	}
+	
+	public void deleteTournament(Tournament t){
+		session().delete(t);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Tournament> listOpenTournaments() {

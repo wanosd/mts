@@ -170,6 +170,14 @@ public class TournamentController {
 		} else
 			return "error";
 	}
+	
+	@RequestMapping("/deleteTournament")
+	public String deleteTournament(Model model, HttpServletRequest request){
+		Tournament t = tournamentService.getTournamentById(request
+				.getParameter("tournamentID"));
+		tournamentService.deleteTournament(t);
+		return "deletedSuccess";
+	}
 
 	@RequestMapping("/alreadyReg")
 	public String duplicateReg() {

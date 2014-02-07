@@ -62,4 +62,8 @@ public class TournamentService {
 	public boolean exists(String tournamentName) {
 		return tournamentDAO.exists(tournamentName);
 	}
+	
+	public void deleteTournament(Tournament t){
+		tournamentDAO.deleteTournament(t);
+	}
 }
