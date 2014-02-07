@@ -6,22 +6,19 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import users.FormValidationGroup;
 import users.PersistenceValidationGroup;
-import users.User;
-import events.Event;
+import events.I_Event;
 
 @Entity
 @Table(name="tournament")
-public class Tournament implements Event {
+public class Tournament implements I_Event {
 
 	@Id
 	@GeneratedValue

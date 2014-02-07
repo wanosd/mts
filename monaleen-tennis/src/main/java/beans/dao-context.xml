@@ -33,6 +33,7 @@
 					<value>users</value>
 					<value>dao</value>
 					<value>events.tournaments</value>
+					<value>events</value>
 						<value>news</value>
 						<value>timetable</value>
 				</list>

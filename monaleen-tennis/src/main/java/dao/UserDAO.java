@@ -234,4 +234,6 @@ public class UserDAO {
 	public List<User> getPendingUsersJDBC() {
 		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
 	}
+
+	
 }

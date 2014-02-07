@@ -8,7 +8,8 @@
 <a href="${pageContext.request.contextPath}/createNews" class="adminLink">Add News Story</a>
 <a href="${pageContext.request.contextPath}/createTimetable" class="adminLink">Create Timetable</a>
 Remove New Story
-Add Event
+<a href="${pageContext.request.contextPath}/createEvent" class="adminLink">Create Event</a>
+<a href="${pageContext.request.contextPath}/viewEvents" class="adminLink">View and Enable Event</a>
 Remove Event
 Change Default Timetable
 Add Event to Timetable

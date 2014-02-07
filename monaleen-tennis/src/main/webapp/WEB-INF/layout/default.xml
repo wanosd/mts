@@ -128,12 +128,22 @@
 	</definition>
 	
 	<definition name="createTimetable" extends="users.base">
-		<put-attribute name="title" value="Monaleen Tennis Club - Create Timetable"></put-attribute>
+		<put-attribute name="title" value="Monaleen Tennis Club - Create Timetable"></put-attribute> 
 		<put-attribute name="content" value="/WEB-INF/tiles/createTimetable.jsp"></put-attribute>
 	</definition>
 	
-		<definition name="fillTimetable" extends="users.base">
+	<definition name="fillTimetable" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Fill Timetable"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/fillTimetable.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="createEvent" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Create Timetable"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createEvent.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="viewEvents" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - View Timetable"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/viewEvents.jsp"></put-attribute>
 	</definition>
 </tiles-definitions>

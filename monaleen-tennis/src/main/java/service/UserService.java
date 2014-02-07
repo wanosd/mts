@@ -57,6 +57,11 @@ public class UserService {
 		usersDAO.changeUserDetails(formUser);
 	}
 	
+	@Secured("ROLE_ADMIN")
+	public String emailToName(String email){
+		return getUserByUsername(email).getName();
+	}
+	
 
 	
 
