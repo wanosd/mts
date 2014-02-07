@@ -58,6 +58,12 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	public List<Event> getDisabledEvents(){
 		return session().createQuery("from Event where enabled ='0'").list();
 	}
+
+	public I_Event getEventID(String name) {
+		Criteria crit = session().createCriteria(Event.class);
+		crit.add(Restrictions.eq("name", name));
+		return (Event) crit.uniqueResult();
+	}
 	
 	
 

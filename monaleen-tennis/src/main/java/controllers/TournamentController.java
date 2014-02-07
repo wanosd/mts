@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import events.Event;
 import events.tournaments.Tournament;
+import service.EventService;
 import service.TournamentService;
 import service.UserService;
 import users.FormValidationGroup;
@@ -31,6 +33,7 @@ public class TournamentController {
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	private TournamentService tournamentService;
 	private UserService userService;
+	private EventService eventService;
 
 	@RequestMapping("/createTournament")
 	public String createTournament(Model model) {
@@ -54,6 +57,7 @@ public class TournamentController {
 			try {
 				logger.info(t.toString());
 				tournamentService.create(t);
+				eventCreation(t);
 				logger.info("Tournament Created");
 				return "tournamentSuccess";
 			} catch (Exception e) {
@@ -99,10 +103,16 @@ public class TournamentController {
 		if (t.isRegistrationOpen()) {
 			t.setRegistrationOpen(false);
 			tournamentService.updateTournament(t);
+			Event e = (Event) eventService.getEventIdByName(t.getTournamentName());
+			e.setEnabled(false);
+			eventService.updateEvent(e);
 			return showTournamentStatus(model);
 		} else {
 			t.setRegistrationOpen(true);
 			tournamentService.updateTournament(t);
+			Event e = (Event) eventService.getEventIdByName(t.getTournamentName());
+			e.setEnabled(true);
+			eventService.updateEvent(e);
 			return showTournamentStatus(model);
 		}
 	}
@@ -193,6 +203,11 @@ public class TournamentController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	@Autowired
+	public void setEventService(EventService eventService) {
+		this.eventService = eventService;
+	}
 
 	public Model tournamentRegStatus(Model model) {
 		List<Tournament> tournament = tournamentService.getCurrentTournaments();
@@ -222,6 +237,13 @@ public class TournamentController {
 			}
 		}
 		return finalList;
+	}
+	
+	public void eventCreation(Tournament t){
+		Event e = new Event();
+		e.setName(t.getTournamentName());
+		e.setAuthor(userService.emailToName(SecurityContextHolder.getContext().getAuthentication().getName()));
+		eventService.createEvent(e);
 	}
 
 }

@@ -38,5 +38,9 @@ public class EventService {
 		return eventDAO.getEventById(id);
 	}
 	
+	public I_Event getEventIdByName(String name){
+		return eventDAO.getEventID(name);
+	}
+	
 	
 }
