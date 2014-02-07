@@ -99,4 +99,11 @@ public class TournamentDAO {
 		session().saveOrUpdate(tour);
 
 	}
+
+	public boolean exists(String tournamentName) {
+		Criteria crit = session().createCriteria(Tournament.class);
+		crit.add(Restrictions.eq("tournamentName", tournamentName)); 
+		Tournament tour = (Tournament) crit.uniqueResult();
+		return tour != null;
+	}
 }

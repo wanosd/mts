@@ -53,7 +53,15 @@ public class TournamentController {
 
 		if (result.hasErrors()) {
 			return "createTournament";
-		} else {
+		} 
+		
+		if (tournamentService.exists(t.getTournamentName())){
+			result.rejectValue("tournamentName", "Duplicate Key",
+					"This Tournament Name has already been used.");
+			return "createTournament";
+		}
+		
+		else {
 			try {
 				logger.info(t.toString());
 				tournamentService.create(t);

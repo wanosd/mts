@@ -58,4 +58,8 @@ public class TournamentService {
 	public List<Tournament> getUnstartedTournaments(){
 		return tournamentDAO.listUnstartedTournaments();
 	}
+
+	public boolean exists(String tournamentName) {
+		return tournamentDAO.exists(tournamentName);
+	}
 }
