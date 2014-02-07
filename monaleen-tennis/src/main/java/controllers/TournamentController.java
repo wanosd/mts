@@ -59,6 +59,7 @@ public class TournamentController {
 			if (eventService.exists(t.getTournamentName())){
 				result.rejectValue("tournamentName", "Duplicate Key",
 						"An event of this name already exists");
+					return "createTournament";
 			}
 			result.rejectValue("tournamentName", "Duplicate Key",
 					"A tournament of this name already exists");
