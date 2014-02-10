@@ -41,5 +41,17 @@ private static Logger logger = Logger.getLogger(TournamentDAO.class);
 			logger.info("Selecting All Timetables....");
 			return session().createQuery("from MonaleenTTV1").list();
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Timetable> getEnabledTimetables() {
+		logger.info("Selecting All Enabled Timetables....");
+		return session().createQuery("from MonaleenTTV1 where enabled ='1'").list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Timetable> getDisabledTimetables() {
+		logger.info("Selecting All Enabled Timetables....");
+		return session().createQuery("from MonaleenTTV1 where enabled ='0'").list();
+	}
 	
 }

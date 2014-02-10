@@ -151,4 +151,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Delete Tournament"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/deleteTournament.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="court" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Court"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/court.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

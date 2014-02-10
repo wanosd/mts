@@ -28,8 +28,16 @@ public class TimetableService {
 		timetableDAO.updateTimetable(t);
 	}
 	
-	public List<Timetable> getTimetables(){
+	public List<Timetable> getAllTimetables(){
 		return timetableDAO.listTimetables();
+	}
+	
+	public List<Timetable> getEnabledTimetables(){
+		return timetableDAO.getEnabledTimetables();
+	}
+	
+	public List<Timetable> getDisabledTimetables(){
+		return timetableDAO.getDisabledTimetables();
 	}
 	
 

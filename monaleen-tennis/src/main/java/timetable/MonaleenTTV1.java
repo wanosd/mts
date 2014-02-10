@@ -37,6 +37,8 @@ public class MonaleenTTV1 implements Timetable {
 	
 	private int endTime;
 	
+	private boolean enabled;
+	
 	@ElementCollection
 	@CollectionTable (name = "monday", joinColumns=@JoinColumn(name="id"))
 	List<String> monday;
@@ -170,6 +172,14 @@ public class MonaleenTTV1 implements Timetable {
 
 	public void setEndTime(int endTime) {
 		this.endTime = endTime;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

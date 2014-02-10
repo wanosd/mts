@@ -1,68 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<table>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+
+
+<table class = "members">
 	<tr>
-		<td><table class="timetable">
-				<c:forEach var="row" items="${monday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table></td>
-		<td>
-			<table class="timetable">
-				<c:forEach var="row" items="${tuesday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</td>
-		<td>
-			<table class="timetable">
-				<c:forEach var="row" items="${wednesday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</td>
-		<td>
-			<table class="timetable">
-				<c:forEach var="row" items="${thursday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</td>
-		<td>
-			<table class="timetable">
-				<c:forEach var="row" items="${friday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</td>
-		<td>
-			<table class="timetable">
-				<c:forEach var="row" items="${saturday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</td>
-		<td>
-			<table class="timetable">
-				<c:forEach var="row" items="${sunday}">
-					<tr>
-						<td>${row}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</td>
+		<td>Court Name</td>
 	</tr>
-</table>
+	
+	<c:forEach var="row" items="${timetable}">
+		<sf:form method="post"
+			action="${pageContext.request.contextPath}/gotoCourt"
+			commandName="timetable">
+			<tr>
+				<td><input type="hidden" value="${row.id}" name="courtID" />${row.name}</td>
+				<td><input value="Select" type="submit" /></td>
+			</tr>
+		</sf:form>
+	</c:forEach>
+	</table>
