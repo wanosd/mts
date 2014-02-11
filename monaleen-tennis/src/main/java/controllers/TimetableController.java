@@ -66,8 +66,17 @@ public class TimetableController {
 		logger.info("TIMETABLE SLOTS " + t.getSlots());
 		logger.info(t);
 		t.setEnabled(false);
+		if (result.hasErrors()){
+			result.rejectValue("slots", "Duplicate Key",
+					"Must be greater than 0");
+			return createTimetablePage(model, t, result);
+		}
 		timetableService.create(t);
-		return "admin";
+		List<Event> events = eventService.listEnabledEvents();
+		int count = t.getSlots();
+		model.addAttribute("events", events);
+		model.addAttribute("count", count);
+		return "fillTimetable";
 	}
 
 	@RequestMapping(value = "/finalizeTimetable", method = RequestMethod.POST)
