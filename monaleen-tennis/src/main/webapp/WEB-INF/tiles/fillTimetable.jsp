@@ -5,45 +5,39 @@
 <sf:form id="details" method="post"
 	action="${pageContext.request.contextPath}/finalizeTimetable"
 	commandName="timetable">
-<c:forEach begin="0" end="${count - 1}" varStatus="loop">
-<sf:select path="monday" value="monday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-<sf:select path="tuesday" value="tuesday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-<sf:select path="wednesday" value="wednesday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-<sf:select path="thursday" value="thursday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-<sf:select path="friday" value="friday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-<sf:select path="saturday" value="saturday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-
-<sf:select path="sunday" value="sunday${loop.index}">
-<c:forEach var="row" items="${events}">
-<sf:option value="${row.name}">${row.name}</sf:option>
-</c:forEach>
-</sf:select>
-
-<hr>
-</c:forEach>
-<input value="Submit" type="submit"/>
+		<input type="hidden" value="${timetable.id }" id="timetableID">
+	
+		
+	<c:forEach begin="0" end="${count - 1}" varStatus="loop">
+		<input type="hidden" value="${count }" id="slots">
+		<sf:select path="monday[${loop.index}]" id="monday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		
+		<sf:select path="tuesday[${loop.index}]" id="tuesday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		
+		<sf:select path="wednesday[${loop.index}]" id="wednesday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		
+		<sf:select path="thursday[${loop.index}]" id="thursday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		
+		<sf:select path="friday[${loop.index}]" id="friday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		
+		<sf:select path="saturday[${loop.index}]" id="saturday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		
+		<sf:select path="sunday[${loop.index}]" id="sunday${loop.index }" multiple="false">
+			<sf:options items="${events }"/>
+		</sf:select>
+		<hr>
+	</c:forEach>
+	<input value="Submit" type="submit" />
 </sf:form>

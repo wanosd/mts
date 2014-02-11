@@ -3,12 +3,16 @@ package dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import timetable.MonaleenTTV1;
 import timetable.Timetable;
 
 
@@ -52,6 +56,12 @@ private static Logger logger = Logger.getLogger(TournamentDAO.class);
 	public List<Timetable> getDisabledTimetables() {
 		logger.info("Selecting All Enabled Timetables....");
 		return session().createQuery("from MonaleenTTV1 where enabled ='0'").list();
+	}
+
+	public Timetable getById(String id) {
+		Criteria crit = session().createCriteria(MonaleenTTV1.class);
+		crit.add(Restrictions.eq("id", Integer.valueOf(id)));
+		return (Timetable) crit.uniqueResult();
 	}
 	
 }

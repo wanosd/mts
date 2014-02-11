@@ -73,25 +73,43 @@ public class TimetableController {
 		}
 		timetableService.create(t);
 		List<Event> events = eventService.listEnabledEvents();
+		List<String> eventName = new ArrayList<String>();
+		for (int i = 0; i < events.size(); i++){
+			eventName.add(events.get(i).getName());
+		}
 		int count = t.getSlots();
-		model.addAttribute("events", events);
+		model.addAttribute("timetable", t);
+		model.addAttribute("events", eventName);
 		model.addAttribute("count", count);
 		return "fillTimetable";
 	}
 
 	@RequestMapping(value = "/finalizeTimetable", method = RequestMethod.POST)
 	public String finalTimetable(Model model, HttpServletRequest request,
-			@ModelAttribute("timetable2") MonaleenTTV1 t, BindingResult result) {
-		logger.info(t);
-		logger.info("Slots: " + t.getSlots());
+			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
+
 		Enumeration<String> test = request.getParameterNames();
 		while (test.hasMoreElements()){
 			String param = (String) test.nextElement();
 			System.out.println(param);
 		}
-		String test1 = request.getParameter("monday0");
-		System.out.println("TEST WORKING!!!!" + test1);
-		logger.info(test1);
+		
+		List<String> params = new ArrayList<String>();
+		String slots = request.getParameter("timetableID");
+		System.out.println("Slots: " + slots);
+	
+		for (int i = 0; i < t.getSlots(); i++){
+			params.add(request.getParameter("monday[" + String.valueOf(i) + "]"));
+		}
+		System.out.println("Monday: " + request.getParameter("monday[0]"));
+		System.out.println("Tuesday: " + request.getParameter("tuesday[" + String.valueOf(0) + "]"));
+		System.out.println("PARAMS SIZE " + params.size());
+		for (int j = 0; j < params.size(); j++){
+			System.out.println("PARAMS: " + params.get(j));
+		}
+		timetableService.update(t);
+	
+		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 		
 		return "timetable";
 	}

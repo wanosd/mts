@@ -40,5 +40,8 @@ public class TimetableService {
 		return timetableDAO.getDisabledTimetables();
 	}
 	
+	public Timetable getById(String id){
+		return timetableDAO.getById(id);
+	}
 
 }
