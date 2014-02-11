@@ -5,11 +5,9 @@
 <sf:form id="details" method="post"
 	action="${pageContext.request.contextPath}/finalizeTimetable"
 	commandName="timetable">
-		<input type="hidden" value="${timetable.id }" id="timetableID">
-	
+	<input name="id" type="hidden" value="${timetable.id }"/>
 		
 	<c:forEach begin="0" end="${count - 1}" varStatus="loop">
-		<input type="hidden" value="${count }" id="slots">
 		<sf:select path="monday[${loop.index}]" id="monday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select>

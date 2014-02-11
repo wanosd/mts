@@ -1,10 +1,8 @@
 package controllers;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,15 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import events.Event;
 import service.EventService;
 import service.TimetableService;
-import service.UserService;
 import timetable.MonaleenTTV1;
 import timetable.Timetable;
-import users.User;
+import events.Event;
 
 @Controller
 public class TimetableController {
@@ -93,20 +88,36 @@ public class TimetableController {
 			String param = (String) test.nextElement();
 			System.out.println(param);
 		}
+		t = (MonaleenTTV1) timetableService.getById(request.getParameter("id"));
 		
-		List<String> params = new ArrayList<String>();
+		
+		List<String> monday = new ArrayList<String>();
+		List<String> tuesday = new ArrayList<String>();
+		List<String> wednesday = new ArrayList<String>();
+		List<String> thursday = new ArrayList<String>();
+		List<String> friday = new ArrayList<String>();
+		List<String> saturday = new ArrayList<String>();
+		List<String> sunday = new ArrayList<String>();
 		String slots = request.getParameter("timetableID");
 		System.out.println("Slots: " + slots);
 	
 		for (int i = 0; i < t.getSlots(); i++){
-			params.add(request.getParameter("monday[" + String.valueOf(i) + "]"));
+			monday.add(request.getParameter("monday[" + String.valueOf(i) + "]"));
+			tuesday.add(request.getParameter("tuesday[" + String.valueOf(i) + "]"));
+			wednesday.add(request.getParameter("wednesday[" + String.valueOf(i) + "]"));
+			thursday.add(request.getParameter("thursday[" + String.valueOf(i) + "]"));
+			friday.add(request.getParameter("friday[" + String.valueOf(i) + "]"));
+			saturday.add(request.getParameter("saturday[" + String.valueOf(i) + "]"));
+			sunday.add(request.getParameter("sunday[" + String.valueOf(i) + "]"));
 		}
-		System.out.println("Monday: " + request.getParameter("monday[0]"));
-		System.out.println("Tuesday: " + request.getParameter("tuesday[" + String.valueOf(0) + "]"));
-		System.out.println("PARAMS SIZE " + params.size());
-		for (int j = 0; j < params.size(); j++){
-			System.out.println("PARAMS: " + params.get(j));
-		}
+
+		t.setMonday(monday);
+		t.setTuesday(tuesday);
+		t.setWednesday(wednesday);
+		t.setThursday(thursday);
+		t.setFriday(friday);
+		t.setSaturday(saturday);
+		t.setSunday(sunday);
 		timetableService.update(t);
 	
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
