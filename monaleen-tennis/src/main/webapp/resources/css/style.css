@@ -110,7 +110,7 @@ li {
 	background-color: #008500;
 }
 
-a:link,a:visited {
+a:link.home,a:visited.home {
 	display: block;
 	width: 120px;
 	font-weight: bold;
@@ -122,7 +122,7 @@ a:link,a:visited {
 	text-transform: uppercase;
 }
 
-a:hover,a:active {
+a:hover.home,a:active.home {
 	background-color: #7A991A;
 }
 

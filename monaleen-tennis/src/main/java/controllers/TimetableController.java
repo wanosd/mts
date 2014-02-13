@@ -127,8 +127,7 @@ public class TimetableController {
 	
 	@RequestMapping(value = "/gotoCourt", method=RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request){
-		
-		
+		model.addAttribute("court", timetableService.getById(request.getParameter("courtID")));
 		return "court";
 	}
 

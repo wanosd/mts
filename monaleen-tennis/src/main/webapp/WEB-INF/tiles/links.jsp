@@ -3,24 +3,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="links">
 	<ul class="linkslist">
-		<li><a href="${pageContext.request.contextPath}/">Home</a></li>
+		<li><a href="${pageContext.request.contextPath}/" class="home">Home</a></li>
 		<li><sec:authorize access="isAuthenticated()">
-				<a href="${pageContext.request.contextPath}/members">Members</a>
+				<a href="${pageContext.request.contextPath}/members" class="home">Members</a>
 			</sec:authorize></li>
 		<li><sec:authorize access="isAuthenticated()">
-				<a href="${pageContext.request.contextPath}/profile">Edit
+				<a href="${pageContext.request.contextPath}/profile" class="home">Edit
 					Details</a>
 			</sec:authorize></li>
 			<li><sec:authorize access="!isAuthenticated()">
-				<a href="${pageContext.request.contextPath}/register">Register</a>
+				<a href="${pageContext.request.contextPath}/register" class="home">Register</a>
 			</sec:authorize></li>
 			<li><sec:authorize access="!isAuthenticated()">
-				<a href="${pageContext.request.contextPath}/">Blank Page</a>
+				<a href="${pageContext.request.contextPath}/" class="home">Blank Page</a>
 			</sec:authorize></li>
-		<li><a href="">Membership</a></li>
-		<li><a href="${pageContext.request.contextPath}/tournaments">Tournaments</a></li>
-		<li><a href="${pageContext.request.contextPath}/news">News</a></li>
-		<li><a href="">Training</a></li>
-		<li><a href="">FAQ/Contact</a></li>
+		<li><a href="" class="home">Membership</a></li>
+		<li><a href="${pageContext.request.contextPath}/tournaments" class="home">Tournaments</a></li>
+		<li><a href="${pageContext.request.contextPath}/news" class="home">News</a></li>
+		<li><a href="" class="home">Training</a></li>
+		<li><a href="" class="home">FAQ/Contact</a></li>
 	</ul>
 </div>

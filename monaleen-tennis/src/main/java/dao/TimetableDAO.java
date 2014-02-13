@@ -40,6 +40,10 @@ private static Logger logger = Logger.getLogger(TournamentDAO.class);
 		session().saveOrUpdate(t);
 	}
 	
+	public void deleteTimetable(Timetable t){
+		session().delete(t);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Timetable> listTimetables(){
 			logger.info("Selecting All Timetables....");
