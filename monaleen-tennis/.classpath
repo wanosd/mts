@@ -30,5 +30,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/resources/css/images/spring-logo.jpg"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

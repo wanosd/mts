@@ -5,4 +5,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-This is the main home page from /tiles/index.jsp
+<img src="${pageContext.request.contextPath}/static/css/images/spring-logo.jpg">
+
+<img src="${pageContext.request.contextPath}/static/css/images/hibernate-logo.jpg">
+
+<img src="${pageContext.request.contextPath}/static/css/images/tomcat-logo.jpg">
+
+<img src="${pageContext.request.contextPath}/static/css/images/tiles-logo.png">
+

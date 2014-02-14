@@ -130,5 +130,11 @@ public class TimetableController {
 		model.addAttribute("court", timetableService.getById(request.getParameter("courtID")));
 		return "court";
 	}
+	
+	@RequestMapping("/deleteTimetable")
+	public String deleteTimetable(Model model){
+		model.addAttribute("timetable", timetableService.getAllTimetables());
+		return "deleteTimetable";
+	}
 
 }

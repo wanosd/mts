@@ -14,7 +14,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String showHome() {
-
+		//code to insert default user if nothing in database
 		final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info("Showing Home Page...." + currentUser);
 		return "index";
