@@ -43,5 +43,9 @@ public class TimetableService {
 	public Timetable getById(String id){
 		return timetableDAO.getById(id);
 	}
+	
+	public void delete(Timetable t){
+		timetableDAO.deleteTimetable(t);
+	}
 
 }

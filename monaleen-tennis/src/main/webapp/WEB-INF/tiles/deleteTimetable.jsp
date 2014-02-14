@@ -12,7 +12,7 @@
 
 	<c:forEach var="row" items="${timetable}">
 		<sf:form method="post"
-			action="${pageContext.request.contextPath}/confirmDelete"
+			action="${pageContext.request.contextPath}/confirmTTDelete"
 			commandName="timetable">
 			<tr>
 				<td><input type="hidden" value="${row.id}" name="timetableID" />${row.id}</td>

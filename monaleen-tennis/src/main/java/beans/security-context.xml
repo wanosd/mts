@@ -43,6 +43,7 @@
 	    <security:intercept-url pattern="/changeEventStatus" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/deleteTournament" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/confirmDelete" access="hasRole('ROLE_ADMIN')" />
+	       <security:intercept-url pattern="/confirmTTDelete" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/accessdenied" access="permitAll" />

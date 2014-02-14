@@ -188,6 +188,7 @@ public class TournamentController {
 				.getParameter("tournamentID"));
 		tournamentService.deleteTournament(t);
 		eventService.deleteEvent(eventService.getEventIdByName(t.getTournamentName()));
+		model.addAttribute("tour", tournamentService.getAllTournaments());
 		return "deleteTournament";
 	}
 

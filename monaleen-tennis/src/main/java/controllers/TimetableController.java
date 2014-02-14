@@ -136,5 +136,13 @@ public class TimetableController {
 		model.addAttribute("timetable", timetableService.getAllTimetables());
 		return "deleteTimetable";
 	}
+	
+	@RequestMapping("/confirmTTDelete")
+	public String confirmTTDelete(Model model, HttpServletRequest request){
+		Timetable t = timetableService.getById(request.getParameter("timetableID"));
+		timetableService.delete(t);
+		model.addAttribute("timetable", timetableService.getAllTimetables());
+		return "deleteTimetable";
+	}
 
 }
