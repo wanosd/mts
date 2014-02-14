@@ -7,13 +7,13 @@
 <li><a href="${pageContext.request.contextPath}/tournamentStatus" class="adminLink">Enable/Disable Tournament</a></li>
 <li><a href="${pageContext.request.contextPath}/deleteTournament" class="adminLink">Delete Tournament</a></li>
 <li><a href="${pageContext.request.contextPath}/createNews" class="adminLink">Add News Story</a></li>
+<li>Remove News Story</li>
 <li><a href="${pageContext.request.contextPath}/createTimetable" class="adminLink">Create Timetable</a></li>
 <li><a href="${pageContext.request.contextPath}/deleteTimetable" class="adminLink">Delete Timetable</a></li>
-<li>Remove New Story</li>
+<li><a href="${pageContext.request.contextPath}/timetableStatus" class="adminLink">Timetable Status</a></li>
 <li><a href="${pageContext.request.contextPath}/createEvent" class="adminLink">Create Event</a></li>
 <li><a href="${pageContext.request.contextPath}/viewEvents" class="adminLink">View and Enable Event</a></li>
 <li>Remove Event</li>
 <li>Change Default Timetable</li>
-<li>Add Event to Timetable</li>
 </ul>
 </div>

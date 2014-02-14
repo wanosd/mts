@@ -161,4 +161,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Delete Timetable"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/deleteTimetable.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="timetableStatus" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Timetable"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/timetableStatus.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

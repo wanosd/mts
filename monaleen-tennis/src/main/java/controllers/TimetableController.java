@@ -144,5 +144,29 @@ public class TimetableController {
 		model.addAttribute("timetable", timetableService.getAllTimetables());
 		return "deleteTimetable";
 	}
+	
+	@RequestMapping("/timetableStatus")
+	public String showTimetableStatus(Model model){
+		logger.info("Showing Timetable Status page....");
+		model.addAttribute("timetableEnabled", timetableService.getEnabledTimetables());
+		model.addAttribute("timetableDisabled", timetableService.getDisabledTimetables());
+		return "timetableStatus";
+	}
+	
+	@RequestMapping("/timetableStatusChange")
+	public String changeTTStatus(Model model, HttpServletRequest request){
+		Timetable t = timetableService.getById(request.getParameter("timetableID"));
+		if (t.isEnabled()){
+			t.setEnabled(false);
+			timetableService.update(t);
+			return showTimetableStatus(model);
+		}
+		else{
+			t.setEnabled(true);
+			timetableService.update(t);
+			return showTimetableStatus(model);
+		}
+		
+	}
 
 }
