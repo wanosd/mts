@@ -8,7 +8,7 @@
 				</tr>
 				<c:forEach var="row" items="${court.monday}">
 					<tr>
-						<td>${row}</td>
+						<td class="inner">${row}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -20,7 +20,7 @@
 				</tr>
 				<c:forEach var="row" items="${court.tuesday}">
 					<tr>
-						<td>${row}</td>
+						<td class="inner">${row}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -33,7 +33,7 @@
 				</tr>
 				<c:forEach var="row" items="${court.wednesday}">
 					<tr>
-						<td>${row}</td>
+						<td class="inner">${row}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -46,7 +46,7 @@
 				</tr>
 				<c:forEach var="row" items="${court.thursday}">
 					<tr>
-						<td>${row}</td>
+						<td class="inner">${row}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -58,7 +58,7 @@
 				</tr>
 				<c:forEach var="row" items="${court.friday}">
 					<tr>
-						<td>${row}</td>
+						<td class="inner">${row}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -70,7 +70,7 @@
 			</tr>
 			<c:forEach var="row" items="${court.saturday}">
 				<tr>
-					<td>${row}</td>
+					<td class="inner">${row}</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -82,7 +82,7 @@
 			</tr>
 			<c:forEach var="row" items="${court.sunday}">
 				<tr>
-					<td>${row}</td>
+					<td class="inner">${row}</td>
 				</tr>
 			</c:forEach>
 

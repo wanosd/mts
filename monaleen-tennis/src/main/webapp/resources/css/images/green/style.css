@@ -414,7 +414,7 @@ th,td
         padding: 5px 10px;
     }
 
-    td:hover
+    td:hover.inner
     {
         cursor: pointer;
         background: #666;
