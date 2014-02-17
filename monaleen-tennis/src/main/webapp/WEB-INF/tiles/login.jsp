@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <body onload='document.f.j_username.focus();'>
-	<h3>Login with Username and Password</h3>
+	<center><h3>Login with Username and Password</h3></center>
 	<c:if test="${param.error != null }">
 	<p class = "errorLogin">
 	Login Error
@@ -10,7 +10,7 @@
 	
 	<form name='f' action='${pageContext.request.contextPath}/j_spring_security_check'
 		method='POST'>
-		<table class="formtable">
+		<table class="formtable" align="center">
 			<tr>
 				<td>User:</td>
 				<td><input type='text' name='j_username' value=''></td>

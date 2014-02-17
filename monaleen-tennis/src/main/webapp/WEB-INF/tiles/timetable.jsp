@@ -2,9 +2,10 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 
-<table class = "members">
+<table class = "members" align="center">
 	<tr>
-		<td>Court Name</td>
+		<th>Court Name</th>
+		<th>Selection</th>
 	</tr>
 	
 	<c:forEach var="row" items="${timetable}">
