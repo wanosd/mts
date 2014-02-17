@@ -46,7 +46,7 @@
 		<li><a href="${pageContext.request.contextPath}/" class="home">home</a></li>
 		<li class="linkslist"><a
 			href="${pageContext.request.contextPath}/timetable" class="home">timetable</a></li>
-		<li class="linkslist"><a href="" class="home">membership</a></li>
+		<li class="linkslist"><a href="${pageContext.request.contextPath}/" class="home">membership</a></li>
 		<li class="linkslist"><a
 			href="${pageContext.request.contextPath}/tournaments" class="home">tournaments</a></li>
 		<li class="linkslist"><a
