@@ -62,6 +62,11 @@ public class UserService {
 		return getUserByUsername(email).getName();
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	public List<User> getAdmins(){
+		return usersDAO.getAdmins();
+	}
+	
 
 	
 

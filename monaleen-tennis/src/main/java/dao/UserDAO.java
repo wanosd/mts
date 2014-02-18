@@ -65,6 +65,12 @@ public class UserDAO {
 		logger.info("Selecting All Enabled Members....");
 		return session().createQuery("from User where enabled = '1'").list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> getAdmins() {
+		logger.info("Selecting All Admin Members....");
+		return session().createQuery("from User where authority = 'ROLE_ADMIN'").list();
+	}
 
 	/*
 	 * Method to get a list of all users in the database

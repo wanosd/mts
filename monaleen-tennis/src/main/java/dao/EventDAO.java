@@ -74,8 +74,14 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	public boolean exists(String e) {
 		Criteria crit = session().createCriteria(Event.class);
 		crit.add(Restrictions.eq("name", e)); 
-		Event event = (Event) crit.uniqueResult();
-		return event != null;
+		List<Event> events = crit.list();
+		logger.info("EVENT LIST SIZE IS: " + events.size());
+		if (events.size() >= 1){
+			return events != null;	
+		}
+		else
+			return events == null;
+		
 	}
 	
 	
