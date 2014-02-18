@@ -6,87 +6,151 @@
 				<tr>
 					<th>Monday</th>
 				</tr>
-				<c:forEach var="row" items="${court.monday}">
-					<tr>
-						<td class="inner">${row}</td>
-					</tr>
+
+				<c:forEach var="row" varStatus="loop" items="${court.monday}">
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner"><a href="${loop.index }">Book This Slot</a></td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</table>
 		</td>
 		<td>
-			<table >
+			<table>
 				<tr>
 					<th>Tuesday</th>
 				</tr>
 				<c:forEach var="row" items="${court.tuesday}">
-					<tr>
-						<td class="inner">${row}</td>
-					</tr>
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner">${loop.index}isBookable</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</table>
 		</td>
 
 		<td>
-			<table >
+			<table>
 				<tr>
 					<th>Wednesday</th>
 				</tr>
 				<c:forEach var="row" items="${court.wednesday}">
-					<tr>
-						<td class="inner">${row}</td>
-					</tr>
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner">${loop.index}isBookable</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</table>
 		</td>
 
 		<td>
-			<table >
+			<table>
 				<tr>
 					<th>Thursday</th>
 				</tr>
 				<c:forEach var="row" items="${court.thursday}">
-					<tr>
-						<td class="inner">${row}</td>
-					</tr>
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner">${loop.index}isBookable</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</table>
 		</td>
 		<td>
-			<table >
+			<table>
 				<tr>
 					<th>Friday</th>
 				</tr>
 				<c:forEach var="row" items="${court.friday}">
-					<tr>
-						<td class="inner">${row}</td>
-					</tr>
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner">${loop.index}isBookable</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</table>
 		</td>
-<td>
-		<table >
-			<tr>
-				<th>Saturday</th>
-			</tr>
-			<c:forEach var="row" items="${court.saturday}">
+		<td>
+			<table>
 				<tr>
-					<td class="inner">${row}</td>
+					<th>Saturday</th>
 				</tr>
-			</c:forEach>
-		</table>
-</td>
-<td>
-		<table >
-			<tr>
-				<th>Sunday</th>
-			</tr>
-			<c:forEach var="row" items="${court.sunday}">
+				<c:forEach var="row" items="${court.saturday}">
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner">${loop.index}isBookable</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</table>
+		</td>
+		<td>
+			<table>
 				<tr>
-					<td class="inner">${row}</td>
+					<th>Sunday</th>
 				</tr>
-			</c:forEach>
+				<c:forEach var="row" items="${court.sunday}">
+					<c:choose>
+						<c:when test='${row eq "Free Court"}'>
+							<tr>
+								<td class="inner">${loop.index}isBookable</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="inner">${row}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
 
-		</table>
-</td>
+			</table>
+		</td>
 	</tr>
 </table>
