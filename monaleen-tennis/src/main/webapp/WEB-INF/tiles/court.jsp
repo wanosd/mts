@@ -1,7 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+Test: ${name } Real Name: ${realname } Principal (PC):
+${pageContext['request'].userPrincipal.name}
+
+
 <table width="100%">
 	<tr>
-		<td>
+		<td class="nothing">
 			<table>
 				<tr>
 					<th>Monday</th>
@@ -23,14 +28,26 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 			</table>
 		</td>
-		<td>
+		<td class="nothing">
 			<table>
 				<tr>
 					<th>Tuesday</th>
@@ -51,7 +68,19 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -80,7 +109,19 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -109,7 +150,20 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
+
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -137,7 +191,19 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -165,7 +231,19 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -193,7 +271,19 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner">${row}<c:choose>
+										<c:when
+											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+											<form action="${pageContext.request.contextPath}/unbookCourt"
+												method="POST">
+												<input type="hidden" value="${loop.index}" name="position" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Unbook">
+											</form>
+										</c:when>
+									</c:choose>
+								</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>

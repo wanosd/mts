@@ -142,6 +142,10 @@ public class TimetableController {
 	public String chooseCourt(Model model, HttpServletRequest request) {
 		model.addAttribute("court",
 				timetableService.getById(request.getParameter("courtID")));
+		model.addAttribute("name", SecurityContextHolder.getContext()
+				.getAuthentication().getName());
+		model.addAttribute("realname",sortEmailtoName(SecurityContextHolder.getContext()
+						.getAuthentication().getName()));
 		return "court";
 	}
 	
