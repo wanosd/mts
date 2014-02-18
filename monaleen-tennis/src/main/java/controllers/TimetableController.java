@@ -144,6 +144,13 @@ public class TimetableController {
 				timetableService.getById(request.getParameter("courtID")));
 		return "court";
 	}
+	
+	@RequestMapping(value="/courtBooked")
+	public String courtBooked(Model model, String id){
+		model.addAttribute("court",
+				timetableService.getById(id));
+		return "court";
+	}
 
 	@RequestMapping("/deleteTimetable")
 	public String deleteTimetable(Model model) {
@@ -187,7 +194,7 @@ public class TimetableController {
 	}
 
 	@RequestMapping("/bookCourt")
-	public String bookCourt(HttpServletRequest request) {
+	public String bookCourt(Model model, HttpServletRequest request) {
 		logger.info("Parameter is " + request.getParameter("position"));
 		logger.info("Day is " + request.getParameter("day"));
 		logger.info("TTID is " + request.getParameter("ttid"));
@@ -211,7 +218,7 @@ public class TimetableController {
 					.getName());
 			e.setAuthor("BOOKING_SYSTEM");
 			eventService.createEvent(e);
-			return "timetable";
+			return courtBooked(model, request.getParameter("ttid"));
 		}
 	}
 
