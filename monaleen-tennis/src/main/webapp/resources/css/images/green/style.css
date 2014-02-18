@@ -424,4 +424,12 @@ th,td
 		
 	}
 
+form input[type="submit"]{
 
+    background: none;
+    border: none;
+    font-size:10px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,0 +1,1 @@
+Sorry, you have exceeded the amount of bookings allowed this week.

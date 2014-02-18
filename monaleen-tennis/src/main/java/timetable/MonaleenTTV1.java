@@ -69,6 +69,57 @@ public class MonaleenTTV1 implements Timetable {
 	@CollectionTable (name = "sunday", joinColumns=@JoinColumn(name="id"))
 	List<String> sunday;
 	
+	public List<String> getList(String day) {
+		if (day.equalsIgnoreCase("monday")){
+			return getMonday();
+		}
+		else if(day.equalsIgnoreCase("tuesday")){
+			return getTuesday();
+		}
+		else if(day.equalsIgnoreCase("wednesday")){
+			return getWednesday();
+		}
+		else if(day.equalsIgnoreCase("thursday")){
+			return getThursday();
+		}
+		else if(day.equalsIgnoreCase("friday")){
+			return getFriday();
+		}
+		else if(day.equalsIgnoreCase("saturday")){
+			return getSaturday();
+		}
+		else if(day.equalsIgnoreCase("sunday")){
+			return getSunday();
+		}
+		return null;
+	}
+	
+	public void setList(List<String> list, String day){
+		if (day.equalsIgnoreCase("monday")){
+			setMonday(list);
+		}
+		else if(day.equalsIgnoreCase("tuesday")){
+			setTuesday(list);
+		}
+		else if(day.equalsIgnoreCase("wednesday")){
+			setWednesday(list);
+		}
+		else if(day.equalsIgnoreCase("thursday")){
+			setThursday(list);
+		}
+		else if(day.equalsIgnoreCase("friday")){
+			setFriday(list);
+		}
+		else if(day.equalsIgnoreCase("saturday")){
+			setSaturday(list);
+		}
+		else if(day.equalsIgnoreCase("sunday")){
+			setSunday(list);
+		}
+		
+	}
+	
+	
 	
 	public MonaleenTTV1(){
 		this.monday = new ArrayList<String>();
@@ -189,6 +240,8 @@ public class MonaleenTTV1 implements Timetable {
 		return "MonaleenTTV1 [id=" + id + ", name=" + name + ", slots=" + slots
 				+ ", startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
+
+	
 	
 	
 	

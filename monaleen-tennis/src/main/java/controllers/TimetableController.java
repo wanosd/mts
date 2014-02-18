@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.EventService;
 import service.TimetableService;
+import service.UserService;
 import timetable.MonaleenTTV1;
 import timetable.Timetable;
 import events.Event;
@@ -28,6 +30,8 @@ public class TimetableController {
 	
 	private EventService eventService;
 	
+	private UserService userService;
+	
 	private static Logger logger = Logger.getLogger(TimetableController.class);
 
 	@Autowired
@@ -38,6 +42,11 @@ public class TimetableController {
 	@Autowired
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
+	}
+	
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	@RequestMapping("/timetable")
@@ -166,6 +175,40 @@ public class TimetableController {
 			timetableService.update(t);
 			return showTimetableStatus(model);
 		}
+		
+	}
+	
+	@RequestMapping("/bookCourt")
+	public String bookCourt(HttpServletRequest request){
+		logger.info("Parameter is " + request.getParameter("position"));
+		logger.info("Day is " + request.getParameter("day"));
+		logger.info("TTID is " + request.getParameter("ttid"));
+		if (eventService.exists(SecurityContextHolder.getContext().getAuthentication().getName())){
+			return "bookingExists";
+		}
+		else{
+	
+		Timetable t = timetableService.getById(request.getParameter("ttid"));
+		List<String> list = null;
+		list = t.getList(request.getParameter("day"));
+		replaceValue(list, request.getParameter("position"));
+		t.setList(list, request.getParameter("day"));
+		timetableService.update(t);
+		Event e = new Event();
+		e.setName(SecurityContextHolder.getContext().getAuthentication().getName());
+		e.setAuthor("BOOKING_SYSTEM");
+		eventService.createEvent(e);
+		return "timetable";		
+		}
+	}
+	
+	public String sortEmailtoName(String email) {
+		return userService.getUserByUsername(email).getName();
+	}
+	
+	public List<String> replaceValue(List<String> list, String position){
+		list.set(Integer.valueOf(position), sortEmailtoName(SecurityContextHolder.getContext().getAuthentication().getName()));
+		return list;
 		
 	}
 

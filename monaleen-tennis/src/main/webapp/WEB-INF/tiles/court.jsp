@@ -11,7 +11,13 @@
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner"><a href="${loop.index }">Book This Slot</a></td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="monday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -28,11 +34,17 @@
 				<tr>
 					<th>Tuesday</th>
 				</tr>
-				<c:forEach var="row" items="${court.tuesday}">
+				<c:forEach var="row" varStatus="loop" items="${court.tuesday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner">${loop.index}isBookable</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="tuesday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -50,11 +62,17 @@
 				<tr>
 					<th>Wednesday</th>
 				</tr>
-				<c:forEach var="row" items="${court.wednesday}">
+				<c:forEach var="row" varStatus="loop" items="${court.wednesday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner">${loop.index}isBookable</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="wednesday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -72,11 +90,17 @@
 				<tr>
 					<th>Thursday</th>
 				</tr>
-				<c:forEach var="row" items="${court.thursday}">
+				<c:forEach var="row" varStatus="loop" items="${court.thursday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner">${loop.index}isBookable</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="thursday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -93,11 +117,17 @@
 				<tr>
 					<th>Friday</th>
 				</tr>
-				<c:forEach var="row" items="${court.friday}">
+				<c:forEach var="row" varStatus="loop" items="${court.friday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner">${loop.index}isBookable</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="friday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -114,16 +144,28 @@
 				<tr>
 					<th>Saturday</th>
 				</tr>
-				<c:forEach var="row" items="${court.saturday}">
+				<c:forEach var="row" varStatus="loop" items="${court.saturday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner">${loop.index}isBookable</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="saturday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="sunday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -135,11 +177,17 @@
 				<tr>
 					<th>Sunday</th>
 				</tr>
-				<c:forEach var="row" items="${court.sunday}">
+				<c:forEach var="row" varStatus="loop" items="${court.sunday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr>
-								<td class="inner">${loop.index}isBookable</td>
+								<td class="inner"><form action="${pageContext.request.contextPath}/bookCourt" method="POST">
+										<input type="hidden" value="${loop.index}" name="position" />
+										<input type="hidden" value="monday" name="day" />
+										<input type="hidden" value="${court.id }" name="ttid" />
+										<input type="submit" value="Book">
+									</form>
+									</td>
 							</tr>
 						</c:when>
 						<c:otherwise>

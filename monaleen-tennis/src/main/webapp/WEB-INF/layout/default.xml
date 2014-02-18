@@ -166,4 +166,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Timetable"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/timetableStatus.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="bookingExists" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Booking Exists"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/bookingExists.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

@@ -59,6 +59,8 @@
 		<security:intercept-url pattern="/createNews" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/members" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/checkRegistered" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/bookCourt" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/bookingExists" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/editdetails" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/tournamentRegister" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/tournamentUnregister" access="isAuthenticated()" />
