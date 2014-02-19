@@ -31,6 +31,11 @@ public class MembersController {
 		model.addAttribute("users", userList);
 		return "members";
 	}
+	
+	@RequestMapping("/membership")
+	public String showMembership(){
+		return "membership";
+	}
 
 	@RequestMapping("/registerSuccess")
 	public String showRegSuccess() {

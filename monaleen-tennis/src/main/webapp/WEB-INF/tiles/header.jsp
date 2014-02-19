@@ -46,7 +46,7 @@
 		<li><a href="${pageContext.request.contextPath}/" class="home">home</a></li>
 		<li class="linkslist"><a
 			href="${pageContext.request.contextPath}/timetable" class="home">timetable</a></li>
-		<li class="linkslist"><a href="${pageContext.request.contextPath}/" class="home">membership</a></li>
+		<li class="linkslist"><a href="${pageContext.request.contextPath}/membership" class="home">membership</a></li>
 		<li class="linkslist"><a
 			href="${pageContext.request.contextPath}/tournaments" class="home">tournaments</a></li>
 		<li class="linkslist"><a
@@ -65,7 +65,15 @@
 	</div>
 	<div class="text_content">
 		<h1>Final Year Project - Chris O'Brien</h1>
-		<p class="green">Stuff to go here</p>
+		<p class="green">The goal of this Final Year Project is to develop a Web Application with a clearly defined stack in order to better support non functional requirements. For the scope
+		of this project, the NFRs being looked at are:
+		<ul>
+		<li>Security</li>
+		<li>Productivity</li>
+		<li>Extensibility</li>
+		<li>Maintainability</li>
+		<li>Usability</li>
+		</ul></p>
 		<div class="read_more">
 			<a href="#">read more</a>
 		</div>

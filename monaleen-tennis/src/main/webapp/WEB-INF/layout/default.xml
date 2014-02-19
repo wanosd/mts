@@ -27,6 +27,11 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/admin.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="membership" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Membership"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/membership.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="login" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Login"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/login.jsp"></put-attribute>
