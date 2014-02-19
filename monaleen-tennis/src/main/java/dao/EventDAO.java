@@ -51,9 +51,6 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 		session().saveOrUpdate(e);
 	}
 	
-	public void deleteEvent(int id){
-		
-	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Event> getEnabledEvents(){
@@ -81,9 +78,16 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 		}
 		else
 			return events == null;
-		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void deleteUserEntries(){
+		List<I_Event> events = session().createQuery("from Event where enabled ='0'").list();
+		for (int i = 0; i < events.size(); i++){
+			deleteEvent(events.get(i));
+		}
+		
+	}
 	
 
 }

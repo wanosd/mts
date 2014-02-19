@@ -145,19 +145,18 @@ public class TimetableController {
 				timetableService.getById(request.getParameter("courtID")));
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
-		model.addAttribute("realname",sortEmailtoName(SecurityContextHolder.getContext()
-						.getAuthentication().getName()));
+		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
+				.getContext().getAuthentication().getName()));
 		return "court";
 	}
-	
-	@RequestMapping(value="/courtBooked")
-	public String courtBooked(Model model, String id){
-		model.addAttribute("court",
-				timetableService.getById(id));
+
+	@RequestMapping(value = "/courtBooked")
+	public String courtBooked(Model model, String id) {
+		model.addAttribute("court", timetableService.getById(id));
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
-		model.addAttribute("realname",sortEmailtoName(SecurityContextHolder.getContext()
-						.getAuthentication().getName()));
+		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
+				.getContext().getAuthentication().getName()));
 		return "court";
 	}
 
@@ -230,14 +229,13 @@ public class TimetableController {
 			return courtBooked(model, request.getParameter("ttid"));
 		}
 	}
-	
+
 	@RequestMapping("/unbookCourt")
-	public String unbookCourt(Model model, HttpServletRequest request){
+	public String unbookCourt(Model model, HttpServletRequest request) {
 		logger.info("Parameter is " + request.getParameter("position"));
 		logger.info("Day is " + request.getParameter("day"));
 		logger.info("TTID is " + request.getParameter("ttid"));
-		Timetable t = timetableService
-				.getById(request.getParameter("ttid"));
+		Timetable t = timetableService.getById(request.getParameter("ttid"));
 		List<String> list = null;
 		list = t.getList(request.getParameter("day"));
 		replaceValue(list, request.getParameter("position"), false);
@@ -250,21 +248,45 @@ public class TimetableController {
 		timetableService.update(t);
 		logger.info("UNBOOK SHOULD HAVE WORKED!");
 		return courtBooked(model, request.getParameter("ttid"));
-		
+	}
+
+	@RequestMapping("/resetTimetable")
+	public String resetTimetable(Model model, HttpServletRequest request) {
+		Timetable t = timetableService.getById(request.getParameter("courtID"));
+		String[] days = { "monday", "tuesday", "wednesday", "thursday",
+				"friday", "saturday", "sunday" };
+		List<String> list = null;
+		for (int i = 0; i < days.length; i++) {
+			list = t.getList(days[i]);
+			for (int j = 0; j < list.size(); j++) {
+				list.set(j, "Free Court");
+			}
+			t.setList(list, days[i]);
+		}
+		eventService.deleteUserEvents(); // add variable to specify court
+		return "admin";
+	}
+
+	@RequestMapping("/reset")
+	public String reset(Model model) {
+		logger.info("Showing Timetable page....");
+		List<Timetable> timetable = timetableService.getEnabledTimetables();
+		model.addAttribute("timetable", timetable);
+		return "resetTimetable";
 	}
 
 	public String sortEmailtoName(String email) {
 		return userService.getUserByUsername(email).getName();
 	}
 
-	public List<String> replaceValue(List<String> list, String position, boolean book) {
-		if (book){
+	public List<String> replaceValue(List<String> list, String position,
+			boolean book) {
+		if (book) {
 			list.set(Integer.valueOf(position),
-				sortEmailtoName(SecurityContextHolder.getContext()
-						.getAuthentication().getName()));
+					sortEmailtoName(SecurityContextHolder.getContext()
+							.getAuthentication().getName()));
 			return list;
-		}
-		else{
+		} else {
 			list.set(Integer.valueOf(position), "Free Court");
 			return list;
 		}
