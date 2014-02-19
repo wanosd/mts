@@ -50,8 +50,8 @@ public class EventService {
 		return eventDAO.exists(e);
 	}
 	
-	public void deleteUserEvents(){
-		eventDAO.deleteUserEntries();
+	public void deleteUserEvents(String id){
+		eventDAO.deleteUserEntries(id);
 	}
 	
 	

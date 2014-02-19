@@ -81,8 +81,8 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void deleteUserEntries(){
-		List<I_Event> events = session().createQuery("from Event where enabled ='0'").list();
+	public void deleteUserEntries(String id){
+		List<I_Event> events = session().createQuery("from Event where courtid = '" + Integer.valueOf(id) + "'").list();
 		for (int i = 0; i < events.size(); i++){
 			deleteEvent(events.get(i));
 		}

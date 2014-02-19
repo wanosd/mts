@@ -225,6 +225,7 @@ public class TimetableController {
 			e.setName(SecurityContextHolder.getContext().getAuthentication()
 					.getName());
 			e.setAuthor("BOOKING_SYSTEM");
+			e.setCourtid(Integer.valueOf(request.getParameter("ttid")));
 			eventService.createEvent(e);
 			return courtBooked(model, request.getParameter("ttid"));
 		}
@@ -263,7 +264,7 @@ public class TimetableController {
 			}
 			t.setList(list, days[i]);
 		}
-		eventService.deleteUserEvents(); // add variable to specify court
+		eventService.deleteUserEvents(request.getParameter("courtID")); // add variable to specify court
 		return "admin";
 	}
 

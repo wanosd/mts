@@ -25,6 +25,8 @@ public class Event implements I_Event {
 	
 	private boolean enabled;
 	
+	private int courtid;
+	
 	public Event(){
 		
 	}
@@ -61,7 +63,12 @@ public class Event implements I_Event {
 		this.enabled = enabled;
 	}
 
-	
-	
+	public int getCourtid() {
+		return courtid;
+	}
+
+	public void setCourtid(int courtid) {
+		this.courtid = courtid;
+	}
 	
 }
