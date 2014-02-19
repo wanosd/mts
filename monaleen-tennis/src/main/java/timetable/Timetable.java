@@ -32,5 +32,7 @@ public interface Timetable {
 	public List<String> getList(String day);
 	
 	public void setList(List<String> list, String day);
+	
+	public int getSlots();
 
 }

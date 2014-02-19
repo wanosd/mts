@@ -12,7 +12,7 @@
 <li><a href="${pageContext.request.contextPath}/deleteTimetable" class="adminLink">Delete Timetable</a></li>
 <li><a href="${pageContext.request.contextPath}/timetableStatus" class="adminLink">Timetable Status</a></li>
 <li><a href="${pageContext.request.contextPath}/reset" class="adminLink">Reset Timetable - Removes ALL bookings</a></li>
-<li><a href="${pageContext.request.contextPath}/timetableStatus" class="adminLink">Edit Timetable</a></li>
+<li><a href="${pageContext.request.contextPath}/chooseEdit" class="adminLink">Edit Timetable</a></li>
 <li><a href="${pageContext.request.contextPath}/createEvent" class="adminLink">Create Event</a></li>
 <li><a href="${pageContext.request.contextPath}/viewEvents" class="adminLink">View and Enable Event</a></li>
 <li>Remove Event</li>

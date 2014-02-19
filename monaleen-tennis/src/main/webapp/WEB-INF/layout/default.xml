@@ -181,4 +181,14 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - "></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/resetAllTimetable.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="chooseEdit" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Choose Court to Edit"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/chooseEdit.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="confirmEdit" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Confirm Timetable"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/confirmEdit.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

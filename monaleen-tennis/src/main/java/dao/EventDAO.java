@@ -89,5 +89,10 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Event> getAllEvents() {
+		return session().createQuery("from Event where enabled ='1' OR author='BOOKING_SYSTEM'").list();
+	}
+	
 
 }

@@ -3,7 +3,7 @@
 <h1>This is empty right now. Just checking if JSTL Works</h1>
 
 <sf:form id="details" method="post"
-	action="${pageContext.request.contextPath}/finalizeTimetable"
+	action="${pageContext.request.contextPath}/finalizeEditTT"
 	commandName="timetable">
 	<input name="id" type="hidden" value="${timetable.id }"/>	
 	<c:forEach begin="0" end="${count - 1}" varStatus="loop">

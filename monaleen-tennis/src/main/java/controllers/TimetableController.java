@@ -24,6 +24,7 @@ import timetable.MonaleenTTV1;
 import timetable.Timetable;
 import users.User;
 import events.Event;
+import events.I_Event;
 
 @Controller
 public class TimetableController {
@@ -94,11 +95,6 @@ public class TimetableController {
 	public String finalTimetable(Model model, HttpServletRequest request,
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
 
-		Enumeration<String> test = request.getParameterNames();
-		while (test.hasMoreElements()) {
-			String param = (String) test.nextElement();
-			System.out.println(param);
-		}
 		t = (MonaleenTTV1) timetableService.getById(request.getParameter("id"));
 
 		List<String> monday = new ArrayList<String>();
@@ -108,9 +104,6 @@ public class TimetableController {
 		List<String> friday = new ArrayList<String>();
 		List<String> saturday = new ArrayList<String>();
 		List<String> sunday = new ArrayList<String>();
-		String slots = request.getParameter("timetableID");
-		System.out.println("Slots: " + slots);
-
 		for (int i = 0; i < t.getSlots(); i++) {
 			monday.add(request.getParameter("monday[" + String.valueOf(i) + "]"));
 			tuesday.add(request.getParameter("tuesday[" + String.valueOf(i)
@@ -136,7 +129,7 @@ public class TimetableController {
 
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 
-		return "timetable";
+		return showTimetableStatus(model);
 	}
 
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
@@ -264,16 +257,92 @@ public class TimetableController {
 			}
 			t.setList(list, days[i]);
 		}
-		eventService.deleteUserEvents(request.getParameter("courtID")); // add variable to specify court
+		eventService.deleteUserEvents(request.getParameter("courtID"));
 		return "admin";
 	}
 
 	@RequestMapping("/reset")
 	public String reset(Model model) {
-		logger.info("Showing Timetable page....");
+		logger.info("Showing Timetable Reset page....");
 		List<Timetable> timetable = timetableService.getEnabledTimetables();
 		model.addAttribute("timetable", timetable);
 		return "resetTimetable";
+	}
+
+	@RequestMapping("/chooseEdit")
+	public String edit(Model model) {
+		logger.info("Showing Timetable Edit page....");
+		List<Timetable> timetable = timetableService.getEnabledTimetables();
+		model.addAttribute("timetable", timetable);
+		return "chooseEdit";
+	}
+
+	@RequestMapping("/editTimetable")
+	public String editTimetable(Model model, HttpServletRequest request) {
+
+		List<Event> events = eventService.listAllEvents();
+		List<String> eventName = new ArrayList<String>();
+		for (int i = 0; i < events.size(); i++) {
+			if (events.get(i).getName().contains("@")) {
+				for (int k = 0; k < eventName.size(); k++){
+					if (!eventName.contains(sortEmailtoName(events.get(i).getName()))){
+						eventName.add(sortEmailtoName(events.get(i).getName()));
+					}
+				}
+				
+			} else {
+				eventName.add(events.get(i).getName());
+			}
+		}
+		Timetable t = timetableService.getById(request.getParameter("courtID"));
+		int count = t.getSlots();
+
+		model.addAttribute("timetable", t);
+		model.addAttribute("events", eventName);
+		model.addAttribute("count", count);
+		return "confirmEdit";
+	}
+
+	@RequestMapping("/finalizeEditTT")
+	public String finalizeEdit(Model model, HttpServletRequest request,
+			@ModelAttribute("timetable") MonaleenTTV1 t) {
+
+		t = (MonaleenTTV1) timetableService.getById(request.getParameter("id"));
+
+		List<String> monday = new ArrayList<String>();
+		List<String> tuesday = new ArrayList<String>();
+		List<String> wednesday = new ArrayList<String>();
+		List<String> thursday = new ArrayList<String>();
+		List<String> friday = new ArrayList<String>();
+		List<String> saturday = new ArrayList<String>();
+		List<String> sunday = new ArrayList<String>();
+		for (int i = 0; i < t.getSlots(); i++) {
+			monday.add(request.getParameter("monday[" + String.valueOf(i) + "]"));
+			tuesday.add(request.getParameter("tuesday[" + String.valueOf(i)
+					+ "]"));
+			wednesday.add(request.getParameter("wednesday[" + String.valueOf(i)
+					+ "]"));
+			thursday.add(request.getParameter("thursday[" + String.valueOf(i)
+					+ "]"));
+			friday.add(request.getParameter("friday[" + String.valueOf(i) + "]"));
+			saturday.add(request.getParameter("saturday[" + String.valueOf(i)
+					+ "]"));
+			sunday.add(request.getParameter("sunday[" + String.valueOf(i) + "]"));
+		}
+
+		t.setMonday(monday);
+		t.setTuesday(tuesday);
+		t.setWednesday(wednesday);
+		t.setThursday(thursday);
+		t.setFriday(friday);
+		t.setSaturday(saturday);
+		t.setSunday(sunday);
+		timetableService.update(t);
+
+		model.addAttribute("timetable", timetableService.getEnabledTimetables());
+
+		return showTimetable(model);
+
 	}
 
 	public String sortEmailtoName(String email) {
