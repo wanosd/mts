@@ -1,9 +1,12 @@
 package controllers;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -166,6 +169,17 @@ public class MembersController {
 				return "error";
 			}
 		}
+	}
+	
+	@RequestMapping("/createGrade")
+	public String createGrade(){
+		return "createGrade";
+	}
+	
+	@RequestMapping("/saveGrade")
+	public String saveGrade(Model model, HttpServletRequest request){
+		userService.createGrade(request.getParameter("grade"));
+		return "grades";
 	}
 	
 	public List<User> removeLoggedIn(List<User> users){

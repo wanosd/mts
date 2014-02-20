@@ -135,6 +135,8 @@ public class TournamentController {
 				.getParameter("tournamentID"));
 		if (t.isTournamentStarted()) {
 			t.setTournamentStarted(false);
+			List<String> registered = t.getUsername();
+			assignTeams(registered);
 			tournamentService.updateTournament(t);
 			return showTournamentStatus(model);
 		} else {
@@ -142,6 +144,11 @@ public class TournamentController {
 			tournamentService.updateTournament(t);
 			return showTournamentStatus(model);
 		}
+	}
+
+	private void assignTeams(List<String> registered) {
+		
+		
 	}
 
 	@RequestMapping("/tournamentRegister")

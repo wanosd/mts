@@ -67,6 +67,11 @@ public class UserService {
 		return usersDAO.getAdmins();
 	}
 	
+	@Secured("ROLE_ADMIN")
+	public void createGrade(String name){
+		usersDAO.createGrade(name);
+	}
+	
 
 	
 

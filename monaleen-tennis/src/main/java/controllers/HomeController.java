@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	
 	private static Logger logger = Logger.getLogger(HomeController.class); 
-
+	
+	
 	@RequestMapping("/")
 	public String showHome() {
-		//code to insert default user if nothing in database
 		final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info("Showing Home Page...." + currentUser);
 		return "index";
 	}
+	
 }

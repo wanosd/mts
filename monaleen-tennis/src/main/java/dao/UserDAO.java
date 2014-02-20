@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import users.Grade;
 import users.User;
 
 @Repository
@@ -35,7 +36,7 @@ public class UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public Session session(){
+	public Session session(){ 
 		logger.info("Session Factory returning current session.....");
 		return sessionFactory.getCurrentSession();
 	}
@@ -79,6 +80,15 @@ public class UserDAO {
 	public List<User> getAllUsers() {
 		logger.info("Selecting All Members....(Hibernate)");
 		return session().createQuery("from User").list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getUserGrades(){
+		return session().createQuery("from Grade").list();
+	}
+	
+	public void createGrade(String name){
+		session().save(new Grade(name));
 	}
 
 	/*
