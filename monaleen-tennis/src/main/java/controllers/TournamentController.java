@@ -135,20 +135,51 @@ public class TournamentController {
 				.getParameter("tournamentID"));
 		if (t.isTournamentStarted()) {
 			t.setTournamentStarted(false);
-			List<String> registered = t.getUsername();
-			assignTeams(registered);
 			tournamentService.updateTournament(t);
 			return showTournamentStatus(model);
 		} else {
 			t.setTournamentStarted(true);
 			tournamentService.updateTournament(t);
+			List<String> registered = t.getUsername();
+			logger.info("REGISTERED FOR TOURNAMENT: " + registered);
+			assignTeams(registered);
 			return showTournamentStatus(model);
 		}
 	}
 
 	private void assignTeams(List<String> registered) {
+		List<String> graded = new ArrayList<String>();
+		List<String> intermediate = new ArrayList<String>();
+		List<String> begin = new ArrayList<String>();
+		for (int i = 0; i < registered.size(); i++){
+			if (checkGrade(registered.get(i)).equalsIgnoreCase("beginner")){
+				begin.add(registered.get(i));
+			}
+			else if (checkGrade(registered.get(i)).equalsIgnoreCase("graded")){
+				graded.add(registered.get(i));
+			}
+			else if (checkGrade(registered.get(i)).equalsIgnoreCase("intermediate")){
+				intermediate.add(registered.get(i));
+			}
+		}
 		
-		
+		logger.info("BEGIN: " + begin);
+
+		logger.info("INTER: "+ intermediate);
+
+		logger.info("GRADED: " + graded);
+	}
+	
+	private String checkGrade(String name){
+		List<User> users = userService.getCurrentMembers();
+		logger.info("USERS SIZE: " + users.size());
+		for (int i = 0; i < users.size(); i++){
+			if (users.get(i).getUsername().equals(name)){
+				logger.info("USER GRADE COMPARE: " + users.get(i).getGrade());
+				return users.get(i).getGrade();
+			}
+		}
+		return "no grade";
 	}
 
 	@RequestMapping("/tournamentRegister")
@@ -217,7 +248,6 @@ public class TournamentController {
 	}
 	
 	@RequestMapping("changeRegistration")
-
 	private boolean checkRegistered(Tournament t) {
 		List<String> users = t.getUsername();
 		String name = SecurityContextHolder.getContext().getAuthentication()
