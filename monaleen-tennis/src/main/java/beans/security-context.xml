@@ -5,9 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-	<security:authentication-manager>
-		
+	<security:authentication-manager>	
 		<security:authentication-provider>
 			<security:jdbc-user-service data-source-ref="dataSource"
 				id="jdbcUserService" authorities-by-username-query="select username, authority from users where binary username = ?" />
@@ -17,9 +15,9 @@
 
 	<security:http use-expressions="true">
 		<security:intercept-url pattern="/static/**" access="permitAll" />
-				<security:intercept-url pattern="/images/**" access="permitAll" />
+		<security:intercept-url pattern="/images/**" access="permitAll" />
 		<security:intercept-url pattern="/createmembers" access="permitAll" />
-			<security:intercept-url pattern="/membership" access="permitAll" />
+		<security:intercept-url pattern="/membership" access="permitAll" />
 		<security:intercept-url pattern="/tournaments" access="permitAll" />
 		<security:intercept-url pattern="/timetable" access="permitAll" />
 		<security:intercept-url pattern="/news" access="permitAll" />

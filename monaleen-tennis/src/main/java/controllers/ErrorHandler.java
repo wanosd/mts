@@ -19,4 +19,9 @@ public class ErrorHandler {
 		System.out.println(e.getCause() + " @@@@ " + e.getClass());
 		return "error";
 	}
+	
+	@ExceptionHandler(Exception.class)
+	public String handleOtherException(Exception e){
+		return "error";
+	}
 }
