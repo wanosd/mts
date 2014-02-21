@@ -105,8 +105,7 @@ public class MembersController {
 	private boolean sendMessage(File file) {
 		MimeMessage message = mailSender.createMimeMessage();
 		logger.info("MIME Message created");
-		try {
-			
+		try {	
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			logger.info("MIME Helper Okay");
 			helper.setFrom("admin@monaleentennisclub.ie");
