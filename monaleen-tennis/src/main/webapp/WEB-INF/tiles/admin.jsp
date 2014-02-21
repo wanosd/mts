@@ -45,7 +45,8 @@
 	</tr>
 	<%--Row 4 --%>
 	<tr>
-		<td>View All Member Details</td>
+		<td><a href="${pageContext.request.contextPath}/viewAllMembers"
+			class="adminLink">View All Member Details</a></td>
 		<td>Tournament Results/Groups or something, perhaps?</td>
 		<td></td>
 		<td><a href="${pageContext.request.contextPath}/timetableStatus"

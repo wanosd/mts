@@ -39,6 +39,17 @@ public class MembersController {
 	public String showMembership(){
 		return "membership";
 	}
+	
+	@RequestMapping("/viewAllMembers")
+	public String viewAllMembers(Model model){
+		List<User> userList = userService.getCurrentMembers();
+		List<User> nonuserList = userService.getPendingMembers();
+		List<User> admins = userService.getAdmins();
+		model.addAttribute("users", userList);
+		model.addAttribute("nonusers", nonuserList);
+		model.addAttribute("admin", admins);
+		return "viewAllMembers";
+	}
 
 	@RequestMapping("/registerSuccess")
 	public String showRegSuccess() {

@@ -191,4 +191,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Confirm Timetable"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/confirmEdit.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="viewAllMembers" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - View All Members"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/viewAllMembers.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
