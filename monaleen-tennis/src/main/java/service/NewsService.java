@@ -26,4 +26,12 @@ public class NewsService {
 	public List<News> getAllNews(){
 		return newsDAO.getNews();
 	}
+	
+	public void deleteNews(News n){
+		newsDAO.deleteNewsStory(n);
+	}
+	
+	public News getNewsStory(String id){
+		return newsDAO.getNewsStory(id);
+	}
 }

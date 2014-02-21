@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import news.News;
 
 import org.apache.log4j.Logger;
@@ -56,6 +58,18 @@ public class NewsController {
 		logger.info("Showing Create News Page....");
 		model.addAttribute("news", new News());
 		return "createNews";
+	}
+	
+	@RequestMapping("/deleteNews")
+	public String deleteNews(Model model){
+		model.addAttribute("news", newsService.getAllNews());
+		return "deleteNews";
+	}
+	
+	@RequestMapping("/confirmNewsDelete")
+	public String confirmNewsDelete(Model model, HttpServletRequest request){
+		newsService.deleteNews(newsService.getNewsStory(request.getParameter("newsID")));
+		return deleteNews(model);
 	}
 	
 	@RequestMapping(value = "/saveNewsStory", method = RequestMethod.POST)

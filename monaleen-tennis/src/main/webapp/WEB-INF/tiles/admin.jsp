@@ -27,7 +27,8 @@
 			class="adminLink">Block Member</a></td>
 		<td><a href="${pageContext.request.contextPath}/tournamentStatus"
 			class="adminLink">Enable/Disable Tournament</a></td>
-		<td>Delete New Story - TO DO!!</td>
+		<td><a href="${pageContext.request.contextPath}/deleteNews"
+			class="adminLink">Delete News Story</a></td>
 		<td><a href="${pageContext.request.contextPath}/deleteTimetable"
 			class="adminLink">Delete Timetable</a></td>
 		<td><a href="${pageContext.request.contextPath}/viewEvents"
@@ -38,7 +39,7 @@
 		<td>Edit Member Details - TO DO!</td>
 		<td><a href="${pageContext.request.contextPath}/deleteTournament"
 			class="adminLink">Delete Tournament</a></td>
-		<td></td>
+		<td>Edit News Story - TO DO!</td>
 		<td><a href="${pageContext.request.contextPath}/reset"
 			class="adminLink">Reset Timetable - Removes ALL bookings</a></td>
 		<td>Remove Event - TO DO!</td>

@@ -196,4 +196,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - View All Members"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/viewAllMembers.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="deleteNews" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Delete News"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/deleteNews.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

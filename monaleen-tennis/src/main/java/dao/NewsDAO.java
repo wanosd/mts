@@ -5,8 +5,10 @@ import java.util.List;
 import news.News;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,16 @@ public class NewsDAO {
 	
 	public void createNewsStory(News n){
 		session().save(n);
+	}
+	
+	public void deleteNewsStory(News n){
+		session().delete(n);;
+	}
+	
+	public News getNewsStory(String id){
+		Criteria crit = session().createCriteria(News.class);
+		crit.add(Restrictions.eq("id", Integer.valueOf(id)));
+		return (News) crit.uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")
