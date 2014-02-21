@@ -4,6 +4,7 @@
 	<hr>
 	<h2>Current Members</h2>
 	<a href="${pageContext.request.contextPath }/blockMembers">Suspend Members</a>
+	<a href="${pageContext.request.contextPath }/emailMembersToAddress">Email List</a>
 	<table class="members">
 	<tr><th>Name</th><th>Address Line 1</th><th>Address Line 2</th><th>Address Town</th><th>Address County</th><th>Grade</th><th>Email</th><th>Member Type</th><th>Contact Number</th><th>Emergency Contact</th><th>Emergency Contact Num</th></tr>
 	

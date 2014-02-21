@@ -4,9 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import logs.EmailLog;
+import logs.Log;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.mail.MailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import reports.CSVCreator;
+import service.LogService;
 import service.UserService;
 import users.FormValidationGroup;
 import users.User;
@@ -25,7 +31,13 @@ import users.User;
 public class MembersController {
 
 	private UserService userService;
+	private LogService logService;
 	private static Logger logger = Logger.getLogger(MembersController.class);
+	
+	@Autowired
+	private MailSender mailSender;
+	
+
 
 	@RequestMapping("/members")
 	public String showMembers(Model model) {
@@ -38,6 +50,39 @@ public class MembersController {
 	@RequestMapping("/membership")
 	public String showMembership(){
 		return "membership";
+	}
+	
+	@RequestMapping("/emailMembersToAddress")
+	public String emailMembers(Model model){
+		List<User> users = userService.getCurrentMembers();
+		logger.info("Entering CreateCSVToEmail");
+		Log log = new Log();
+		log.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		logger.info("Set Username on Log");
+		log.setInformationType("ListExistingUsers");
+		logger.info("Set Date Format");
+		logger.info("Create Date Object");
+		log.setAccessed("today");
+		logger.info("Saved Data Object to String in Log");
+		if (logService == null) {
+			logger.info("Log Service is Null");
+		}
+		logService.createLog(log);
+		logger.info("Log Service created Log");
+		CSVCreator create = new CSVCreator(users, SecurityContextHolder.getContext()
+				.getAuthentication().getName());
+		if (create.createCSVToEmail(users, SecurityContextHolder.getContext()
+				.getAuthentication().getName())){
+			//log stuff
+			//mail sender stuff
+			model.addAttribute("message", "Email successfull sent to : " + SecurityContextHolder.getContext().getAuthentication().getName());
+		}
+		else{
+			//log failed attempt
+			model.addAttribute("message", "Message Failed. Try Again Later.");
+		}
+		
+		return "emailSent";
 	}
 	
 	@RequestMapping("/viewAllMembers")
@@ -215,4 +260,12 @@ public class MembersController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	@Autowired
+	public void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+
+	
+	
 }
