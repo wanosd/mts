@@ -21,39 +21,29 @@ import service.LogService;
 import users.User;
 
 public class CSVCreator {
-
-	private LogService logService;
 	
 	@Autowired
 	private MailSender mailSender;
 
 	private static Logger logger = Logger.getLogger(CSVCreator.class);
 
-	@Autowired
-	public void setLogService(LogService logService) {
-		this.logService = logService;
-	}
-
-	public CSVCreator(List<User> list, String name) {
-		createCSVToEmail(list, name);
-	}
-
-	public boolean createCSVToEmail(List<User> list, String name) {
-		try {
+	private CSVCreator() {
 		
-			DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
-			Date today = Calendar.getInstance().getTime();
-			String date = df.format(today);
-			date.replace("\\", "");
-			date.replace(" ", "");
-			File file = new File(name.replace("@","") + date + ".csv");
+	}
+
+	
+
+	public static boolean createCSVToEmail(List<User> list, File file) {
+		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			create(writer, list);
 			writer.flush();
 			writer.close();
+			logger.info("CSVCreator Exiting");
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			logger.info("CSVCreator Exiting");
 			return false;
 		}
 

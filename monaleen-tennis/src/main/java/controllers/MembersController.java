@@ -1,7 +1,14 @@
 package controllers;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import logs.EmailLog;
@@ -11,6 +18,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,7 +45,8 @@ public class MembersController {
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	
 	@Autowired
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
+	
 	
 
 
@@ -52,39 +63,76 @@ public class MembersController {
 		return "membership";
 	}
 	
+	@RequestMapping("/emailSent")
+	public String emailSent(){
+		return "emailSent";
+	}
+	
 	@RequestMapping("/emailMembersToAddress")
 	public String emailMembers(Model model){
 		List<User> users = userService.getCurrentMembers();
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info("Entering CreateCSVToEmail");
 		Log log = new Log();
 		log.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		logger.info("Set Username on Log");
+		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
+		Date today = Calendar.getInstance().getTime();
+		String date = df.format(today);
+		date.replace("\\", "");
+		date.replace(" ", "");
+		log.setAccessed(date);
 		log.setInformationType("ListExistingUsers");
-		logger.info("Set Date Format");
-		logger.info("Create Date Object");
-		log.setAccessed("today");
-		logger.info("Saved Data Object to String in Log");
 		if (logService == null) {
 			logger.info("Log Service is Null");
 		}
-		logService.createLog(log);
-		logger.info("Log Service created Log");
-		CSVCreator create = new CSVCreator(users, SecurityContextHolder.getContext()
-				.getAuthentication().getName());
-		if (create.createCSVToEmail(users, SecurityContextHolder.getContext()
-				.getAuthentication().getName())){
-			//log stuff
-			//mail sender stuff
-			model.addAttribute("message", "Email successfull sent to : " + SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		File file = new File(name.replace("@","") + date + ".csv");
+		CSVCreator.createCSVToEmail(users, file);
+		logger.info("About to attempt sending message");
+		if (sendMessage(file)){
+			logService.createLog(log);
+			model.addAttribute("message", "Email successfully sent to : " + SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 		else{
-			//log failed attempt
+			log.setInformationType("Failed Attempt");
+			logService.createLog(log);
 			model.addAttribute("message", "Message Failed. Try Again Later.");
 		}
 		
 		return "emailSent";
 	}
 	
+	private boolean sendMessage(File file) {
+		MimeMessage message = mailSender.createMimeMessage();
+		logger.info("MIME Message created");
+		try {
+			
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			logger.info("MIME Helper Okay");
+			helper.setFrom("admin@monaleentennisclub.ie");
+			logger.info("Set From");
+			helper.setTo(SecurityContextHolder.getContext().getAuthentication().getName());
+			logger.info("Set To");
+			helper.setSubject("Monaleen Tennis Club Users");
+			logger.info("Set Sub");
+			helper.setText("This email is confidental. Please do not forward or make copies");
+			logger.info("Set Text. File is " + file.getName() + " at " + file.getAbsolutePath());
+			helper.addAttachment(file.getName(), file);
+			logger.info("Set File");
+			logger.info("Finished putting message together");
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		logger.info("About to send");
+		mailSender.send(message);
+		logger.info("Sent");
+		return true;
+		
+		
+	}
+
 	@RequestMapping("/viewAllMembers")
 	public String viewAllMembers(Model model){
 		List<User> userList = userService.getCurrentMembers();
