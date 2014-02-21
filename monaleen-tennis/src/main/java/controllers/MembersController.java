@@ -33,8 +33,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import reports.CSVCreator;
 import service.LogService;
+import service.RoleService;
 import service.UserService;
 import users.FormValidationGroup;
+import users.Role;
 import users.User;
 
 @Controller
@@ -42,6 +44,7 @@ public class MembersController {
 
 	private UserService userService;
 	private LogService logService;
+	private RoleService roleService;
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	
 	@Autowired
@@ -285,6 +288,47 @@ public class MembersController {
 		return "grades";
 	}
 	
+	@RequestMapping("/createNewRole")
+	public String newRole(Model model){
+		defaultRoles();
+		model.addAttribute("role", new Role());
+		model.addAttribute("existing", roleService.getRoles());
+		return "createNewRole";
+	}
+	
+	private void defaultRoles() {
+		List<Role> roles = roleService.getRoles();
+		if (roles.size() == 0){
+			Role admin = new Role("ROLE_ADMIN", 9999);
+			Role committee = new Role("ROLE_COMMITTEE", 9999);
+			Role member = new Role("ROLE_MEMBER", 3);
+			Role member_warning = new Role("ROLE_WARNING", 2);
+			Role member_suspend = new Role("ROLE_SUSPEND", 1);
+			roleService.create(admin);
+			roleService.create(committee);
+			roleService.create(member);
+			roleService.create(member_warning);
+			roleService.create(member_suspend);
+		}
+		
+	}
+
+	@RequestMapping("/saveNewRole")
+	public String saveNewRole(Model model, @ModelAttribute("role") Role role,
+			BindingResult result){
+		if (roleService.exists(role.getName())){
+			result.rejectValue("name", "Duplicate Key",
+					"This role exists already");
+			return newRole(model);
+		}
+		else{
+			// code to insert default roles - ROLE_ADMIN, ROLE_COMMITTEE, ROLE_MEMBERSHIP, ROLE_MEMBER, ROLE_WARNING, ROLE_SUSPENDED
+			roleService.create(role);
+			return newRole(model);
+		}
+		
+	}
+	
 	public List<User> removeLoggedIn(List<User> users){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
@@ -312,6 +356,15 @@ public class MembersController {
 	public void setLogService(LogService logService) {
 		this.logService = logService;
 	}
+
+	@Autowired
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+
+	
+	
 
 	
 	

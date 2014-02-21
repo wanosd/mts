@@ -206,4 +206,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Email Sent"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/emailSent.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="createNewRole" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Email Sent"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/createNewRole.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

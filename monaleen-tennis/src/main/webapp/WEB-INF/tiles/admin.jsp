@@ -56,7 +56,8 @@
 	</tr>
 	<%--Row 5 --%>
 	<tr>
-		<td></td>
+		<td><a href="${pageContext.request.contextPath}/createNewRole"
+			class="adminLink">Add New Role</a></td></td>
 		<td></td>
 		<td></td>
 		<td><a href="${pageContext.request.contextPath}/chooseEdit"
