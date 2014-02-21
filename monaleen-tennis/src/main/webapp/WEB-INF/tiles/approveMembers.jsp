@@ -11,6 +11,7 @@
 			<th>Email</th>
 			<th>Member Type</th>
 			<th>Contact Number</th>
+			<th>Action</th>
 		</tr>
 		<c:forEach var="row" items="${toApprove}">
 			<sf:form method="post" action="${pageContext.request.contextPath}/approveFinalize" commandName="toApprove">

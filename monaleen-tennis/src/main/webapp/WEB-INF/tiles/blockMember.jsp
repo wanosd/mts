@@ -6,11 +6,12 @@
 
 	<table class="members">
 		<tr>
-			<td>Name</td>
-			<td>Grade</td>
-			<td>Email</td>
-			<td>Member Type</td>
-			<td>Contact Number</td>
+			<th>Name</th>
+			<th>Grade</th>
+			<th>Email</th>
+			<th>Member Type</th>
+			<th>Contact Number</th>
+			<th>Action</th>
 		</tr>
 		<c:forEach var="row" items="${toBlock}">
 			<sf:form method="post" action="${pageContext.request.contextPath}/blockFinalize" commandName="toBlock">
