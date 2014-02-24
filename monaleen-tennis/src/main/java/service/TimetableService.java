@@ -47,5 +47,13 @@ public class TimetableService {
 	public void delete(Timetable t){
 		timetableDAO.deleteTimetable(t);
 	}
+	
+	public boolean nextExists(int id){
+		return timetableDAO.nextExists(id);
+	}
+
+	public boolean prevExists(int id) {
+		return timetableDAO.prevExists(id);
+	}
 
 }

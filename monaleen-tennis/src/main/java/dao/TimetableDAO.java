@@ -67,5 +67,19 @@ private static Logger logger = Logger.getLogger(TournamentDAO.class);
 		crit.add(Restrictions.eq("id", Integer.valueOf(id)));
 		return (Timetable) crit.uniqueResult();
 	}
+
+	public boolean nextExists(int id) {
+		Criteria crit = session().createCriteria(MonaleenTTV1.class);
+		crit.add(Restrictions.eq("id", id));
+		MonaleenTTV1 tt = (MonaleenTTV1) crit.uniqueResult();
+		return tt != null;
+	}
+
+	public boolean prevExists(int id) {
+		Criteria crit = session().createCriteria(MonaleenTTV1.class);
+		crit.add(Restrictions.eq("id", id));
+		MonaleenTTV1 tt = (MonaleenTTV1) crit.uniqueResult();
+		return tt != null;
+	}
 	
 }

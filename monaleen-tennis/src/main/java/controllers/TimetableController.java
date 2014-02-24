@@ -144,14 +144,15 @@ public class TimetableController {
 		t.setSaturday(saturday);
 		t.setSunday(sunday);
 		timetableService.update(t);
-	
+		for (int i = 0; i < t.getTotal(); i++){
 		MonaleenTTV1 test = new MonaleenTTV1();
 		copyList(test, t);
-		test.setName(t.getName() + "2");
+		test.setName(t.getName() + "Week " + i+1);
 		test.setSlots(t.getSlots());
 		test.setEnabled(false);
 		test.setPrev(t.getId());
 		timetableService.create(test);
+		}
 
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 
@@ -170,7 +171,12 @@ public class TimetableController {
 				.getName();
 		int left = roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) - userService.getUserByUsername(loggedIn).getBookings_left();
 		model.addAttribute("bookings", left);
-	
+		if (timetableService.nextExists(Integer.valueOf(request.getParameter("courtID"))+1)){
+			model.addAttribute("next", Integer.valueOf(request.getParameter("courtID"))+1);
+		}
+		if (timetableService.prevExists(Integer.valueOf(request.getParameter("courtID"))-1)){
+			model.addAttribute("prev", Integer.valueOf(request.getParameter("courtID"))-1);
+		} 
 		return "court";
 	}
 
