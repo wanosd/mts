@@ -144,6 +144,14 @@ public class TimetableController {
 		t.setSaturday(saturday);
 		t.setSunday(sunday);
 		timetableService.update(t);
+	
+		MonaleenTTV1 test = new MonaleenTTV1();
+		copyList(test, t);
+		test.setName(t.getName() + "2");
+		test.setSlots(t.getSlots());
+		test.setEnabled(false);
+		test.setPrev(t.getId());
+		timetableService.create(test);
 
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 
@@ -417,6 +425,18 @@ public class TimetableController {
 			}
 		}
 		return false;
+	}
+	
+	public void copyList(MonaleenTTV1 copy, MonaleenTTV1 original){
+		for (int i = 0; i < original.getMonday().size(); i++){
+			copy.getMonday().add(original.getMonday().get(i));
+			copy.getTuesday().add(original.getTuesday().get(i));
+			copy.getWednesday().add(original.getWednesday().get(i));
+			copy.getThursday().add(original.getThursday().get(i));
+			copy.getFriday().add(original.getFriday().get(i));
+			copy.getSaturday().add(original.getSaturday().get(i));
+			copy.getSunday().add(original.getSunday().get(i));
+		}
 	}
 
 }
