@@ -74,6 +74,9 @@ public class User {
 	@Column(name="authority")
 	String authority;
 	
+	@Column(name="bookings_left")
+	int bookings_left;
+	
 	public User(){}
 	
 	public User(String username, String password, String name, String gender, String grade, String member_type, String ad_line1, String ad_line2, String ad_city, String ad_county, String contact_num, String em_con_name, String em_con_num, boolean enabled, String authority) {
@@ -224,7 +227,13 @@ public class User {
 		this.authority = authority;
 	}
 	
-	
+	public int getBookings_left() {
+		return bookings_left;
+	}
+
+	public void setBookings_left(int bookings_left) {
+		this.bookings_left = bookings_left;
+	}
 
 	@Override
 	public int hashCode() {

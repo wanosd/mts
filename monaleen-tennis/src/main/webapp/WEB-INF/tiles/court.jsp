@@ -3,6 +3,8 @@
 Test: ${name } Real Name: ${realname } Principal (PC):
 ${pageContext['request'].userPrincipal.name}
 
+You have ${bookings } bookings left!
+
 
 <table width="100%">
 	<tr>

@@ -37,6 +37,7 @@
 					<value>news</value>
 					<value>timetable</value>
 					<value>logs</value>
+					<value>analytics</value>
 				</list>
 			</property>
 		</bean>

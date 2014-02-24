@@ -38,6 +38,9 @@ public class RoleService {
 		return roleDAO.getRoles();
 	}
 	
+	public int getNoBookings(String role){
+		return roleDAO.noBookings(role);
+	}
 	
 	
 }

@@ -55,5 +55,13 @@ private static Logger logger = Logger.getLogger(RoleDAO.class);
 		session().saveOrUpdate(role);
 		
 	}
+	
+	public int noBookings(String name){
+		Criteria crit = session().createCriteria(Role.class);
+		crit.add(Restrictions.eq("name", name)); 
+		Role role = (Role) crit.uniqueResult();
+		return role.getBookings_allowed();
+		
+	}
 
 }

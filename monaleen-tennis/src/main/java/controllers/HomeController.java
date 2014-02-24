@@ -16,6 +16,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String showHome() {
 		final String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+	
 		logger.info("Showing Home Page...." + currentUser);
 		return "index";
 	}

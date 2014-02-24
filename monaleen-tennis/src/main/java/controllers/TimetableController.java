@@ -140,6 +140,11 @@ public class TimetableController {
 				.getAuthentication().getName());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
+		model.addAttribute(
+				"bookings",
+				userService.getUserByUsername(
+						SecurityContextHolder.getContext().getAuthentication()
+								.getName()).getBookings_left());
 		return "court";
 	}
 
@@ -150,6 +155,11 @@ public class TimetableController {
 				.getAuthentication().getName());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
+		model.addAttribute(
+				"bookings",
+				userService.getUserByUsername(
+						SecurityContextHolder.getContext().getAuthentication()
+								.getName()).getBookings_left());
 		return "court";
 	}
 
@@ -220,6 +230,13 @@ public class TimetableController {
 			e.setAuthor("BOOKING_SYSTEM");
 			e.setCourtid(Integer.valueOf(request.getParameter("ttid")));
 			eventService.createEvent(e);
+			userService.getUserByUsername(
+					SecurityContextHolder.getContext().getAuthentication()
+							.getName()).setBookings_left(
+					userService.getUserByUsername(
+							SecurityContextHolder.getContext()
+									.getAuthentication().getName())
+							.getBookings_left() - 1);
 			return courtBooked(model, request.getParameter("ttid"));
 		}
 	}
@@ -284,12 +301,13 @@ public class TimetableController {
 		List<String> eventName = new ArrayList<String>();
 		for (int i = 0; i < events.size(); i++) {
 			if (events.get(i).getName().contains("@")) {
-				for (int k = 0; k < eventName.size(); k++){
-					if (!eventName.contains(sortEmailtoName(events.get(i).getName()))){
+				for (int k = 0; k < eventName.size(); k++) {
+					if (!eventName.contains(sortEmailtoName(events.get(i)
+							.getName()))) {
 						eventName.add(sortEmailtoName(events.get(i).getName()));
 					}
 				}
-				
+
 			} else {
 				eventName.add(events.get(i).getName());
 			}

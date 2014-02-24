@@ -11,14 +11,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
-import logs.EmailLog;
 import logs.Log;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
@@ -31,7 +27,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import analytics.MTCAnalytics;
 import reports.CSVCreator;
+import service.AnalyticsService;
 import service.LogService;
 import service.RoleService;
 import service.UserService;
@@ -45,14 +43,12 @@ public class MembersController {
 	private UserService userService;
 	private LogService logService;
 	private RoleService roleService;
+	private AnalyticsService analyticsService;
 	private static Logger logger = Logger.getLogger(MembersController.class);
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	
-
-
 	@RequestMapping("/members")
 	public String showMembers(Model model) {
 		logger.info("Showing Members Page....");
@@ -172,6 +168,9 @@ public class MembersController {
 		logger.info("Moving to approveFinalize and back to approveMembers");
 		userService.enableUser(request.getParameter("username"));
 		List<User> toApprove = userService.getPendingMembers();
+		MTCAnalytics a = new MTCAnalytics();
+		a.run(userService.getCurrentMembers().size(), userService.getPendingMembers().size());
+		analyticsService.save(a);
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
 	} 
@@ -198,6 +197,7 @@ public class MembersController {
 	
 	@RequestMapping("/createmembers")
 	public String createMembers(Model model) {
+		defaultRoles();
 		logger.info("Showing Create Members Page....");
 		model.addAttribute("member", new User());
 		return "createmembers";
@@ -361,6 +361,13 @@ public class MembersController {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
+
+	@Autowired
+	public void setAnalyticsService(AnalyticsService analyticsService) {
+		this.analyticsService = analyticsService;
+	}
+	
+	
 
 
 	

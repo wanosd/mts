@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import service.RoleService;
 import users.Grade;
 import users.User;
 
@@ -35,6 +36,9 @@ public class UserDAO {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	public Session session(){ 
 		logger.info("Session Factory returning current session.....");
@@ -55,6 +59,7 @@ public class UserDAO {
 	@Transactional
 	public void createUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setBookings_left(roleService.getNoBookings("ROLE_MEMBER"));
 		session().save(user);
 	}
 
@@ -122,6 +127,25 @@ public class UserDAO {
 		System.out.println("USER RETRIEVED : " + formUser.toString());
 		crit.add(Restrictions.eq("username", auth.getName())); // Restrictions.idEq for primary key integer
 		User user = (User) crit.uniqueResult();
+		user.setAd_line1(formUser.getAd_line1());
+		user.setAd_line2(formUser.getAd_line2());
+		user.setAd_city(formUser.getAd_city());
+		user.setAd_county(formUser.getAd_county());
+		user.setContact_num(formUser.getContact_num());
+		user.setEm_con_name(formUser.getEm_con_name());
+		user.setEm_con_num(formUser.getEm_con_num());
+		System.out.println("USER BEING UPDATED RETRIEVED : " + user.toString());
+		session().saveOrUpdate(user);
+		logger.info("User Profile Changed");
+	}
+	
+	public void changeUserDetailsAdmin(User formUser) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Criteria crit = session().createCriteria(User.class);
+		System.out.println("USER RETRIEVED : " + formUser.toString());
+		crit.add(Restrictions.eq("username", auth.getName())); // Restrictions.idEq for primary key integer
+		User user = (User) crit.uniqueResult();
+		user.setPassword(passwordEncoder.encode(formUser.getPassword()));
 		user.setAd_line1(formUser.getAd_line1());
 		user.setAd_line2(formUser.getAd_line2());
 		user.setAd_city(formUser.getAd_city());
