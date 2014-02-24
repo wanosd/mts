@@ -63,6 +63,14 @@ public class TimetableController {
 	@RequestMapping("/createTimetable")
 	public String createTimetablePage(Model model,
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
+		if (eventService.getEventById(1).equals(null)){
+			Event e = new Event();
+			e.setName("Free Court");
+			e.setAuthor(userService.emailToName(SecurityContextHolder
+					.getContext().getAuthentication().getName()));
+			e.setEnabled(true);
+			eventService.createEvent(e);
+		}
 		model.addAttribute("timetable", t);
 		return "createTimetable";
 	}

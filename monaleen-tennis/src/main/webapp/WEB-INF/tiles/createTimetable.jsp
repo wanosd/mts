@@ -12,6 +12,8 @@
 		
 		End Time <sf:input name ="endTime" type="text" path="endTime"/>
 		
+		Total Weeks <sf:input name ="total" type="text" path="total"/>
+		
 		<input value="Create" type="submit"/>
 			
 </sf:form>

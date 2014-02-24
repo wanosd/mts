@@ -6,7 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import service.UserService;
 
 @Component
 @Entity
@@ -21,8 +24,8 @@ public class MTCAnalytics{
 	@Column(name="total_members")
 	int total_members;
 	
-	@Column(name="pending_members")
-	int pending_members;
+	@Column(name="total_pending")
+	int total_pending;
 	
 	@Column(name="total_times_booked")
 	int total_times_booked;
@@ -30,9 +33,9 @@ public class MTCAnalytics{
 	@Column(name="total_times_unbooked")
 	int total_times_unbooked;
 	
-	public void run(int total, int pending) {
-		setTotal_members(total);
-		setPending_members(pending);
+	public void run(UserService userService) {
+		setTotal_members(userService.getCurrentMembers().size());
+	
 	}
 	
 	public void increaseBooking(){
@@ -49,14 +52,6 @@ public class MTCAnalytics{
 
 	public void setTotal_members(int total_members) {
 		this.total_members = total_members;
-	}
-
-	public int getPending_members() {
-		return pending_members;
-	}
-
-	public void setPending_members(int pending_members) {
-		this.pending_members = pending_members;
 	}
 
 	public int getTotal_times_booked() {
@@ -82,6 +77,16 @@ public class MTCAnalytics{
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public int getTotal_pending() {
+		return total_pending;
+	}
+
+	public void setTotal_pending(int total_pending) {
+		this.total_pending = total_pending;
+	}
+
+	
 	
 	
 	

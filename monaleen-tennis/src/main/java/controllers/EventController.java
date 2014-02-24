@@ -39,6 +39,13 @@ public class EventController {
 	@RequestMapping(value = "/saveEvent", method = RequestMethod.POST)
 	public String saveEvent(Model model, @ModelAttribute("event") Event e,
 			BindingResult result) {
+		if (eventService.getEventById(1).equals(null)){
+			e.setName("Free Court");
+			e.setAuthor(userService.emailToName(SecurityContextHolder
+					.getContext().getAuthentication().getName()));
+			e.setEnabled(true);
+			eventService.createEvent(e);
+		}
 		logger.info("Event Save Method....");
 		if (result.hasErrors()) {
 			return "createEvent";

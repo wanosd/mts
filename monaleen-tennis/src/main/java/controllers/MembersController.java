@@ -168,9 +168,13 @@ public class MembersController {
 		logger.info("Moving to approveFinalize and back to approveMembers");
 		userService.enableUser(request.getParameter("username"));
 		List<User> toApprove = userService.getPendingMembers();
-		MTCAnalytics a = new MTCAnalytics();
-		a.run(userService.getCurrentMembers().size(), userService.getPendingMembers().size());
-		analyticsService.save(a);
+		/**
+		MTCAnalytics a = analyticsService.get();
+		if (a == null){
+			a = new MTCAnalytics();	
+		}
+		a.run(userService);
+		analyticsService.save(a);**/
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
 	} 
@@ -322,7 +326,6 @@ public class MembersController {
 			return newRole(model);
 		}
 		else{
-			// code to insert default roles - ROLE_ADMIN, ROLE_COMMITTEE, ROLE_MEMBERSHIP, ROLE_MEMBER, ROLE_WARNING, ROLE_SUSPENDED
 			roleService.create(role);
 			return newRole(model);
 		}

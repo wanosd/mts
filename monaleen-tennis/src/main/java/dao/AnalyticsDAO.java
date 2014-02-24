@@ -26,11 +26,11 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	}
 	
 	public void save(MTCAnalytics a){
-		session().saveOrUpdate(a);
+		session().update(a);;
 	}
 	
 	public MTCAnalytics get(){
-		return (MTCAnalytics) session().createQuery("from Analytics");
+		return (MTCAnalytics) session().createQuery("from Analytics").list().get(0);
 	}
 
 }
