@@ -60,6 +60,7 @@ private static Logger logger = Logger.getLogger(RoleDAO.class);
 		Criteria crit = session().createCriteria(Role.class);
 		crit.add(Restrictions.eq("name", name)); 
 		Role role = (Role) crit.uniqueResult();
+		logger.info("TOTAL ALLOWED BOOKINGS: " + role.getBookings_allowed());
 		return role.getBookings_allowed();
 		
 	}

@@ -43,31 +43,37 @@ public class MonaleenTTV1 implements Timetable {
 	
 	@ElementCollection
 	@CollectionTable (name = "monday", joinColumns=@JoinColumn(name="id"))
-	List<String> monday;
+	private List<String> monday;
 	
 	@ElementCollection
 	@CollectionTable (name = "tuesday", joinColumns=@JoinColumn(name="id"))
-	List<String> tuesday;
+	private List<String> tuesday;
 	
 	@ElementCollection
 	@CollectionTable (name = "wednesday", joinColumns=@JoinColumn(name="id"))
-	List<String> wednesday;
+	private List<String> wednesday;
 	
 	@ElementCollection
 	@CollectionTable (name = "thursday", joinColumns=@JoinColumn(name="id"))
-	List<String> thursday;
+	private List<String> thursday;
 	
 	@ElementCollection
 	@CollectionTable (name = "friday", joinColumns=@JoinColumn(name="id"))
-	List<String> friday;
+	private List<String> friday;
 	
 	@ElementCollection
 	@CollectionTable (name = "saturday", joinColumns=@JoinColumn(name="id"))
-	List<String> saturday;
+	private List<String> saturday;
 	
 	@ElementCollection
 	@CollectionTable (name = "sunday", joinColumns=@JoinColumn(name="id"))
-	List<String> sunday;
+	private List<String> sunday;
+	
+	private int total;
+	
+	private int prev;
+	
+	private int next;
 	
 	public List<String> getList(String day) {
 		if (day.equalsIgnoreCase("monday")){
@@ -233,6 +239,30 @@ public class MonaleenTTV1 implements Timetable {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getPrev() {
+		return prev;
+	}
+
+	public void setPrev(int prev) {
+		this.prev = prev;
+	}
+
+	public int getNext() {
+		return next;
+	}
+
+	public void setNext(int next) {
+		this.next = next;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.EventService;
+import service.RoleService;
 import service.TimetableService;
 import service.UserService;
 import timetable.MonaleenTTV1;
@@ -34,6 +36,8 @@ public class TimetableController {
 	private EventService eventService;
 
 	private UserService userService;
+	
+	private RoleService roleService;
 
 	private static Logger logger = Logger.getLogger(TimetableController.class);
 
@@ -51,6 +55,11 @@ public class TimetableController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	@Autowired
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
 
 	@RequestMapping("/timetable")
 	public String showTimetable(Model model) {
@@ -63,7 +72,8 @@ public class TimetableController {
 	@RequestMapping("/createTimetable")
 	public String createTimetablePage(Model model,
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
-		if (eventService.getEventById(1).equals(null)){
+		if (!eventService.exists("Free Court")){
+			logger.info("into create default event");
 			Event e = new Event();
 			e.setName("Free Court");
 			e.setAuthor(userService.emailToName(SecurityContextHolder
@@ -148,11 +158,11 @@ public class TimetableController {
 				.getAuthentication().getName());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
-		model.addAttribute(
-				"bookings",
-				userService.getUserByUsername(
-						SecurityContextHolder.getContext().getAuthentication()
-								.getName()).getBookings_left());
+		String loggedIn = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		int left = roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) - userService.getUserByUsername(loggedIn).getBookings_left();
+		model.addAttribute("bookings", left);
+	
 		return "court";
 	}
 
@@ -163,11 +173,10 @@ public class TimetableController {
 				.getAuthentication().getName());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
-		model.addAttribute(
-				"bookings",
-				userService.getUserByUsername(
-						SecurityContextHolder.getContext().getAuthentication()
-								.getName()).getBookings_left());
+		String loggedIn = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		int left = roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) - userService.getUserByUsername(loggedIn).getBookings_left();
+		model.addAttribute("bookings", left);
 		return "court";
 	}
 
@@ -217,13 +226,16 @@ public class TimetableController {
 		logger.info("Parameter is " + request.getParameter("position"));
 		logger.info("Day is " + request.getParameter("day"));
 		logger.info("TTID is " + request.getParameter("ttid"));
+		logger.info("DAY OF THE WEEK IS: " + Calendar.DAY_OF_WEEK);
 
-		if (eventService.exists(SecurityContextHolder.getContext()
-				.getAuthentication().getName())
-				&& !userIsAdmin()) {
-			return "bookingExists";
-
-		} else {
+		String loggedIn = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		if(userService.getUserByUsername(loggedIn).getBookings_left() == roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority())){
+								return "bookingExists";
+								
+							}
+			
+		else {
 
 			Timetable t = timetableService
 					.getById(request.getParameter("ttid"));
@@ -244,7 +256,7 @@ public class TimetableController {
 					userService.getUserByUsername(
 							SecurityContextHolder.getContext()
 									.getAuthentication().getName())
-							.getBookings_left() - 1);
+							.getBookings_left() + 1);
 			return courtBooked(model, request.getParameter("ttid"));
 		}
 	}
@@ -265,6 +277,13 @@ public class TimetableController {
 		e.setAuthor("BOOKING_SYSTEM");
 		eventService.deleteEvent(e);
 		timetableService.update(t);
+		userService.getUserByUsername(
+				SecurityContextHolder.getContext().getAuthentication()
+						.getName()).setBookings_left(
+				userService.getUserByUsername(
+						SecurityContextHolder.getContext()
+								.getAuthentication().getName())
+						.getBookings_left() - 1);
 		logger.info("UNBOOK SHOULD HAVE WORKED!");
 		return courtBooked(model, request.getParameter("ttid"));
 	}

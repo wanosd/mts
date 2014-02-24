@@ -59,7 +59,7 @@ public class UserDAO {
 	@Transactional
 	public void createUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setBookings_left(roleService.getNoBookings("ROLE_MEMBER"));
+		user.setBookings_left(0);
 		session().save(user);
 	}
 
