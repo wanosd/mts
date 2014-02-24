@@ -55,5 +55,11 @@ public class TimetableService {
 	public boolean prevExists(int id) {
 		return timetableDAO.prevExists(id);
 	}
+	
+	public int getNewSeries(){
+		return timetableDAO.newSeries();
+	}
+	
+
 
 }

@@ -36,7 +36,7 @@ public class TimetableController {
 	private EventService eventService;
 
 	private UserService userService;
-	
+
 	private RoleService roleService;
 
 	private static Logger logger = Logger.getLogger(TimetableController.class);
@@ -55,7 +55,7 @@ public class TimetableController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	@Autowired
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
@@ -72,7 +72,7 @@ public class TimetableController {
 	@RequestMapping("/createTimetable")
 	public String createTimetablePage(Model model,
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
-		if (!eventService.exists("Free Court")){
+		if (!eventService.exists("Free Court")) {
 			logger.info("into create default event");
 			Event e = new Event();
 			e.setName("Free Court");
@@ -143,16 +143,19 @@ public class TimetableController {
 		t.setFriday(friday);
 		t.setSaturday(saturday);
 		t.setSunday(sunday);
-		timetableService.update(t);
-		for (int i = 0; i < t.getTotal(); i++){
-		MonaleenTTV1 test = new MonaleenTTV1();
-		copyList(test, t);
-		test.setName(t.getName() + "Week " + i+1);
-		test.setSlots(t.getSlots());
-		test.setEnabled(false);
-		test.setPrev(t.getId());
-		timetableService.create(test);
+		t.setSeries(timetableService.getNewSeries() + 1);
+
+		for (int i = 0; i < t.getTotal(); i++) {
+			MonaleenTTV1 test = new MonaleenTTV1();
+			copyList(test, t);
+			test.setName(t.getName() + "Week " + (i + 1));
+			test.setSeries(t.getSeries());
+			test.setSlots(t.getSlots());
+			test.setEnabled(false);
+			//test.setPrev(t.getId());
+			timetableService.create(test);
 		}
+		timetableService.delete(t);
 
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 
@@ -167,17 +170,35 @@ public class TimetableController {
 				.getAuthentication().getName());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
-		String loggedIn = SecurityContextHolder.getContext().getAuthentication()
-				.getName();
-		int left = roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) - userService.getUserByUsername(loggedIn).getBookings_left();
+		String loggedIn = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		int left = roleService.getNoBookings(userService.getUserByUsername(
+				loggedIn).getAuthority())
+				- userService.getUserByUsername(loggedIn).getBookings_left();
 		model.addAttribute("bookings", left);
-		if (timetableService.nextExists(Integer.valueOf(request.getParameter("courtID"))+1)){
-			model.addAttribute("next", Integer.valueOf(request.getParameter("courtID"))+1);
+		int courtID = Integer.valueOf(request.getParameter("courtID"));
+		int nextCourt = courtID + 1;
+		int prevCourt = courtID - 1;
+		if (seriesMatch(courtID, nextCourt)) {
+			model.addAttribute("next",
+					Integer.valueOf(request.getParameter("courtID")) + 1);
 		}
-		if (timetableService.prevExists(Integer.valueOf(request.getParameter("courtID"))-1)){
-			model.addAttribute("prev", Integer.valueOf(request.getParameter("courtID"))-1);
-		} 
+		if (seriesMatch(courtID, prevCourt)) {
+			model.addAttribute("prev",
+					Integer.valueOf(request.getParameter("courtID")) - 1);
+		}
 		return "court";
+	}
+
+	private boolean seriesMatch(int courtID, int nextCourt) {
+		if (timetableService.getById(String.valueOf(nextCourt)) == null){
+			return false;
+		}
+		if (timetableService.getById(String.valueOf(courtID)).getSeries() == timetableService.getById(String.valueOf(nextCourt)).getSeries()){
+			return true;
+		}
+		else
+			return false;
 	}
 
 	@RequestMapping(value = "/courtBooked")
@@ -187,9 +208,11 @@ public class TimetableController {
 				.getAuthentication().getName());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
-		String loggedIn = SecurityContextHolder.getContext().getAuthentication()
-				.getName();
-		int left = roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) - userService.getUserByUsername(loggedIn).getBookings_left();
+		String loggedIn = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		int left = roleService.getNoBookings(userService.getUserByUsername(
+				loggedIn).getAuthority())
+				- userService.getUserByUsername(loggedIn).getBookings_left();
 		model.addAttribute("bookings", left);
 		return "court";
 	}
@@ -242,13 +265,16 @@ public class TimetableController {
 		logger.info("TTID is " + request.getParameter("ttid"));
 		logger.info("DAY OF THE WEEK IS: " + Calendar.DAY_OF_WEEK);
 
-		String loggedIn = SecurityContextHolder.getContext().getAuthentication().getName();
-		
-		if(userService.getUserByUsername(loggedIn).getBookings_left() == roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority())){
-								return "bookingExists";
-								
-							}
-			
+		String loggedIn = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+
+		if (userService.getUserByUsername(loggedIn).getBookings_left() == roleService
+				.getNoBookings(userService.getUserByUsername(loggedIn)
+						.getAuthority())) {
+			return "bookingExists";
+
+		}
+
 		else {
 
 			Timetable t = timetableService
@@ -295,9 +321,8 @@ public class TimetableController {
 				SecurityContextHolder.getContext().getAuthentication()
 						.getName()).setBookings_left(
 				userService.getUserByUsername(
-						SecurityContextHolder.getContext()
-								.getAuthentication().getName())
-						.getBookings_left() - 1);
+						SecurityContextHolder.getContext().getAuthentication()
+								.getName()).getBookings_left() - 1);
 		logger.info("UNBOOK SHOULD HAVE WORKED!");
 		return courtBooked(model, request.getParameter("ttid"));
 	}
@@ -432,9 +457,9 @@ public class TimetableController {
 		}
 		return false;
 	}
-	
-	public void copyList(MonaleenTTV1 copy, MonaleenTTV1 original){
-		for (int i = 0; i < original.getMonday().size(); i++){
+
+	public void copyList(MonaleenTTV1 copy, MonaleenTTV1 original) {
+		for (int i = 0; i < original.getMonday().size(); i++) {
 			copy.getMonday().add(original.getMonday().get(i));
 			copy.getTuesday().add(original.getTuesday().get(i));
 			copy.getWednesday().add(original.getWednesday().get(i));

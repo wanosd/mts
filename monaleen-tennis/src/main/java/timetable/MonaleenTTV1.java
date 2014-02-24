@@ -73,8 +73,9 @@ public class MonaleenTTV1 implements Timetable {
 	
 	private int prev;
 	
-	private int next;
+	private int series;
 	
+
 	public List<String> getList(String day) {
 		if (day.equalsIgnoreCase("monday")){
 			return getMonday();
@@ -257,18 +258,21 @@ public class MonaleenTTV1 implements Timetable {
 		this.prev = prev;
 	}
 
-	public int getNext() {
-		return next;
+
+	public int getSeries() {
+		return series;
 	}
 
-	public void setNext(int next) {
-		this.next = next;
+	public void setSeries(int series) {
+		this.series = series;
 	}
 
 	@Override
 	public String toString() {
 		return "MonaleenTTV1 [id=" + id + ", name=" + name + ", slots=" + slots
-				+ ", startTime=" + startTime + ", endTime=" + endTime + "]";
+				+ ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", enabled=" + enabled + ", total=" + total + ", prev="
+				+ prev + ", series=" + series + "]";
 	}
 
 	

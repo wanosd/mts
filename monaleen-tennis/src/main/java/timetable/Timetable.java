@@ -34,5 +34,7 @@ public interface Timetable {
 	public void setList(List<String> list, String day);
 	
 	public int getSlots();
+	
+	public int getSeries();
 
 }
