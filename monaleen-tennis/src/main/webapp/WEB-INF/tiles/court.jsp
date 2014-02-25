@@ -6,6 +6,10 @@ ${pageContext['request'].userPrincipal.name} You have ${bookings }
 bookings left!
 
 <p>${ court.name}</p>
+<p>Current Week: ${week }</p>
+<p>Current Date: ${date }</p>
+<p>Week Beginning: ${testDate }</p>
+<p>Test Position: ${position }</p>
 <table width="100%">
 	<tr>
 		<td class="nothing">

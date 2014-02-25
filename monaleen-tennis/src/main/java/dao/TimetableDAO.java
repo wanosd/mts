@@ -118,4 +118,9 @@ public class TimetableDAO {
 		}
 	}
 
+	public List<Timetable> getTimetableSeries(int series) {
+		return session().createQuery("from MonaleenTTV1 where series ='" + series +"'")
+				.list();
+	}
+
 }

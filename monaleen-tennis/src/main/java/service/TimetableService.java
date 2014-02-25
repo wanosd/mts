@@ -59,6 +59,11 @@ public class TimetableService {
 	public int getNewSeries(){
 		return timetableDAO.newSeries();
 	}
+
+	public List<Timetable> getTimetableSeries(int series) {
+		return timetableDAO.getTimetableSeries(series);
+		
+	}
 	
 
 

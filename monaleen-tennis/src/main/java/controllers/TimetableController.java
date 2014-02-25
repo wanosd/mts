@@ -1,7 +1,10 @@
 package controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -164,6 +167,33 @@ public class TimetableController {
 
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
+		//Week of Year Testing
+		String format = "dd/MM/yyyy";
+		SimpleDateFormat df = new SimpleDateFormat(format);
+		Date date = new Date();
+		String input = df.format(date);
+		int week = 0;
+		try {
+			date = df.parse(input);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			week = cal.get(Calendar.WEEK_OF_YEAR);
+			int position = checkPosition(timetableService.getById(request.getParameter("courtID"))) + 1;
+			cal = Calendar.getInstance();
+			cal.set(Calendar.WEEK_OF_YEAR, position);        
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			model.addAttribute("week", week);
+			model.addAttribute("date", input);
+			model.addAttribute("testDate", df.format(cal.getTime()));  
+			model.addAttribute("position", position);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 
+		//End
+		
 		model.addAttribute("court",
 				timetableService.getById(request.getParameter("courtID")));
 		model.addAttribute("name", SecurityContextHolder.getContext()
@@ -188,6 +218,16 @@ public class TimetableController {
 					Integer.valueOf(request.getParameter("courtID")) - 1);
 		}
 		return "court";
+	}
+
+	private int checkPosition(Timetable byId) {
+		List<Timetable> list = timetableService.getTimetableSeries(byId.getSeries());
+		for (int i = 0; i < list.size(); i++){
+			if (list.get(i).equals(byId)){
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	private boolean seriesMatch(int courtID, int nextCourt) {
