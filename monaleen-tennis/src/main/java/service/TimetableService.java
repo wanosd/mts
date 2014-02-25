@@ -63,6 +63,10 @@ public class TimetableService {
 	public List<Timetable> getTimetableSeries(int series) {
 		return timetableDAO.getTimetableSeries(series);
 		
+	} 
+	
+	public List<Timetable> getTimetableSeriesSecion(int start, int end, int series){
+		return timetableDAO.getTimetableSeriesSecion(start, end, series);
 	}
 	
 

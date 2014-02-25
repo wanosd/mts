@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<h1>This is empty right now. Just checking if JSTL Works</h1>
 
+This is the template for all timetables in the year. It can be changed individually later on. Please fill out the template that or press cancel to go back.
 <sf:form id="details" method="post"
 	action="${pageContext.request.contextPath}/finalizeTimetable"
 	commandName="timetable">
@@ -38,4 +38,3 @@
 	</c:forEach>
 	<input value="Submit" type="submit" />
 </sf:form>
-</div>

@@ -37,4 +37,6 @@ public interface Timetable {
 	
 	public int getSeries();
 
+	public int getId();
+
 }

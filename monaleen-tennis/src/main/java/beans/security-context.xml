@@ -20,6 +20,7 @@
 		<security:intercept-url pattern="/membership" access="permitAll" />
 		<security:intercept-url pattern="/tournaments" access="permitAll" />
 		<security:intercept-url pattern="/timetable" access="permitAll" />
+		<security:intercept-url pattern="/changeCourt" access="permitAll" />
 		<security:intercept-url pattern="/news" access="permitAll" />
 		<security:intercept-url pattern="/court" access="permitAll" />
 		<security:intercept-url pattern="/gotoCourt" access="permitAll" />

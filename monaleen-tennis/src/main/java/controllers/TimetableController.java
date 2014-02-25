@@ -151,7 +151,7 @@ public class TimetableController {
 		for (int i = 0; i < t.getTotal(); i++) {
 			MonaleenTTV1 test = new MonaleenTTV1();
 			copyList(test, t);
-			test.setName(t.getName() + "Week " + (i + 1));
+			test.setName(t.getName() + " Week " + (i + 1));
 			test.setSeries(t.getSeries());
 			test.setSlots(t.getSlots());
 			test.setEnabled(false);
@@ -167,11 +167,17 @@ public class TimetableController {
 
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
-		model = addDateToTimetable(model, request.getParameter("courtID"));
-		model.addAttribute("court",
-				timetableService.getById(request.getParameter("courtID")));
+		
+		Timetable first = timetableService.getById(request.getParameter("courtID"));
+		List<Timetable> firstSeries = timetableService.getTimetableSeries(first.getSeries());
+		Timetable current = firstSeries.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		logger.info("GETTING POSITION: " + (Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		model = addDateToTimetable(model, String.valueOf(current.getId()));
+		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
+		model.addAttribute("court", current);
+		logger.info("TT:" + firstSeries.get(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1).toString());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
@@ -180,18 +186,44 @@ public class TimetableController {
 				loggedIn).getAuthority())
 				- userService.getUserByUsername(loggedIn).getBookings_left();
 		model.addAttribute("bookings", left);
-		
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
-			model.addAttribute("next",
-					Integer.valueOf(request.getParameter("courtID")) + 1);
+			model.addAttribute("next",(current.getId() + 1));
 		}
 		if (seriesMatch(courtID, prevCourt)) {
-			model.addAttribute("prev",
-					Integer.valueOf(request.getParameter("courtID")) - 1);
+				model.addAttribute("prev", (current.getId() - 1));
 		}
+		return "court";
+	}
+	
+	@RequestMapping("/changeCourt")
+	public String prevNext(Model model, HttpServletRequest request){
+		Timetable tt = timetableService.getById(request.getParameter("courtID"));
+		model = addDateToTimetable(model, String.valueOf(tt.getId()));
+		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
+		model.addAttribute("name", SecurityContextHolder.getContext()
+				.getAuthentication().getName());
+		model.addAttribute("court", tt);
+		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
+				.getContext().getAuthentication().getName()));
+		String loggedIn = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		int left = roleService.getNoBookings(userService.getUserByUsername(
+				loggedIn).getAuthority())
+				- userService.getUserByUsername(loggedIn).getBookings_left();
+		model.addAttribute("bookings", left);
+		int courtID = Integer.valueOf(request.getParameter("courtID"));
+		int nextCourt = courtID + 1;
+		int prevCourt = courtID - 1;
+		if (seriesMatch(courtID, nextCourt)) {
+			model.addAttribute("next",(tt.getId() + 1));
+		}
+		if (seriesMatch(courtID, prevCourt)) {
+			model.addAttribute("prev", (tt.getId() - 1));
+		}
+		
 		return "court";
 	}
 
@@ -261,14 +293,12 @@ public class TimetableController {
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
-			model.addAttribute("next",
-					Integer.valueOf(id) + 1);
+			model.addAttribute("next", Integer.valueOf(id) + 1);
 		}
 		if (seriesMatch(courtID, prevCourt)) {
-			model.addAttribute("prev",
-					Integer.valueOf(id) - 1);
+			model.addAttribute("prev", Integer.valueOf(id) - 1);
 		}
-		
+
 		return "court";
 	}
 

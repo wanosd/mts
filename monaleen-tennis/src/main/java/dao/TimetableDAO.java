@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -121,6 +122,16 @@ public class TimetableDAO {
 	public List<Timetable> getTimetableSeries(int series) {
 		return session().createQuery("from MonaleenTTV1 where series ='" + series +"'")
 				.list();
+	}
+	
+	public List<Timetable> getTimetableSeriesSecion(int start, int end, int series){
+		List<Timetable> list = session().createQuery("from MonaleenTTV1 where series ='" + series +"'")
+				.list();
+		List<Timetable> section = new ArrayList<Timetable>();
+		for (int i = start; i < end; i++){
+			section.add(list.get(i));
+		}
+		return section;
 	}
 
 }

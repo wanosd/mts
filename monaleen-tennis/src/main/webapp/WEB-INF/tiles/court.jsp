@@ -1,15 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
-Test: ${name } Real Name: ${realname } Principal (PC):
-${pageContext['request'].userPrincipal.name} You have ${bookings }
-bookings left!
+You have ${bookings } bookings left!
 
-<p>${ court.name}</p>
-<p>Current Week: ${week }</p>
+<p>Court Name: ${court.name}</p>
 <p>Current Date: ${date }</p>
 <p>Week Beginning: ${testDate }</p>
-<p>Test Position: ${position }</p>
 <table width="100%">
 	<tr>
 		<td class="nothing">
@@ -303,7 +299,7 @@ bookings left!
 	<tr>
 		<td><c:if test="${not empty prev}">
 				<sf:form method="post"
-					action="${pageContext.request.contextPath}/gotoCourt"
+					action="${pageContext.request.contextPath}/changeCourt"
 					commandName="timetable">
 					<input type="hidden" value="${prev}" name="courtID" />
 					<input value="Previous Week" type="submit" />
@@ -315,7 +311,7 @@ bookings left!
 	<tr>
 		<td><c:if test="${not empty next}">
 				<sf:form method="post"
-					action="${pageContext.request.contextPath}/gotoCourt"
+					action="${pageContext.request.contextPath}/changeCourt"
 					commandName="timetable">
 					<input type="hidden" value="${next}" name="courtID" />
 					<input value="Next Week" type="submit" />
