@@ -119,11 +119,13 @@ public class TimetableDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Timetable> getTimetableSeries(int series) {
 		return session().createQuery("from MonaleenTTV1 where series ='" + series +"'")
 				.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Timetable> getTimetableSeriesSecion(int start, int end, int series){
 		List<Timetable> list = session().createQuery("from MonaleenTTV1 where series ='" + series +"'")
 				.list();
@@ -132,6 +134,21 @@ public class TimetableDAO {
 			section.add(list.get(i));
 		}
 		return section;
+	}
+
+	public List<Timetable> getTimetableAllSeries() {
+		int size = newSeries();
+		List<Timetable> list = new ArrayList<Timetable>();
+		for (int i = 1; i <=size; i++ ){
+			list.add((Timetable) session().createQuery("from MonaleenTTV1 where series ='" + i + "'").list().get(0));
+		}
+		return list;
+	}
+	public void deleteSeries(int id) {
+		List<Timetable> delete = getTimetableSeries(id);
+		for (int i = 0; i < delete.size(); i++){
+			session().delete(delete.get(i));
+		}
 	}
 
 }

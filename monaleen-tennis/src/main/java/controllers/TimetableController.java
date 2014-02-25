@@ -154,8 +154,8 @@ public class TimetableController {
 			test.setName(t.getName() + " Week " + (i + 1));
 			test.setSeries(t.getSeries());
 			test.setSlots(t.getSlots());
+			test.setTotal(t.getTotal());
 			test.setEnabled(false);
-			// test.setPrev(t.getId());
 			timetableService.create(test);
 		}
 		timetableService.delete(t);
@@ -304,16 +304,17 @@ public class TimetableController {
 
 	@RequestMapping("/deleteTimetable")
 	public String deleteTimetable(Model model) {
-		model.addAttribute("timetable", timetableService.getAllTimetables());
+		model.addAttribute("timetable", timetableService.getTimetableAllSeries());
 		return "deleteTimetable";
 	}
+	
 
 	@RequestMapping("/confirmTTDelete")
 	public String confirmTTDelete(Model model, HttpServletRequest request) {
 		Timetable t = timetableService.getById(request
 				.getParameter("timetableID"));
-		timetableService.delete(t);
-		model.addAttribute("timetable", timetableService.getAllTimetables());
+		timetableService.deleteSeries(t.getSeries());
+		model.addAttribute("timetable", timetableService.getTimetableAllSeries());
 		return "deleteTimetable";
 	}
 
@@ -321,9 +322,9 @@ public class TimetableController {
 	public String showTimetableStatus(Model model) {
 		logger.info("Showing Timetable Status page....");
 		model.addAttribute("timetableEnabled",
-				timetableService.getEnabledTimetables());
-		model.addAttribute("timetableDisabled",
-				timetableService.getDisabledTimetables());
+				timetableService.getTimetableAllSeries());
+	//	model.addAttribute("timetableDisabled",
+				//timetableService.getDisabledTimetables());
 		return "timetableStatus";
 	}
 
@@ -440,7 +441,7 @@ public class TimetableController {
 	@RequestMapping("/chooseEdit")
 	public String edit(Model model) {
 		logger.info("Showing Timetable Edit page....");
-		List<Timetable> timetable = timetableService.getEnabledTimetables();
+		List<Timetable> timetable = timetableService.getAllTimetables();
 		model.addAttribute("timetable", timetable);
 		return "chooseEdit";
 	}
