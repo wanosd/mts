@@ -155,7 +155,7 @@ public class TimetableController {
 			test.setSeries(t.getSeries());
 			test.setSlots(t.getSlots());
 			test.setEnabled(false);
-			//test.setPrev(t.getId());
+			// test.setPrev(t.getId());
 			timetableService.create(test);
 		}
 		timetableService.delete(t);
@@ -167,33 +167,7 @@ public class TimetableController {
 
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
-		//Week of Year Testing
-		String format = "dd/MM/yyyy";
-		SimpleDateFormat df = new SimpleDateFormat(format);
-		Date date = new Date();
-		String input = df.format(date);
-		int week = 0;
-		try {
-			date = df.parse(input);
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			week = cal.get(Calendar.WEEK_OF_YEAR);
-			int position = checkPosition(timetableService.getById(request.getParameter("courtID"))) + 1;
-			cal = Calendar.getInstance();
-			cal.set(Calendar.WEEK_OF_YEAR, position);        
-			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-			model.addAttribute("week", week);
-			model.addAttribute("date", input);
-			model.addAttribute("testDate", df.format(cal.getTime()));  
-			model.addAttribute("position", position);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		 
-		//End
-		
+		model = addDateToTimetable(model, request.getParameter("courtID"));
 		model.addAttribute("court",
 				timetableService.getById(request.getParameter("courtID")));
 		model.addAttribute("name", SecurityContextHolder.getContext()
@@ -206,6 +180,7 @@ public class TimetableController {
 				loggedIn).getAuthority())
 				- userService.getUserByUsername(loggedIn).getBookings_left();
 		model.addAttribute("bookings", left);
+		
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
@@ -220,10 +195,37 @@ public class TimetableController {
 		return "court";
 	}
 
+	private Model addDateToTimetable(Model model, String courtID) {
+		String format = "dd/MM/yyyy";
+		SimpleDateFormat df = new SimpleDateFormat(format);
+		Date date = new Date();
+		String input = df.format(date);
+		int week = 0;
+		try {
+			date = df.parse(input);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			week = cal.get(Calendar.WEEK_OF_YEAR);
+			int position = checkPosition(timetableService.getById(courtID)) + 1;
+			cal = Calendar.getInstance();
+			cal.set(Calendar.WEEK_OF_YEAR, position);
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			model.addAttribute("week", week);
+			model.addAttribute("date", input);
+			model.addAttribute("testDate", df.format(cal.getTime()));
+			model.addAttribute("position", position);
+			return model;
+		} catch (ParseException e) {
+			return model;
+		}
+
+	}
+
 	private int checkPosition(Timetable byId) {
-		List<Timetable> list = timetableService.getTimetableSeries(byId.getSeries());
-		for (int i = 0; i < list.size(); i++){
-			if (list.get(i).equals(byId)){
+		List<Timetable> list = timetableService.getTimetableSeries(byId
+				.getSeries());
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(byId)) {
 				return i;
 			}
 		}
@@ -231,18 +233,19 @@ public class TimetableController {
 	}
 
 	private boolean seriesMatch(int courtID, int nextCourt) {
-		if (timetableService.getById(String.valueOf(nextCourt)) == null){
+		if (timetableService.getById(String.valueOf(nextCourt)) == null) {
 			return false;
 		}
-		if (timetableService.getById(String.valueOf(courtID)).getSeries() == timetableService.getById(String.valueOf(nextCourt)).getSeries()){
+		if (timetableService.getById(String.valueOf(courtID)).getSeries() == timetableService
+				.getById(String.valueOf(nextCourt)).getSeries()) {
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 
 	@RequestMapping(value = "/courtBooked")
 	public String courtBooked(Model model, String id) {
+		model = addDateToTimetable(model, id);
 		model.addAttribute("court", timetableService.getById(id));
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
@@ -254,6 +257,18 @@ public class TimetableController {
 				loggedIn).getAuthority())
 				- userService.getUserByUsername(loggedIn).getBookings_left();
 		model.addAttribute("bookings", left);
+		int courtID = Integer.valueOf(id);
+		int nextCourt = courtID + 1;
+		int prevCourt = courtID - 1;
+		if (seriesMatch(courtID, nextCourt)) {
+			model.addAttribute("next",
+					Integer.valueOf(id) + 1);
+		}
+		if (seriesMatch(courtID, prevCourt)) {
+			model.addAttribute("prev",
+					Integer.valueOf(id) - 1);
+		}
+		
 		return "court";
 	}
 
