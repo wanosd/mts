@@ -1,5 +1,19 @@
 <h2>Stuff Admin needs to do</h2>
 
+Bugs / Major To Do
+<ul>
+<li>Fix Booking Bug when changing roles </li>
+<li><s>Export to XLS</s></li>
+<li>No Shows</li>
+Data Usage - Pending Number
+Advertising Slot
+Assign Members to groups, assign no bookings to groups
+WAMP - ref architecutre for Spring.
+Hibernate - 
+</ul>
+
+
+
 <table>
 	<tr>
 		<th>Member Tasks</th>
