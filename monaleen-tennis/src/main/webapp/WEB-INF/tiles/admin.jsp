@@ -36,7 +36,8 @@
 	</tr>
 	<%--Row 3 --%>
 	<tr>
-		<td>Edit Member Details - TO DO!</td>
+		<td><a href="${pageContext.request.contextPath}/displayUsers"
+			class="adminLink">Edit Member</a></td>
 		<td><a href="${pageContext.request.contextPath}/deleteTournament"
 			class="adminLink">Delete Tournament</a></td>
 		<td>Edit News Story - TO DO!</td>

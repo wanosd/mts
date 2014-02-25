@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -63,6 +64,15 @@ private static Logger logger = Logger.getLogger(RoleDAO.class);
 		logger.info("TOTAL ALLOWED BOOKINGS: " + role.getBookings_allowed());
 		return role.getBookings_allowed();
 		
+	}
+
+	public List<String> getRolesNames() {
+		List<Role> roles = getRoles();
+		List<String> names = new ArrayList<String>();
+		for (int i = 0; i < roles.size(); i++){
+			names.add(roles.get(i).getName());
+		}
+		return names;
 	}
 
 }

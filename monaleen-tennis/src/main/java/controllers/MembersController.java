@@ -250,28 +250,62 @@ public class MembersController {
 		model.addAttribute("member", user);
 		return "profile";
 	}
+	
+	@RequestMapping("/displayUsers")
+	public String chooseUserAdmin(Model model){
+		model.addAttribute("users", userService.getCurrentMembers());
+		return "displayUsers";
+	}
+	
+	@RequestMapping("/adminEditProfile")
+	public String chooseUserAdminEdit(Model model, HttpServletRequest request){
+		logger.info("Username is " + request.getParameter("username"));
+		model.addAttribute("member", userService.getUserByUsername(request.getParameter("username")));
+		model.addAttribute("roles", roleService.getRoleNames());
+		return "adminEditProfile";
+	}
+	
+	@RequestMapping(value = "/adminProfileUpdate", method = RequestMethod.POST)
+	public String doAdminEditProfile(Model model, @ModelAttribute("member") User member, BindingResult result, HttpServletRequest request) {
+		logger.info("Showing Profile Updated.....");
+		if (result.hasErrors()) {
+			logger.info("Errors found in BindingResult object....");
+			return "adminEditProfile";
+		} 
+		if (userService.exists(member.getUsername())) {
+			result.rejectValue("username", "Duplicate Key",
+					"This email address has already been used");
+			return "adminEditProfile";
+		}
+		else {
+			try {
+				logger.info("About to  update user");
+				userService.editProfile(member, request.getParameter("username"));
+				logger.info("User Updated");
+				return "profileUpdated";
+			} catch (Exception e) {
+				logger.info("Database update failed. Cause: " + e.getClass());
+				return "error";
+			}
+		}
+	}
 
 	@RequestMapping(value = "/profileUpdated", method = RequestMethod.POST)
-	public String doEditProfile(
-			Model model,
-			@ModelAttribute("member") User member,
-			BindingResult result) {
+	public String doEditProfile(Model model, @ModelAttribute("member") User member, BindingResult result) {
 		logger.info("Showing Profile Updated.....");
 		if (result.hasErrors()) {
 			logger.info("Errors found in BindingResult object....");
 			return "profile";
 		} 
-		
 		if (userService.exists(member.getUsername())) {
 			result.rejectValue("username", "Duplicate Key",
 					"This email address has already been used");
 			return "profile";
 		}
-		
 		else {
 			try {
 				logger.info("About to  update user");
-				userService.editProfile(member);
+				userService.editProfile(member, SecurityContextHolder.getContext().getAuthentication().getName());
 				logger.info("User Updated");
 				return "profileUpdated";
 			} catch (Exception e) {

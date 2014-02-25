@@ -121,19 +121,24 @@ public class UserDAO {
 	 * properly error checked in that the name should not be used (perhaps Id or
 	 * what not)
 	 */
-	public void changeUserDetails(User formUser) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	public void changeUserDetails(User formUser, String username) {
 		Criteria crit = session().createCriteria(User.class);
 		System.out.println("USER RETRIEVED : " + formUser.toString());
-		crit.add(Restrictions.eq("username", auth.getName())); // Restrictions.idEq for primary key integer
+		crit.add(Restrictions.eq("username", username)); // Restrictions.idEq for primary key integer
 		User user = (User) crit.uniqueResult();
+		logger.info(user.toString());
 		user.setAd_line1(formUser.getAd_line1());
 		user.setAd_line2(formUser.getAd_line2());
 		user.setAd_city(formUser.getAd_city());
+		if (getAdmins().contains(getUserByName(SecurityContextHolder.getContext().getAuthentication().getName()))){
+			user.setPassword(passwordEncoder.encode(formUser.getPassword()));
+		}
 		user.setAd_county(formUser.getAd_county());
 		user.setContact_num(formUser.getContact_num());
 		user.setEm_con_name(formUser.getEm_con_name());
 		user.setEm_con_num(formUser.getEm_con_num());
+		logger.info("AUTHORITY EDITED IS: " + formUser.getAuthority());
+		user.setAuthority(formUser.getAuthority());
 		System.out.println("USER BEING UPDATED RETRIEVED : " + user.toString());
 		session().saveOrUpdate(user);
 		logger.info("User Profile Changed");

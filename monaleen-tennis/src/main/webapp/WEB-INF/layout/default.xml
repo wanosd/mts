@@ -211,4 +211,14 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Email Sent"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/createNewRole.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="displayUsers" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Display Users (Edit)"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/displayUsers.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="adminEditProfile" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Edit User Profile"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/adminEditProfile.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
