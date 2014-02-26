@@ -35,15 +35,15 @@ import events.I_Event;
 public class TimetableController {
 
 	private TimetableService timetableService;
-
 	private EventService eventService;
-
 	private UserService userService;
-
 	private RoleService roleService;
-
 	private static Logger logger = Logger.getLogger(TimetableController.class);
 
+	/**
+	 * Autowiring for service objects
+	 */
+	
 	@Autowired
 	public void setTimetableService(TimetableService timetableService) {
 		this.timetableService = timetableService;
@@ -63,7 +63,12 @@ public class TimetableController {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
+	
+	/**
+	 * Methods to display Timetable page
+	 */
 
+	
 	@RequestMapping("/timetable")
 	public String showTimetable(Model model) {
 		logger.info("Showing Timetable page....");
@@ -75,18 +80,11 @@ public class TimetableController {
 	@RequestMapping("/createTimetable")
 	public String createTimetablePage(Model model,
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
-		if (!eventService.exists("Free Court")) {
-			logger.info("into create default event");
-			Event e = new Event();
-			e.setName("Free Court");
-			e.setAuthor(userService.emailToName(SecurityContextHolder
-					.getContext().getAuthentication().getName()));
-			e.setEnabled(true);
-			eventService.createEvent(e);
-		}
+		checkEventExists("Free Court");
 		model.addAttribute("timetable", t);
 		return "createTimetable";
 	}
+	
 
 	@RequestMapping(value = "/timetableDefaults", method = RequestMethod.POST)
 	public String timetableDefaults(Model model, HttpServletRequest request,
@@ -323,8 +321,6 @@ public class TimetableController {
 		logger.info("Showing Timetable Status page....");
 		model.addAttribute("timetableEnabled",
 				timetableService.getTimetableAllSeries());
-	//	model.addAttribute("timetableDisabled",
-				//timetableService.getDisabledTimetables());
 		return "timetableStatus";
 	}
 
@@ -448,7 +444,6 @@ public class TimetableController {
 
 	@RequestMapping("/editTimetable")
 	public String editTimetable(Model model, HttpServletRequest request) {
-
 		List<Event> events = eventService.listAllEvents();
 		List<String> eventName = new ArrayList<String>();
 		for (int i = 0; i < events.size(); i++) {
@@ -459,14 +454,12 @@ public class TimetableController {
 						eventName.add(sortEmailtoName(events.get(i).getName()));
 					}
 				}
-
 			} else {
 				eventName.add(events.get(i).getName());
 			}
 		}
 		Timetable t = timetableService.getById(request.getParameter("courtID"));
 		int count = t.getSlots();
-
 		model.addAttribute("timetable", t);
 		model.addAttribute("events", eventName);
 		model.addAttribute("count", count);
@@ -508,17 +501,32 @@ public class TimetableController {
 		t.setSaturday(saturday);
 		t.setSunday(sunday);
 		timetableService.update(t);
-
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
-
 		return showTimetable(model);
 
 	}
-
+	
+	/**
+	 * Non Mapping Methods
+	 * @return
+	 */
+	
+	/**
+	 * Returns the real name of currently logged in user
+	 * @param email
+	 * @return
+	 */
 	public String sortEmailtoName(String email) {
 		return userService.getUserByUsername(email).getName();
 	}
 
+	/**
+	 * Replaces a position in a List with the name of the person booking
+	 * @param list
+	 * @param position
+	 * @param book
+	 * @return
+	 */
 	public List<String> replaceValue(List<String> list, String position,
 			boolean book) {
 		if (book) {
@@ -553,6 +561,18 @@ public class TimetableController {
 			copy.getFriday().add(original.getFriday().get(i));
 			copy.getSaturday().add(original.getSaturday().get(i));
 			copy.getSunday().add(original.getSunday().get(i));
+		}
+	}
+	
+	public void checkEventExists(String event){
+		if (!eventService.exists(event)) {
+			logger.info("into create default event");
+			Event e = new Event();
+			e.setName("Free Court");
+			e.setAuthor(userService.emailToName(SecurityContextHolder
+					.getContext().getAuthentication().getName()));
+			e.setEnabled(true);
+			eventService.createEvent(e);
 		}
 	}
 
