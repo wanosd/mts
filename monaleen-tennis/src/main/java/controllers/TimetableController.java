@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.File;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,8 +13,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import logs.Log;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +26,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import reports.CSVCreator;
 import service.EventService;
+import service.LogService;
 import service.RoleService;
 import service.TimetableService;
 import service.UserService;
 import timetable.MonaleenTTV1;
 import timetable.Timetable;
 import users.User;
+import email.Email;
+import email.I_Message;
 import events.Event;
 import events.I_Event;
 
@@ -38,7 +47,9 @@ public class TimetableController {
 	private EventService eventService;
 	private UserService userService;
 	private RoleService roleService;
+	private LogService logService;
 	private static Logger logger = Logger.getLogger(TimetableController.class);
+	private JavaMailSender mailSender;
 
 	/**
 	 * Autowiring for service objects
@@ -63,6 +74,17 @@ public class TimetableController {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
+	
+	@Autowired
+	public void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+
+	@Autowired
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
 	
 	/**
 	 * Methods to display Timetable page
@@ -487,7 +509,14 @@ public class TimetableController {
 		timetableService.update(t);
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 		return showTimetable(model);
-
+	}
+	
+	@RequestMapping("/reportNoShow")
+	public String reportNoShow(Model model, HttpServletRequest request){
+		I_Message message = new Email(mailSender);
+		String text = "Reported no show from " + request.getParameter("bookedUser");
+		message.set(SecurityContextHolder.getContext().getAuthentication().getName(), "monaleentennisclub@gmail.com", "No Show", text , null);
+		return reportUser(model, request.getParameter("bookedUser"), message, mailSender);
 	}
 	
 	/**
@@ -568,6 +597,34 @@ public class TimetableController {
 	
 	private void unbookEvent(String loggedin, int id) {
 		eventService.removeBooking(loggedin, id);	
+	}
+	
+	private String reportUser(Model model, String username, I_Message message, JavaMailSender mailSender){
+		logger.info("Reporting NoShow");
+		Log log = new Log();
+		log.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
+		Date today = Calendar.getInstance().getTime();
+		String date = df.format(today);
+		date.replace("\\", "");
+		date.replace(" ", "");
+		log.setAccessed(date);
+		log.setInformationType("NoShow: " + username);
+		if (logService == null) {
+			logger.info("Log Service is Null");
+		}
+		logger.info("About to attempt sending message");
+		if (message.send(mailSender)){
+			logService.createLog(log);
+			model.addAttribute("message", "User reported");
+			return "emailSent";
+		}
+		else{
+			log.setInformationType("Failed Attempt");
+			logService.createLog(log);
+			model.addAttribute("message", "Message Not Sent. Try again.");
+			return "emailSent";
+		}
 	}
 
 }

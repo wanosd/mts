@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import email.*;
 import analytics.MTCAnalytics;
 import reports.CSVCreator;
 import service.AnalyticsService;
@@ -102,33 +103,10 @@ public class MembersController {
 	}
 	
 	private boolean sendMessage(File file) {
-		MimeMessage message = mailSender.createMimeMessage();
-		logger.info("MIME Message created");
-		try {	
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-			logger.info("MIME Helper Okay");
-			helper.setFrom("admin@monaleentennisclub.ie");
-			logger.info("Set From");
-			helper.setTo(SecurityContextHolder.getContext().getAuthentication().getName());
-			logger.info("Set To");
-			helper.setSubject("Monaleen Tennis Club Users");
-			logger.info("Set Sub");
-			helper.setText("This email is confidental. Please do not forward or make copies");
-			logger.info("Set Text. File is " + file.getName() + " at " + file.getAbsolutePath());
-			helper.addAttachment(file.getName(), file);
-			logger.info("Set File");
-			logger.info("Finished putting message together");
-		} catch (MessagingException e) {
-			
-			e.printStackTrace();
-			return false;
-		}
-		logger.info("About to send");
-		mailSender.send(message);
-		logger.info("Sent");
-		return true;
-		
-		
+		String text = "This email is confidental. Please do not forward or make copies";
+		I_Message message = new Email(mailSender);
+		message.set("admin@monaleentennisclub.ie", SecurityContextHolder.getContext().getAuthentication().getName(), "Monaleen Tennis Club Users", text, file);
+		return message.send(mailSender);
 	}
 
 	@RequestMapping("/viewAllMembers")
