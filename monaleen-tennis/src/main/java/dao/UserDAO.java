@@ -193,6 +193,7 @@ public class UserDAO {
 		return session().createQuery("from User where enabled = '0'").list();
 	}
 	
+	
 	/**
 	 * The following code is left in for comparative purposes to compare JDBC to Hibernate. They will only be used in a Test Class at a later stage and are left in the code for this purpose alone
 	 */
@@ -279,6 +280,8 @@ public class UserDAO {
 	public List<User> getPendingUsersJDBC() {
 		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
 	}
+
+	
 
 	
 }

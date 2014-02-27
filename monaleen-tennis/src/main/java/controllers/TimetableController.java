@@ -165,7 +165,7 @@ public class TimetableController {
 
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
-		
+		int courtID = Integer.valueOf(request.getParameter("courtID"));
 		Timetable first = timetableService.getById(request.getParameter("courtID"));
 		List<Timetable> firstSeries = timetableService.getTimetableSeries(first.getSeries());
 		Timetable current = firstSeries.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
@@ -180,11 +180,8 @@ public class TimetableController {
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
-		int left = roleService.getNoBookings(userService.getUserByUsername(
-				loggedIn).getAuthority())
-				- userService.getUserByUsername(loggedIn).getBookings_left();
+		int left = bookingsLeft(loggedIn, String.valueOf(courtID));
 		model.addAttribute("bookings", left);
-		int courtID = Integer.valueOf(request.getParameter("courtID"));
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
@@ -199,6 +196,7 @@ public class TimetableController {
 	@RequestMapping("/changeCourt")
 	public String prevNext(Model model, HttpServletRequest request){
 		Timetable tt = timetableService.getById(request.getParameter("courtID"));
+		int courtID = Integer.valueOf(request.getParameter("courtID"));
 		model = addDateToTimetable(model, String.valueOf(tt.getId()));
 		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
 		model.addAttribute("name", SecurityContextHolder.getContext()
@@ -208,11 +206,9 @@ public class TimetableController {
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
-		int left = roleService.getNoBookings(userService.getUserByUsername(
-				loggedIn).getAuthority())
-				- userService.getUserByUsername(loggedIn).getBookings_left();
+		int left = bookingsLeft(loggedIn, String.valueOf(courtID));
 		model.addAttribute("bookings", left);
-		int courtID = Integer.valueOf(request.getParameter("courtID"));
+	
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
@@ -283,9 +279,7 @@ public class TimetableController {
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
-		int left = roleService.getNoBookings(userService.getUserByUsername(
-				loggedIn).getAuthority())
-				- userService.getUserByUsername(loggedIn).getBookings_left();
+		int left = bookingsLeft(loggedIn, String.valueOf(id));
 		model.addAttribute("bookings", left);
 		int courtID = Integer.valueOf(id);
 		int nextCourt = courtID + 1;
@@ -350,9 +344,7 @@ public class TimetableController {
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
 
-		if (userService.getUserByUsername(loggedIn).getBookings_left() == roleService
-				.getNoBookings(userService.getUserByUsername(loggedIn)
-						.getAuthority())) {
+		if (roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) == eventService.checkBookingsUser(loggedIn, request.getParameter("ttid"))) {
 			return "bookingExists";
 
 		}
@@ -385,6 +377,7 @@ public class TimetableController {
 
 	@RequestMapping("/unbookCourt")
 	public String unbookCourt(Model model, HttpServletRequest request) {
+		String loggedin = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info("Parameter is " + request.getParameter("position"));
 		logger.info("Day is " + request.getParameter("day"));
 		logger.info("TTID is " + request.getParameter("ttid"));
@@ -393,18 +386,9 @@ public class TimetableController {
 		list = t.getList(request.getParameter("day"));
 		replaceValue(list, request.getParameter("position"), false);
 		t.setList(list, "day");
-		Event e = new Event();
-		e.setName(SecurityContextHolder.getContext().getAuthentication()
-				.getName());
-		e.setAuthor("BOOKING_SYSTEM");
-		eventService.deleteEvent(e);
+		unbookEvent(loggedin, t.getId());
 		timetableService.update(t);
-		userService.getUserByUsername(
-				SecurityContextHolder.getContext().getAuthentication()
-						.getName()).setBookings_left(
-				userService.getUserByUsername(
-						SecurityContextHolder.getContext().getAuthentication()
-								.getName()).getBookings_left() - 1);
+		userService.getUserByUsername(loggedin).setBookings_left(userService.getUserByUsername(loggedin).getBookings_left() - 1);
 		logger.info("UNBOOK SHOULD HAVE WORKED!");
 		return courtBooked(model, request.getParameter("ttid"));
 	}
@@ -574,6 +558,16 @@ public class TimetableController {
 			e.setEnabled(true);
 			eventService.createEvent(e);
 		}
+	}
+	
+	public int bookingsLeft(String username, String id){
+		return roleService.getNoBookings(userService.getUserByUsername(
+				username).getAuthority())
+				- eventService.checkBookingsUser(username, id);
+	}
+	
+	private void unbookEvent(String loggedin, int id) {
+		eventService.removeBooking(loggedin, id);	
 	}
 
 }

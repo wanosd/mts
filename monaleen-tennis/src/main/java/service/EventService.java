@@ -58,6 +58,15 @@ public class EventService {
 		eventDAO.deleteUserEntries(id);
 	}
 	
+	public int checkBookingsUser(String name, String id){
+		return eventDAO.checkBookingsUserCourt(name, id);
+	}
+
+	public void removeBooking(String loggedin, int id) {
+		eventDAO.removeBooking(loggedin, id);
+		
+	}
+	
 	
 	
 }

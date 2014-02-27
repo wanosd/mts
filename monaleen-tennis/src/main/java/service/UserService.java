@@ -19,7 +19,7 @@ public class UserService {
 		this.usersDAO = usersDAO;
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public List<User> getCurrentMembers(){
 		return usersDAO.getUsers();
 	}
@@ -37,7 +37,7 @@ public class UserService {
 		return usersDAO.exists(username);
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public User getUserByUsername(String username){
 		return usersDAO.getUserByUserName(username);
 	}
@@ -52,7 +52,7 @@ public class UserService {
 		usersDAO.disableMember(username);
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public void editProfile(User formUser, String username){
 		usersDAO.changeUserDetails(formUser, username);
 	}
@@ -62,7 +62,7 @@ public class UserService {
 		return getUserByUsername(email).getName();
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public List<User> getAdmins(){
 		return usersDAO.getAdmins();
 	}
@@ -71,6 +71,7 @@ public class UserService {
 	public void createGrade(String name){
 		usersDAO.createGrade(name);
 	}
+	
 	
 
 	

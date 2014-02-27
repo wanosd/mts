@@ -94,5 +94,18 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 		return session().createQuery("from Event where enabled ='1' OR author='BOOKING_SYSTEM'").list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public int checkBookingsUserCourt(String loggedin, String id) {
+		List<Event> event = session().createQuery("from Event where name = '" + loggedin + "' AND courtid = '" + id + "'").list();
+		return event.size();
+	}
+
+	@SuppressWarnings("unchecked")
+	public void removeBooking(String loggedin, int id) {
+		List<Event> event = session().createQuery("from Event where name = '" + loggedin + "' AND courtid = '" + id + "'").list();
+		session().delete(event.get(0));
+		
+	}
+	
 
 }
