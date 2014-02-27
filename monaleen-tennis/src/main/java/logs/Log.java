@@ -31,6 +31,10 @@ public class Log {
 	@Column(name = "logtype")
 	private String logtype;
 	
+	public Log(){
+		
+	}
+	
 	public Log(String username, String date, String informationType, String logType){
 		this.username = username;
 		this.accessed = date;

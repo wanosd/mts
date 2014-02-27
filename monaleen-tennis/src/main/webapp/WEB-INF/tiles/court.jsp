@@ -45,7 +45,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="monday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">
@@ -95,7 +95,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="tuesday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">
@@ -146,7 +146,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="wednesday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">
@@ -197,7 +197,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="thursday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">
@@ -248,7 +248,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="friday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">
@@ -298,7 +298,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="saturday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">
@@ -348,7 +348,7 @@ You have ${bookings } bookings left!
 									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="${row}" name="bookedUser" />
 												<input type="hidden" value="sunday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Report User">

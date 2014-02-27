@@ -4,7 +4,7 @@ Bugs / Major To Do
 <ul>
 <li>Fix Booking Bug when changing roles </li>
 <li><s>Export to XLS</s></li>
-<li>No Shows</li>
+<li><s>No Shows</s></li>
 Data Usage - Pending Number
 Advertising Slot
 Assign Members to groups, assign no bookings to groups
@@ -77,6 +77,15 @@ Hibernate -
 		<td></td>
 		<td><a href="${pageContext.request.contextPath}/chooseEdit"
 			class="adminLink">Edit Timetable</a></td>
+		<td></td>
+	</tr>
+		<%--Row 6 --%>
+	<tr>
+		<td>Edit Role></td></td>
+		<td></td>
+		<td></td>
+		<td><a href="${pageContext.request.contextPath}/adminAnalysis"
+			class="adminLink">Timetable Analysis</a></td>
 		<td></td>
 	</tr>
 

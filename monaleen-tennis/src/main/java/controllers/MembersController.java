@@ -5,7 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -46,10 +48,10 @@ public class MembersController {
 	private RoleService roleService;
 	private AnalyticsService analyticsService;
 	private static Logger logger = Logger.getLogger(MembersController.class);
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@RequestMapping("/members")
 	public String showMembers(Model model) {
 		logger.info("Showing Members Page....");
@@ -57,56 +59,80 @@ public class MembersController {
 		model.addAttribute("users", userList);
 		return "members";
 	}
-	
+
 	@RequestMapping("/membership")
-	public String showMembership(){
+	public String showMembership() {
 		return "membership";
 	}
-	
+
 	@RequestMapping("/emailSent")
-	public String emailSent(){
+	public String emailSent() {
 		return "emailSent";
 	}
-	
+
+	@RequestMapping("/adminAnalysis")
+	public String adminAnalysis(Model model) {
+		List<Log> logs = logService.getNoShowLogStats();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		for (int i = 0; i < logs.size(); i++) {
+			if (map.containsKey(logs.get(i).getInformationType())) {
+				int current = map.get(logs.get(i).getInformationType());
+				current++;
+				map.put(logs.get(i).getInformationType(), current);
+			} else {
+				map.put(logs.get(i).getInformationType(), 1);
+			}
+		}
+		model.addAttribute("map", map);
+		logger.info("MAP" + map.toString());
+		return "adminAnalysis";
+	}
+
 	@RequestMapping("/emailMembersToAddress")
-	public String emailMembers(Model model){
+	public String emailMembers(Model model) {
 		List<User> users = userService.getCurrentMembers();
-		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		String name = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
 		logger.info("Entering CreateCSVToEmail");
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
 		String date = df.format(today);
 		date.replace("\\", "");
 		date.replace(" ", "");
-		Log log = new Log(SecurityContextHolder.getContext().getAuthentication().getName(), date , "ListExistingUsers" , "datacopy");
+		Log log = new Log(SecurityContextHolder.getContext()
+				.getAuthentication().getName(), date, "ListExistingUsers",
+				"datacopy");
 		if (logService == null) {
 			logger.info("Log Service is Null");
 		}
-		File file = new File(name.replace("@","") + date + ".csv");
+		File file = new File(name.replace("@", "") + date + ".csv");
 		CSVCreator.createCSVToEmail(users, file);
 		logger.info("About to attempt sending message");
-		if (sendMessage(file)){
+		if (sendMessage(file)) {
 			logService.createLog(log);
-			model.addAttribute("message", "Email successfully sent to : " + SecurityContextHolder.getContext().getAuthentication().getName());
-		}
-		else{
+			model.addAttribute("message", "Email successfully sent to : "
+					+ SecurityContextHolder.getContext().getAuthentication()
+							.getName());
+		} else {
 			log.setInformationType("Failed Attempt");
 			logService.createLog(log);
 			model.addAttribute("message", "Message Failed. Try Again Later.");
 		}
-		
+
 		return "emailSent";
 	}
-	
+
 	private boolean sendMessage(File file) {
 		String text = "This email is confidental. Please do not forward or make copies";
 		I_Message message = new Email(mailSender);
-		message.set("admin@monaleentennisclub.ie", SecurityContextHolder.getContext().getAuthentication().getName(), "Monaleen Tennis Club Users", text, file);
+		message.set("admin@monaleentennisclub.ie", SecurityContextHolder
+				.getContext().getAuthentication().getName(),
+				"Monaleen Tennis Club Users", text, file);
 		return message.send(mailSender);
 	}
 
 	@RequestMapping("/viewAllMembers")
-	public String viewAllMembers(Model model){
+	public String viewAllMembers(Model model) {
 		List<User> userList = userService.getCurrentMembers();
 		List<User> nonuserList = userService.getPendingMembers();
 		List<User> admins = userService.getAdmins();
@@ -136,22 +162,19 @@ public class MembersController {
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
 	}
-	
+
 	@RequestMapping("/approveFinalize")
 	public String approveMembers(Model model, HttpServletRequest request) {
 		logger.info("Moving to approveFinalize and back to approveMembers");
 		userService.enableUser(request.getParameter("username"));
 		List<User> toApprove = userService.getPendingMembers();
 		/**
-		MTCAnalytics a = analyticsService.get();
-		if (a == null){
-			a = new MTCAnalytics();	
-		}
-		a.run(userService);
-		analyticsService.save(a);**/
+		 * MTCAnalytics a = analyticsService.get(); if (a == null){ a = new
+		 * MTCAnalytics(); } a.run(userService); analyticsService.save(a);
+		 **/
 		model.addAttribute("toApprove", toApprove);
 		return "approveMembers";
-	} 
+	}
 
 	@RequestMapping("/blockMembers")
 	public String showActiveMembers(Model model) {
@@ -161,7 +184,7 @@ public class MembersController {
 		model.addAttribute("toBlock", toBlock);
 		return "blockMembers";
 	}
-	
+
 	@RequestMapping("/blockFinalize")
 	public String blockMembers(Model model, HttpServletRequest request) {
 		logger.info("Moving to blockFinalize and back to blockMembers");
@@ -170,9 +193,8 @@ public class MembersController {
 		toBlock = removeLoggedIn(toBlock);
 		model.addAttribute("toBlock", toBlock);
 		return "blockMembers";
-	} 
-	
-	
+	}
+
 	@RequestMapping("/createmembers")
 	public String createMembers(Model model) {
 		defaultRoles();
@@ -224,37 +246,40 @@ public class MembersController {
 		model.addAttribute("member", user);
 		return "profile";
 	}
-	
+
 	@RequestMapping("/displayUsers")
-	public String chooseUserAdmin(Model model){
+	public String chooseUserAdmin(Model model) {
 		model.addAttribute("users", userService.getCurrentMembers());
 		return "displayUsers";
 	}
-	
+
 	@RequestMapping("/adminEditProfile")
-	public String chooseUserAdminEdit(Model model, HttpServletRequest request){
+	public String chooseUserAdminEdit(Model model, HttpServletRequest request) {
 		logger.info("Username is " + request.getParameter("username"));
-		model.addAttribute("member", userService.getUserByUsername(request.getParameter("username")));
+		model.addAttribute("member",
+				userService.getUserByUsername(request.getParameter("username")));
 		model.addAttribute("roles", roleService.getRoleNames());
 		return "adminEditProfile";
 	}
-	
+
 	@RequestMapping(value = "/adminProfileUpdate", method = RequestMethod.POST)
-	public String doAdminEditProfile(Model model, @ModelAttribute("member") User member, BindingResult result, HttpServletRequest request) {
+	public String doAdminEditProfile(Model model,
+			@ModelAttribute("member") User member, BindingResult result,
+			HttpServletRequest request) {
 		logger.info("Showing Profile Updated.....");
 		if (result.hasErrors()) {
 			logger.info("Errors found in BindingResult object....");
 			return "adminEditProfile";
-		} 
+		}
 		if (userService.exists(member.getUsername())) {
 			result.rejectValue("username", "Duplicate Key",
 					"This email address has already been used");
 			return "adminEditProfile";
-		}
-		else {
+		} else {
 			try {
 				logger.info("About to  update user");
-				userService.editProfile(member, request.getParameter("username"));
+				userService.editProfile(member,
+						request.getParameter("username"));
 				logger.info("User Updated");
 				return "profileUpdated";
 			} catch (Exception e) {
@@ -265,21 +290,22 @@ public class MembersController {
 	}
 
 	@RequestMapping(value = "/profileUpdated", method = RequestMethod.POST)
-	public String doEditProfile(Model model, @ModelAttribute("member") User member, BindingResult result) {
+	public String doEditProfile(Model model,
+			@ModelAttribute("member") User member, BindingResult result) {
 		logger.info("Showing Profile Updated.....");
 		if (result.hasErrors()) {
 			logger.info("Errors found in BindingResult object....");
 			return "profile";
-		} 
+		}
 		if (userService.exists(member.getUsername())) {
 			result.rejectValue("username", "Duplicate Key",
 					"This email address has already been used");
 			return "profile";
-		}
-		else {
+		} else {
 			try {
 				logger.info("About to  update user");
-				userService.editProfile(member, SecurityContextHolder.getContext().getAuthentication().getName());
+				userService.editProfile(member, SecurityContextHolder
+						.getContext().getAuthentication().getName());
 				logger.info("User Updated");
 				return "profileUpdated";
 			} catch (Exception e) {
@@ -288,29 +314,29 @@ public class MembersController {
 			}
 		}
 	}
-	
+
 	@RequestMapping("/createGrade")
-	public String createGrade(){
+	public String createGrade() {
 		return "createGrade";
 	}
-	
+
 	@RequestMapping("/saveGrade")
-	public String saveGrade(Model model, HttpServletRequest request){
+	public String saveGrade(Model model, HttpServletRequest request) {
 		userService.createGrade(request.getParameter("grade"));
 		return "grades";
 	}
-	
+
 	@RequestMapping("/createNewRole")
-	public String newRole(Model model){
+	public String newRole(Model model) {
 		defaultRoles();
 		model.addAttribute("role", new Role());
 		model.addAttribute("existing", roleService.getRoles());
 		return "createNewRole";
 	}
-	
+
 	private void defaultRoles() {
 		List<Role> roles = roleService.getRoles();
-		if (roles.size() == 0){
+		if (roles.size() == 0) {
 			Role admin = new Role("ROLE_ADMIN", 9999);
 			Role committee = new Role("ROLE_COMMITTEE", 9999);
 			Role member = new Role("ROLE_MEMBER", 3);
@@ -322,38 +348,38 @@ public class MembersController {
 			roleService.create(member_warning);
 			roleService.create(member_suspend);
 		}
-		
+
 	}
 
 	@RequestMapping("/saveNewRole")
 	public String saveNewRole(Model model, @ModelAttribute("role") Role role,
-			BindingResult result){
-		if (roleService.exists(role.getName())){
+			BindingResult result) {
+		if (roleService.exists(role.getName())) {
 			result.rejectValue("name", "Duplicate Key",
 					"This role exists already");
 			return newRole(model);
-		}
-		else{
+		} else {
 			roleService.create(role);
 			return newRole(model);
 		}
-		
+
 	}
-	
-	public List<User> removeLoggedIn(List<User> users){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+	public List<User> removeLoggedIn(List<User> users) {
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
 		String username = auth.getName();
 		User temp = null;
-		for (int i = 0; i < users.size(); i++){
-			if (users.get(i).getUsername().equals(username)){
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUsername().equals(username)) {
 				temp = users.get(i);
 			}
 		}
-		
-		if (temp != null){
+
+		if (temp != null) {
 			users.remove(temp);
 			return users;
-		}else{
+		} else {
 			return users;
 		}
 	}
@@ -362,7 +388,7 @@ public class MembersController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	@Autowired
 	public void setLogService(LogService logService) {
 		this.logService = logService;
@@ -377,13 +403,5 @@ public class MembersController {
 	public void setAnalyticsService(AnalyticsService analyticsService) {
 		this.analyticsService = analyticsService;
 	}
-	
-	
 
-
-	
-	
-
-	
-	
 }

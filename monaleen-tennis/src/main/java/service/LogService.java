@@ -1,10 +1,13 @@
 package service;
 
 import java.util.List;
+import java.util.Map;
 
 import logs.Log;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import dao.LogDAO;
 
 @Service("logService")
@@ -23,5 +26,9 @@ public class LogService {
 	
 	public List<Log> getLogs(){
 		return logDAO.getLogs();
+	}
+	
+	public List<Log> getNoShowLogStats(){
+		return logDAO.getNoShowLogStats();
 	}
 }
