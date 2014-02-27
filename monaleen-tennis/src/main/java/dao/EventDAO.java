@@ -54,12 +54,12 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	
 	@SuppressWarnings("unchecked")
 	public List<Event> getEnabledEvents(){
-		return session().createQuery("from Event where enabled ='1'").list();
+		return session().createQuery("from Event where enabled ='1' AND author != 'BOOKING_SYSTEM'").list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Event> getDisabledEvents(){
-		return session().createQuery("from Event where enabled ='0'").list();
+		return session().createQuery("from Event where enabled ='0' AND author != 'BOOKING_SYSTEM'").list();
 	}
 
 	public I_Event getEventID(String name) {
@@ -91,7 +91,7 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	
 	@SuppressWarnings("unchecked")
 	public List<Event> getAllEvents() {
-		return session().createQuery("from Event where enabled ='1' OR author='BOOKING_SYSTEM'").list();
+		return session().createQuery("from Event where enabled ='1' AND author !='BOOKING_SYSTEM'").list();
 	}
 	
 	@SuppressWarnings("unchecked")
