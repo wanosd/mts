@@ -601,15 +601,12 @@ public class TimetableController {
 	
 	private String reportUser(Model model, String username, I_Message message, JavaMailSender mailSender){
 		logger.info("Reporting NoShow");
-		Log log = new Log();
-		log.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
 		String date = df.format(today);
 		date.replace("\\", "");
 		date.replace(" ", "");
-		log.setAccessed(date);
-		log.setInformationType("NoShow: " + username);
+		Log log = new Log(SecurityContextHolder.getContext().getAuthentication().getName(), date, username, "noshow");
 		if (logService == null) {
 			logger.info("Log Service is Null");
 		}

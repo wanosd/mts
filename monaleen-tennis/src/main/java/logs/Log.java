@@ -17,17 +17,27 @@ public class Log {
 	
 	@GeneratedValue
 	@Id
-	int id;
+	private int id;
 	
 	@Column(name="username")
-	String username;
+	private String username;
 	
 	@Column(name="accessed")
-	String accessed;
+	private String accessed;
 	
 	@Column(name="informationType")
-	String informationType;
+	private String informationType;
 
+	@Column(name = "logtype")
+	private String logtype;
+	
+	public Log(String username, String date, String informationType, String logType){
+		this.username = username;
+		this.accessed = date;
+		this.informationType = informationType;
+		this.logtype = logType;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -59,6 +69,16 @@ public class Log {
 	public void setInformationType(String informationType) {
 		this.informationType = informationType;
 	}
+
+	public String getLogtype() {
+		return logtype;
+	}
+
+	public void setLogtype(String logtype) {
+		this.logtype = logtype;
+	}
+	
+	
 	
 	
 

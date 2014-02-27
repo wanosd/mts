@@ -73,19 +73,15 @@ public class MembersController {
 		List<User> users = userService.getCurrentMembers();
 		String name = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.info("Entering CreateCSVToEmail");
-		Log log = new Log();
-		log.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
 		String date = df.format(today);
 		date.replace("\\", "");
 		date.replace(" ", "");
-		log.setAccessed(date);
-		log.setInformationType("ListExistingUsers");
+		Log log = new Log(SecurityContextHolder.getContext().getAuthentication().getName(), date , "ListExistingUsers" , "datacopy");
 		if (logService == null) {
 			logger.info("Log Service is Null");
 		}
-		
 		File file = new File(name.replace("@","") + date + ".csv");
 		CSVCreator.createCSVToEmail(users, file);
 		logger.info("About to attempt sending message");

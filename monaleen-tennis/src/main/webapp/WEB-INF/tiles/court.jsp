@@ -32,8 +32,7 @@ You have ${bookings } bookings left!
 							<tr>
 								<td class="inner">${row}
 								<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -41,27 +40,17 @@ You have ${bookings } bookings left!
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Unbook">
 											</form>
+										</c:when>
+									
+									<c:otherwise>
 											<form action="${pageContext.request.contextPath}/reportNoShow"
 												method="POST">
-												<input type="hidden" value="${loop.index}" name="position" />
-												<input type="hidden" value="monday" name="day" />
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="monday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report No Show">
+													type="submit" value="Report User">
 											</form>
-										</c:when>
-									</c:choose>
-									<c:choose>
-									<c:when test="${name ne pageContext['request'].userPrincipal.name}">
-										<form action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${loop.index}" name="position" />
-												<input type="hidden" value="monday" name="day" />
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report No Show">
-											</form>
-										</c:when>
+									</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
@@ -91,9 +80,9 @@ You have ${bookings } bookings left!
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+								<td class="inner">${row}
+								<c:choose>
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -102,6 +91,16 @@ You have ${bookings } bookings left!
 													type="submit" value="Unbook">
 											</form>
 										</c:when>
+									
+									<c:otherwise>
+											<form action="${pageContext.request.contextPath}/reportNoShow"
+												method="POST">
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="tuesday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Report User">
+											</form>
+									</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
@@ -132,9 +131,9 @@ You have ${bookings } bookings left!
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+								<td class="inner">${row}
+								<c:choose>
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -143,6 +142,16 @@ You have ${bookings } bookings left!
 													type="submit" value="Unbook">
 											</form>
 										</c:when>
+									
+									<c:otherwise>
+											<form action="${pageContext.request.contextPath}/reportNoShow"
+												method="POST">
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="wednesday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Report User">
+											</form>
+									</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
@@ -173,9 +182,9 @@ You have ${bookings } bookings left!
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+								<td class="inner">${row}
+								<c:choose>
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -184,6 +193,16 @@ You have ${bookings } bookings left!
 													type="submit" value="Unbook">
 											</form>
 										</c:when>
+									
+									<c:otherwise>
+											<form action="${pageContext.request.contextPath}/reportNoShow"
+												method="POST">
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="thursday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Report User">
+											</form>
+									</c:otherwise>
 									</c:choose>
 								</td>
 
@@ -214,9 +233,9 @@ You have ${bookings } bookings left!
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+								<td class="inner">${row}
+								<c:choose>
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -225,6 +244,16 @@ You have ${bookings } bookings left!
 													type="submit" value="Unbook">
 											</form>
 										</c:when>
+									
+									<c:otherwise>
+											<form action="${pageContext.request.contextPath}/reportNoShow"
+												method="POST">
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="friday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Report User">
+											</form>
+									</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
@@ -254,9 +283,9 @@ You have ${bookings } bookings left!
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+								<td class="inner">${row}
+								<c:choose>
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -265,6 +294,16 @@ You have ${bookings } bookings left!
 													type="submit" value="Unbook">
 											</form>
 										</c:when>
+									
+									<c:otherwise>
+											<form action="${pageContext.request.contextPath}/reportNoShow"
+												method="POST">
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="saturday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Report User">
+											</form>
+									</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
@@ -294,9 +333,9 @@ You have ${bookings } bookings left!
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td class="inner">${row}<c:choose>
-										<c:when
-											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
+								<td class="inner">${row}
+								<c:choose>
+										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
@@ -305,6 +344,16 @@ You have ${bookings } bookings left!
 													type="submit" value="Unbook">
 											</form>
 										</c:when>
+									
+									<c:otherwise>
+											<form action="${pageContext.request.contextPath}/reportNoShow"
+												method="POST">
+												<input type="hidden" value="${name}" name="bookedUser" />
+												<input type="hidden" value="sunday" name="day" /> <input
+													type="hidden" value="${court.id }" name="ttid" /> <input
+													type="submit" value="Report User">
+											</form>
+									</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
