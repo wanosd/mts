@@ -396,8 +396,17 @@ public Model analyseTimetable(Model model){
 		List<Timetable> series = timetableService.getTimetableAllSeries();
 		List<Timetable> firstSeries = timetableService.getTimetableSeries(series.get(0).getSeries());
 		Timetable current = firstSeries.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		Timetable next = firstSeries.get(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+		if (next != null){
+			attributes.put("nextmon", iterateList(next.getMonday()));
+			attributes.put("nexttue", iterateList(next.getTuesday()));
+			attributes.put("nextwed", iterateList(next.getWednesday()));
+			attributes.put("nextthur", iterateList(next.getThursday()));
+			attributes.put("nextfri", iterateList(next.getFriday()));
+			attributes.put("nextsat", iterateList(next.getSaturday()));
+			attributes.put("nextsun", iterateList(next.getSunday()));
+		}
 		attributes.put("monday", iterateList(current.getMonday()));
-		logger.info("MAP FOR TT ANALYSIS: " + iterateList(current.getMonday()).toString());
 		attributes.put("tuesday", iterateList(current.getTuesday()));
 		attributes.put("wednesday", iterateList(current.getWednesday()));
 		attributes.put("thursday", iterateList(current.getThursday()));

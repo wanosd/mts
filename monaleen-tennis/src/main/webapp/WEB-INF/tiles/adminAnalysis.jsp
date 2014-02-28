@@ -67,3 +67,45 @@
 	<td>${entry.key} ${entry.value}</td>
 	</c:forEach></tr>
 </table>
+
+<c:if test="${not empty nextmon }">
+<center><h2>Next Week Bookings</h2></center>
+
+<table align="center">
+	<tr>
+		<th>Day</th>
+		<th>Free Slots</th>
+		<th>User Bookings</th>
+		<th>Club Bookings</th>
+	
+	</tr>
+	<tr><th>Monday</th>
+	<c:forEach var="entry" items="${nextmon}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+	<tr><th>Tuesday</th>
+	<c:forEach var="entry" items="${nexttue}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+	<tr><th>Wednesday</th>
+	<c:forEach var="entry" items="${nextwed}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+	<tr><th>Thursday</th>
+	<c:forEach var="entry" items="${nextthur}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+	<tr><th>Friday</th>
+	<c:forEach var="entry" items="${nextfri}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+	<tr><th>Saturday</th>
+	<c:forEach var="entry" items="${nextsat}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+	<tr><th>Sunday</th>
+	<c:forEach var="entry" items="${nextsun}">
+	<td>${entry.key} ${entry.value}</td>
+	</c:forEach></tr>
+</table>
+</c:if>
