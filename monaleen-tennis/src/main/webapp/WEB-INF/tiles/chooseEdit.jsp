@@ -13,7 +13,7 @@
 			action="${pageContext.request.contextPath}/editTimetable"
 			commandName="timetable">
 			<tr>
-				<td><input type="hidden" value="${row.series}" name="series" />${row.name}</td>
+				<td><input type="hidden" value="${row.id}" name="courtID" />${row.name}</td>
 				<td><input value="Select" type="submit" /></td>
 			</tr>
 		</sf:form>

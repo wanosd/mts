@@ -176,9 +176,7 @@ public class TimetableController {
 				eventName.add(events.get(i).getName());
 			}
 		}
-		Timetable t;
-		List<Timetable> series = timetableService.getTimetableSeries(Integer.parseInt(request.getParameter("series")));
-		t = (MonaleenTTV1) series.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		Timetable t = (MonaleenTTV1) timetableService.getById(request.getParameter("courtID"));
 		logger.info("TEST: " + t.getMonday());
 		int count = t.getSlots();
 		model.addAttribute("timetable", t);
@@ -191,10 +189,6 @@ public class TimetableController {
 	@RequestMapping("/finalizeEditTT")
 	public String finalizeEdit(Model model, HttpServletRequest request,
 			@ModelAttribute("timetable") MonaleenTTV1 t) {
-		
-		List<Timetable> series = timetableService.getTimetableSeries(Integer.parseInt(request.getParameter("series")));
-		t = (MonaleenTTV1) series.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
-		t = (MonaleenTTV1) constructTimetable(t, request);
 		timetableService.update(t);
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 		return showTimetable(model);
