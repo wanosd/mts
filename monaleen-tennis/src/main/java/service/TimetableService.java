@@ -29,6 +29,7 @@ public class TimetableService {
 	}
 	
 	public List<Timetable> getAllTimetables(){
+		timetableDAO.cleanUp();
 		return timetableDAO.listTimetables();
 	}
 	

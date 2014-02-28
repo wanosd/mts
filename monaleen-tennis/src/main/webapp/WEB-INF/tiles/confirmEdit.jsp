@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<h1>This is empty right now. Just checking if JSTL Works</h1>
 
 <sf:form id="details" method="post"
 	action="${pageContext.request.contextPath}/finalizeEditTT"

@@ -32,7 +32,6 @@ public class MonaleenTTV1 implements Timetable {
 	private String name;
 	
 	@NotNull
-	//@Min(value = 1, message="Value must be 1 or greater")
 	private int slots;
 	
 	private int startTime;

@@ -6,7 +6,7 @@
 			
 		<tr><th>Court Name</th><td><sf:input name ="name" type="text" path="name"/></td></tr>
 			
-		<tr><th>Slots per Day</th><td><sf:input name ="slots" type="text" path="slots"/><td></tr>
+		<tr><th>Slots per Day</th><td><sf:input name ="slots" type="text" path="slots"/><sf:errors path="slots" cssClass="error"></sf:errors><td></tr>
 		
 		<tr><th>Start Time</th><td><sf:input name ="startTime" type="text" path="startTime"/></td></tr>
 		

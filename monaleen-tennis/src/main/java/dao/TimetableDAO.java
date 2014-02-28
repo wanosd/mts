@@ -151,4 +151,11 @@ public class TimetableDAO {
 		}
 	}
 
+	public void cleanUp(){
+		List<Timetable> list = getTimetableSeries(0);
+		for (int i = 0; i < list.size(); i++ ){
+				session().delete(list.get(i));
+		}
+	}
+	
 }

@@ -91,7 +91,6 @@ public class TimetableController {
 	 * Methods to display Timetable page
 	 */
 
-	
 	@RequestMapping("/timetable")
 	public String showTimetable(Model model) {
 		logger.info("Showing Timetable page....");
@@ -102,7 +101,7 @@ public class TimetableController {
 
 	@RequestMapping("/createTimetable")
 	public String createTimetablePage(Model model,
-			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
+			@ModelAttribute("timetable") MonaleenTTV1 t) {
 		checkEventExists("Free Court");
 		model.addAttribute("timetable", t);
 		return "createTimetable";
@@ -112,13 +111,8 @@ public class TimetableController {
 	@RequestMapping(value = "/timetableDefaults", method = RequestMethod.POST)
 	public String timetableDefaults(Model model, HttpServletRequest request,
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
-		logger.info("TIMETABLE SLOTS " + t.getSlots());
-		logger.info(t);
-		t.setEnabled(false);
 		if (result.hasErrors()) {
-			result.rejectValue("slots", "Duplicate Key",
-					"Must be greater than 0");
-			return createTimetablePage(model, t, result);
+			return "createTimetable";
 		}
 		timetableService.create(t);
 		List<Event> events = eventService.listEnabledEvents();
@@ -138,7 +132,75 @@ public class TimetableController {
 			@ModelAttribute("timetable") MonaleenTTV1 t, BindingResult result) {
 
 		t = (MonaleenTTV1) timetableService.getById(request.getParameter("id"));
+		t = (MonaleenTTV1) constructTimetable(t, request);
+		t.setSeries(timetableService.getNewSeries() + 1);
+		for (int i = 0; i < t.getTotal(); i++) {
+			MonaleenTTV1 test = new MonaleenTTV1();
+			copyList(test, t);
+			test.setName(t.getName() + " Week " + (i + 1));
+			test.setSeries(t.getSeries());
+			test.setSlots(t.getSlots());
+			test.setTotal(t.getTotal());
+			test.setEnabled(false);
+			timetableService.create(test);
+		}
+		timetableService.delete(t);
 
+		model.addAttribute("timetable", timetableService.getEnabledTimetables());
+
+		return showTimetableStatus(model);
+	}
+	
+	@RequestMapping("/chooseEdit")
+	public String edit(Model model) {
+		logger.info("Showing Timetable Edit page....");
+		List<Timetable> timetable = timetableService.getAllTimetables();
+		model.addAttribute("timetable", timetable);
+		return "chooseEdit";
+	}
+
+	@RequestMapping("/editTimetable")
+	public String editTimetable(Model model, HttpServletRequest request) {
+		List<Event> events = eventService.listAllEventsEnabledFilter();
+		logger.info(events.toString());
+		List<String> eventName = new ArrayList<String>();
+		for (int i = 0; i < events.size(); i++) {
+			if (events.get(i).getName().contains("@")) {
+				for (int k = 0; k < eventName.size(); k++) {
+					if (!eventName.contains(sortEmailtoName(events.get(i)
+							.getName()))) {
+						eventName.add(sortEmailtoName(events.get(i).getName()));
+					}
+				}
+			} else {
+				eventName.add(events.get(i).getName());
+			}
+		}
+		Timetable t;
+		List<Timetable> series = timetableService.getTimetableSeries(Integer.parseInt(request.getParameter("series")));
+		t = (MonaleenTTV1) series.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		logger.info("TEST: " + t.getMonday());
+		int count = t.getSlots();
+		model.addAttribute("timetable", t);
+		model.addAttribute("events", eventName);
+		model.addAttribute("count", count);
+		return "confirmEdit";
+	}
+
+
+	@RequestMapping("/finalizeEditTT")
+	public String finalizeEdit(Model model, HttpServletRequest request,
+			@ModelAttribute("timetable") MonaleenTTV1 t) {
+		
+		List<Timetable> series = timetableService.getTimetableSeries(Integer.parseInt(request.getParameter("series")));
+		t = (MonaleenTTV1) series.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		t = (MonaleenTTV1) constructTimetable(t, request);
+		timetableService.update(t);
+		model.addAttribute("timetable", timetableService.getEnabledTimetables());
+		return showTimetable(model);
+	}
+	
+	public Timetable constructTimetable(Timetable t, HttpServletRequest request){
 		List<String> monday = new ArrayList<String>();
 		List<String> tuesday = new ArrayList<String>();
 		List<String> wednesday = new ArrayList<String>();
@@ -167,25 +229,9 @@ public class TimetableController {
 		t.setFriday(friday);
 		t.setSaturday(saturday);
 		t.setSunday(sunday);
-		t.setSeries(timetableService.getNewSeries() + 1);
-
-		for (int i = 0; i < t.getTotal(); i++) {
-			MonaleenTTV1 test = new MonaleenTTV1();
-			copyList(test, t);
-			test.setName(t.getName() + " Week " + (i + 1));
-			test.setSeries(t.getSeries());
-			test.setSlots(t.getSlots());
-			test.setTotal(t.getTotal());
-			test.setEnabled(false);
-			timetableService.create(test);
-		}
-		timetableService.delete(t);
-
-		model.addAttribute("timetable", timetableService.getEnabledTimetables());
-
-		return showTimetableStatus(model);
+		
+		return t;
 	}
-
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
@@ -441,77 +487,8 @@ public class TimetableController {
 		return "resetTimetable";
 	}
 
-	@RequestMapping("/chooseEdit")
-	public String edit(Model model) {
-		logger.info("Showing Timetable Edit page....");
-		List<Timetable> timetable = timetableService.getAllTimetables();
-		model.addAttribute("timetable", timetable);
-		return "chooseEdit";
-	}
-
-	@RequestMapping("/editTimetable")
-	public String editTimetable(Model model, HttpServletRequest request) {
-		List<Event> events = eventService.listAllEventsEnabledFilter();
-		logger.info(events.toString());
-		List<String> eventName = new ArrayList<String>();
-		for (int i = 0; i < events.size(); i++) {
-			if (events.get(i).getName().contains("@")) {
-				for (int k = 0; k < eventName.size(); k++) {
-					if (!eventName.contains(sortEmailtoName(events.get(i)
-							.getName()))) {
-						eventName.add(sortEmailtoName(events.get(i).getName()));
-					}
-				}
-			} else {
-				eventName.add(events.get(i).getName());
-			}
-		}
-		Timetable t = timetableService.getById(request.getParameter("courtID"));
-		int count = t.getSlots();
-		model.addAttribute("timetable", t);
-		model.addAttribute("events", eventName);
-		model.addAttribute("count", count);
-		return "confirmEdit";
-	}
-
-	@RequestMapping("/finalizeEditTT")
-	public String finalizeEdit(Model model, HttpServletRequest request,
-			@ModelAttribute("timetable") MonaleenTTV1 t) {
-
-		t = (MonaleenTTV1) timetableService.getById(request.getParameter("id"));
-
-		List<String> monday = new ArrayList<String>();
-		List<String> tuesday = new ArrayList<String>();
-		List<String> wednesday = new ArrayList<String>();
-		List<String> thursday = new ArrayList<String>();
-		List<String> friday = new ArrayList<String>();
-		List<String> saturday = new ArrayList<String>();
-		List<String> sunday = new ArrayList<String>();
-		for (int i = 0; i < t.getSlots(); i++) {
-			monday.add(request.getParameter("monday[" + String.valueOf(i) + "]"));
-			tuesday.add(request.getParameter("tuesday[" + String.valueOf(i)
-					+ "]"));
-			wednesday.add(request.getParameter("wednesday[" + String.valueOf(i)
-					+ "]"));
-			thursday.add(request.getParameter("thursday[" + String.valueOf(i)
-					+ "]"));
-			friday.add(request.getParameter("friday[" + String.valueOf(i) + "]"));
-			saturday.add(request.getParameter("saturday[" + String.valueOf(i)
-					+ "]"));
-			sunday.add(request.getParameter("sunday[" + String.valueOf(i) + "]"));
-		}
-
-		t.setMonday(monday);
-		t.setTuesday(tuesday);
-		t.setWednesday(wednesday);
-		t.setThursday(thursday);
-		t.setFriday(friday);
-		t.setSaturday(saturday);
-		t.setSunday(sunday);
-		timetableService.update(t);
-		model.addAttribute("timetable", timetableService.getEnabledTimetables());
-		return showTimetable(model);
-	}
+	
+	
 	
 	@RequestMapping("/reportNoShow")
 	public String reportNoShow(Model model, HttpServletRequest request){
