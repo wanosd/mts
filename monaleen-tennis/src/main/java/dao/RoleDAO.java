@@ -75,4 +75,36 @@ private static Logger logger = Logger.getLogger(RoleDAO.class);
 		return names;
 	}
 
+	public Role getRole(String id) {
+		Criteria crit = session().createCriteria(Role.class);
+		crit.add(Restrictions.eq("id", Integer.valueOf(id))); 
+		return (Role) crit.uniqueResult();
+	}
+	
+	public List<String> defaultRoles(){
+		List<Role> roles = getRoles();
+		if (roles.size() == 0) {
+			Role admin = new Role("ROLE_ADMIN", 9999);
+			Role committee = new Role("ROLE_COMMITTEE", 9999);
+			Role member = new Role("ROLE_MEMBER", 3);
+			Role member_warning = new Role("ROLE_WARNING", 2);
+			Role member_suspend = new Role("ROLE_SUSPEND", 1);
+			createRole(admin);
+			createRole(committee);
+			createRole(member);
+			createRole(member_warning);
+			createRole(member_suspend);
+			return null;
+		}
+		else{
+			List<String> list = new ArrayList<String>();
+			list.add("ROLE_ADMIN");
+			list.add("ROLE_COMMITTEE");
+			list.add("ROLE_MEMBER");
+			list.add("ROLE_WARNING");
+			list.add("ROLE_SUSPEND");
+			return list;
+		}
+	}
+
 }

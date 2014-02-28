@@ -73,7 +73,7 @@ Bugs / Major To Do
 	<%--Row 5 --%>
 	<tr>
 		<td><a href="${pageContext.request.contextPath}/createNewRole"
-			class="adminLink">Add New Role</a></td></td>
+			class="adminLink">Manage Roles</a></td></td>
 		<td></td>
 		<td></td>
 		<td><a href="${pageContext.request.contextPath}/chooseEdit"
@@ -82,7 +82,7 @@ Bugs / Major To Do
 	</tr>
 		<%--Row 6 --%>
 	<tr>
-		<td>Edit Role></td></td>
+		<td></td>
 		<td></td>
 		<td></td>
 		<td><a href="${pageContext.request.contextPath}/adminAnalysis"

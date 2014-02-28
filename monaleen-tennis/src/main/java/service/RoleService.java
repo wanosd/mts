@@ -45,6 +45,14 @@ public class RoleService {
 	public int getNoBookings(String role){
 		return roleDAO.noBookings(role);
 	}
+ 
+	public Role getRole(String id) {
+		return roleDAO.getRole(id);
+	}
+	
+	public List<String> defaultRoles(){
+		return roleDAO.defaultRoles();
+	}
 	
 	
 }
