@@ -155,14 +155,22 @@ public class TimetableController {
 	public String seriesChoice(Model model){
 		
 		int series = timetableService.getNewSeries();
+		logger.info("SERIES:" + series);
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		for (int i = 1; i <= series; i++){
+			if (timetableService.getTimetableSeries(i) == null){
+				
+			}
+			else if (timetableService.getTimetableSeries(i) != null){
 			map.put(i, timetableService.getTimetableSeries(i).get(0).getName());
+			}
 		}
 		model.addAttribute("map", map);
 		return "seriesChoice";
 	}
 	
+	
+
 	@RequestMapping("/chooseEdit")
 	public String edit(Model model, HttpServletRequest request) {
 		logger.info("Showing Timetable Edit page....");
@@ -238,6 +246,7 @@ public class TimetableController {
 		
 		return t;
 	}
+	
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
@@ -481,14 +490,15 @@ public class TimetableController {
 			}
 			t.setList(list, days[i]);
 		}
+		timetableService.update(t);
 		eventService.deleteUserEvents(request.getParameter("courtID"));
 		return "admin";
 	}
 
 	@RequestMapping("/reset")
-	public String reset(Model model) {
+	public String reset(Model model, HttpServletRequest request) {
 		logger.info("Showing Timetable Reset page....");
-		List<Timetable> timetable = timetableService.getEnabledTimetables();
+		List<Timetable> timetable = timetableService.getTimetableSeries(Integer.valueOf(request.getParameter("seriesID")));
 		model.addAttribute("timetable", timetable);
 		return "resetTimetable";
 	}

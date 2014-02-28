@@ -29,7 +29,7 @@ public class TimetableService {
 	}
 	
 	public List<Timetable> getAllTimetables(){
-		timetableDAO.cleanUp();
+		
 		return timetableDAO.listTimetables();
 	}
 	
@@ -62,6 +62,7 @@ public class TimetableService {
 	}
 
 	public List<Timetable> getTimetableSeries(int series) {
+		timetableDAO.cleanUp();
 		return timetableDAO.getTimetableSeries(series);
 		
 	} 

@@ -41,4 +41,6 @@ public interface Timetable {
 
 	public int getId();
 
+	public void setSeries(int id);
+
 }

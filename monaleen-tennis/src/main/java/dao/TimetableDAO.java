@@ -149,6 +149,16 @@ public class TimetableDAO {
 		for (int i = 0; i < delete.size(); i++){
 			session().delete(delete.get(i));
 		}
+		for (int i = (id+1); i <= newSeries(); i++){
+			List<Timetable> series = getTimetableSeries(i);
+			int sID = series.get(0).getSeries();
+			sID = sID - 1;
+			for (int j = 0; j < series.size(); j++){
+				Timetable t = series.get(j);
+				t.setSeries(id);
+				session().update(t);
+			}
+		}
 	}
 
 	public void cleanUp(){

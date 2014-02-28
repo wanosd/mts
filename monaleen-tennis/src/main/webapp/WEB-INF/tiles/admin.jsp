@@ -56,7 +56,7 @@ Bugs / Major To Do
 		<td><a href="${pageContext.request.contextPath}/deleteTournament"
 			class="adminLink">Delete Tournament</a></td>
 		<td>Edit News Story - TO DO!</td>
-		<td><a href="${pageContext.request.contextPath}/reset"
+		<td><a href="${pageContext.request.contextPath}/seriesChoice"
 			class="adminLink">Reset Current Timetable - Removes ALL bookings (To Fix)</a></td>
 		<td>Remove Event - TO DO!</td>
 	</tr>

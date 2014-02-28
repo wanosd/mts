@@ -3,11 +3,13 @@
 
 <table class = "members">
 	<tr>
-		<td>ID</td>
-		<td>Name</td>
-		<td>No Slots</td>
-		<td>Start Time</td>
-		<td>End Time</td>
+		<th>ID</th>
+		<th>Name</th>
+		<th>No Slots</th>
+		<th>Start Time</th>
+		<th>End Time</th>
+				<th>Enabled</th>
+						<th>Action</th>
 	</tr>
 
 	<c:forEach var="row" items="${timetable}">
