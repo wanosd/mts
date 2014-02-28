@@ -2,14 +2,15 @@
 
 Bugs / Major To Do
 <ul>
-<li>Fix Booking Bug when changing roles </li>
+<li><s>Fix Booking Bug when changing roles</s></li>
 <li><s>Export to XLS</s></li>
 <li><s>No Shows</s></li>
-Data Usage - Pending Number
-Advertising Slot
-Assign Members to groups, assign no bookings to groups
-WAMP - ref architecutre for Spring.
-Hibernate - 
+<li><s>Data Usage - Pending Number - Overview of free slots for admin</s></li>
+<li>Advertising Slot</li>
+<li><s>Assign Members to groups</s></li>
+<li>Assign no bookings to groups</li>
+<li>WAMP - ref architecutre for Spring.</li>
+<li>Hibernate</li>
 </ul>
 
 
@@ -56,7 +57,7 @@ Hibernate -
 			class="adminLink">Delete Tournament</a></td>
 		<td>Edit News Story - TO DO!</td>
 		<td><a href="${pageContext.request.contextPath}/reset"
-			class="adminLink">Reset Timetable - Removes ALL bookings</a></td>
+			class="adminLink">Reset Current Timetable - Removes ALL bookings (To Fix)</a></td>
 		<td>Remove Event - TO DO!</td>
 	</tr>
 	<%--Row 4 --%>
