@@ -76,7 +76,7 @@ Bugs / Major To Do
 			class="adminLink">Manage Roles</a></td></td>
 		<td></td>
 		<td></td>
-		<td><a href="${pageContext.request.contextPath}/chooseEdit"
+		<td><a href="${pageContext.request.contextPath}/seriesChoice"
 			class="adminLink">Edit Timetable</a></td>
 		<td></td>
 	</tr>

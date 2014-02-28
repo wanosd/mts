@@ -31,6 +31,7 @@
 		<security:intercept-url pattern="/emailMembersToAddress" access="hasRole('ROLE_ADMIN')" />
 				<security:intercept-url pattern="/adminProfileUpdate" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/createTimetable" access="hasRole('ROLE_ADMIN')" />
+				<security:intercept-url pattern="/seriesChoice" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/adminAnalysis" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/blockMembers" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/deleteTimetable" access="hasRole('ROLE_ADMIN')" />

@@ -226,4 +226,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Edit User Profile"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/adminAnalysis.jsp"></put-attribute>
 	</definition>
+	
+		<definition name="seriesChoice" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Series Choice"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/seriesChoice.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

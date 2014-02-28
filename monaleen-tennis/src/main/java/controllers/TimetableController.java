@@ -151,10 +151,22 @@ public class TimetableController {
 		return showTimetableStatus(model);
 	}
 	
+	@RequestMapping("/seriesChoice")
+	public String seriesChoice(Model model){
+		
+		int series = timetableService.getNewSeries();
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		for (int i = 1; i <= series; i++){
+			map.put(i, timetableService.getTimetableSeries(i).get(0).getName());
+		}
+		model.addAttribute("map", map);
+		return "seriesChoice";
+	}
+	
 	@RequestMapping("/chooseEdit")
-	public String edit(Model model) {
+	public String edit(Model model, HttpServletRequest request) {
 		logger.info("Showing Timetable Edit page....");
-		List<Timetable> timetable = timetableService.getAllTimetables();
+		List<Timetable> timetable = timetableService.getTimetableSeries(Integer.valueOf(request.getParameter("seriesID")));
 		model.addAttribute("timetable", timetable);
 		return "chooseEdit";
 	}

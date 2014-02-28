@@ -8,6 +8,8 @@ public interface Timetable {
 	
 	public void setEnabled(boolean e);
 	
+	public String getName();
+	
 	public List<String> getMonday();
 	public void setMonday(List<String> day);
 	
