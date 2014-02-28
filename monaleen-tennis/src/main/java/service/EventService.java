@@ -46,6 +46,10 @@ public class EventService {
 		return eventDAO.getAllEvents();
 	}
 	
+	public List<Event> listAllEventsEnabledFilter(){
+		return eventDAO.getAllEventsEnabledFilter();
+	}
+	
 	public I_Event getEventIdByName(String name){
 		return eventDAO.getEventID(name);
 	}

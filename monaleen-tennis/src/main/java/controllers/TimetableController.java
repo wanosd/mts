@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -450,7 +451,8 @@ public class TimetableController {
 
 	@RequestMapping("/editTimetable")
 	public String editTimetable(Model model, HttpServletRequest request) {
-		List<Event> events = eventService.listAllEvents();
+		List<Event> events = eventService.listAllEventsEnabledFilter();
+		logger.info(events.toString());
 		List<String> eventName = new ArrayList<String>();
 		for (int i = 0; i < events.size(); i++) {
 			if (events.get(i).getName().contains("@")) {
@@ -623,5 +625,6 @@ public class TimetableController {
 			return "emailSent";
 		}
 	}
-
+	
+	
 }

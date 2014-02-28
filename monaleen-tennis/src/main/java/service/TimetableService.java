@@ -66,7 +66,7 @@ public class TimetableService {
 	} 
 	
 	public List<Timetable> getTimetableSeriesSecion(int start, int end, int series){
-		return timetableDAO.getTimetableSeriesSecion(start, end, series);
+		return timetableDAO.getTimetableSeriesSection(start, end, series);
 	}
 
 	public List<Timetable> getTimetableAllSeries() {
@@ -76,6 +76,7 @@ public class TimetableService {
 	public void deleteSeries(int id) {
 		timetableDAO.deleteSeries(id);
 	}
+
 	
 
 

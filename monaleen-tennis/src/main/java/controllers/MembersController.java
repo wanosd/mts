@@ -33,9 +33,12 @@ import email.*;
 import analytics.MTCAnalytics;
 import reports.CSVCreator;
 import service.AnalyticsService;
+import service.EventService;
 import service.LogService;
 import service.RoleService;
+import service.TimetableService;
 import service.UserService;
+import timetable.Timetable;
 import users.FormValidationGroup;
 import users.Role;
 import users.User;
@@ -47,6 +50,8 @@ public class MembersController {
 	private LogService logService;
 	private RoleService roleService;
 	private AnalyticsService analyticsService;
+	private EventService eventService;
+	private TimetableService timetableService;
 	private static Logger logger = Logger.getLogger(MembersController.class);
 
 	@Autowired
@@ -83,6 +88,7 @@ public class MembersController {
 				map.put(logs.get(i).getInformationType(), 1);
 			}
 		}
+	    model = analyseTimetable(model);
 		model.addAttribute("map", map);
 		logger.info("MAP" + map.toString());
 		return "adminAnalysis";
@@ -383,6 +389,50 @@ public class MembersController {
 			return users;
 		}
 	}
+	
+public Model analyseTimetable(Model model){
+		
+		Map<String, Map<String, Integer>> attributes = new HashMap<String, Map<String, Integer>>();
+		List<Timetable> series = timetableService.getTimetableAllSeries();
+		List<Timetable> firstSeries = timetableService.getTimetableSeries(series.get(0).getSeries());
+		Timetable current = firstSeries.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		attributes.put("monday", iterateList(current.getMonday()));
+		logger.info("MAP FOR TT ANALYSIS: " + iterateList(current.getMonday()).toString());
+		attributes.put("tuesday", iterateList(current.getTuesday()));
+		attributes.put("wednesday", iterateList(current.getWednesday()));
+		attributes.put("thursday", iterateList(current.getThursday()));
+		attributes.put("friday", iterateList(current.getFriday()));
+		attributes.put("saturday", iterateList(current.getSaturday()));
+		attributes.put("sunday", iterateList(current.getSunday()));
+		model.addAllAttributes(attributes);
+		return model;
+	}
+	
+	public Map<String, Integer> iterateList(List<String> list){
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("free", 0);
+		map.put("club", 0);
+		map.put("booked", 0);
+		for (int i = 0; i < list.size(); i++){
+			if (list.get(i).equals("Free Court")){
+					int j = map.get("free");
+					j++;
+					map.put("free", j);
+			}
+			else if (eventService.exists(list.get(i))){
+					int j = map.get("club");
+					j++;
+					map.put("club", j);
+			}
+			else{
+					int j = map.get("booked");
+					j++;
+					map.put("booked", j);
+			}
+		}
+		return map;
+	}
+
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -403,5 +453,17 @@ public class MembersController {
 	public void setAnalyticsService(AnalyticsService analyticsService) {
 		this.analyticsService = analyticsService;
 	}
+
+	@Autowired
+	public void setEventService(EventService eventService) {
+		this.eventService = eventService;
+	}
+
+	@Autowired
+	public void setTimetableService(TimetableService timetableService) {
+		this.timetableService = timetableService;
+	}
+	
+	
 
 }

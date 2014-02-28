@@ -126,7 +126,7 @@ public class TimetableDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Timetable> getTimetableSeriesSecion(int start, int end, int series){
+	public List<Timetable> getTimetableSeriesSection(int start, int end, int series){
 		List<Timetable> list = session().createQuery("from MonaleenTTV1 where series ='" + series +"'")
 				.list();
 		List<Timetable> section = new ArrayList<Timetable>();
