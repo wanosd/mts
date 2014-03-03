@@ -356,7 +356,7 @@ public class TimetableController {
 		}
 		if (nextCourt > courtID) {
 			if (checkPosition(timetableService.getById(String.valueOf(courtID))) > (Calendar
-					.getInstance().get(Calendar.WEEK_OF_YEAR)-1)
+					.getInstance().get(Calendar.WEEK_OF_YEAR)-2)
 					+ timetableService.getById(String.valueOf(courtID))
 							.getPrev()) {
 				return false;
