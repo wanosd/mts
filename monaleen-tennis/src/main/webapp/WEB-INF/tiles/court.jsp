@@ -6,6 +6,7 @@ You have ${bookings } bookings left!
 <p>Court Name: ${court.name}</p>
 <p>Current Date: ${date }</p>
 <p>Week Beginning: ${testDate }</p>
+<p>Court LookAhead: ${court.prev }</p>
 <table width="100%">
 	<tr>
 		<td class="nothing">
@@ -371,6 +372,7 @@ You have ${bookings } bookings left!
 				<sf:form method="post"
 					action="${pageContext.request.contextPath}/changeCourt"
 					commandName="timetable">
+					<input type="hidden" value="${court.prev}" name="prev" />
 					<input type="hidden" value="${prev}" name="courtID" />
 					<input value="Previous Week" type="submit" />
 				</sf:form>
@@ -383,6 +385,7 @@ You have ${bookings } bookings left!
 				<sf:form method="post"
 					action="${pageContext.request.contextPath}/changeCourt"
 					commandName="timetable">
+								<input type="hidden" value="${court.prev}" name="prev" />
 					<input type="hidden" value="${next}" name="courtID" />
 					<input value="Next Week" type="submit" />
 				</sf:form>

@@ -65,11 +65,6 @@ public class MembersController {
 		return "members";
 	}
 
-	@RequestMapping("/membership")
-	public String showMembership() {
-		return "membership";
-	}
-
 	@RequestMapping("/emailSent")
 	public String emailSent() {
 		return "emailSent";

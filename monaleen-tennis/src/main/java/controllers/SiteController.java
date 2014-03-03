@@ -35,5 +35,11 @@ public class SiteController {
 		return "contactus";
 	}
 	
+	@RequestMapping("/membership")
+	public String membership(Model model){
+		
+		return "membership";
+	}
+	
 	
 }

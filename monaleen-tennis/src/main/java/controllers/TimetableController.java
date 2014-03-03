@@ -55,7 +55,7 @@ public class TimetableController {
 	/**
 	 * Autowiring for service objects
 	 */
-	
+
 	@Autowired
 	public void setTimetableService(TimetableService timetableService) {
 		this.timetableService = timetableService;
@@ -75,7 +75,7 @@ public class TimetableController {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
-	
+
 	@Autowired
 	public void setLogService(LogService logService) {
 		this.logService = logService;
@@ -86,7 +86,6 @@ public class TimetableController {
 		this.mailSender = mailSender;
 	}
 
-	
 	/**
 	 * Methods to display Timetable page
 	 */
@@ -106,7 +105,6 @@ public class TimetableController {
 		model.addAttribute("timetable", t);
 		return "createTimetable";
 	}
-	
 
 	@RequestMapping(value = "/timetableDefaults", method = RequestMethod.POST)
 	public String timetableDefaults(Model model, HttpServletRequest request,
@@ -150,31 +148,30 @@ public class TimetableController {
 
 		return showTimetableStatus(model);
 	}
-	
+
 	@RequestMapping("/seriesChoice")
-	public String seriesChoice(Model model){
-		
+	public String seriesChoice(Model model) {
+
 		int series = timetableService.getNewSeries();
 		logger.info("SERIES:" + series);
 		Map<Integer, String> map = new HashMap<Integer, String>();
-		for (int i = 1; i <= series; i++){
-			if (timetableService.getTimetableSeries(i) == null){
-				
-			}
-			else if (timetableService.getTimetableSeries(i) != null){
-			map.put(i, timetableService.getTimetableSeries(i).get(0).getName());
+		for (int i = 1; i <= series; i++) {
+			if (timetableService.getTimetableSeries(i) == null) {
+
+			} else if (timetableService.getTimetableSeries(i) != null) {
+				map.put(i, timetableService.getTimetableSeries(i).get(0)
+						.getName());
 			}
 		}
 		model.addAttribute("map", map);
 		return "seriesChoice";
 	}
-	
-	
 
 	@RequestMapping("/chooseEdit")
 	public String edit(Model model, HttpServletRequest request) {
 		logger.info("Showing Timetable Edit page....");
-		List<Timetable> timetable = timetableService.getTimetableSeries(Integer.valueOf(request.getParameter("seriesID")));
+		List<Timetable> timetable = timetableService.getTimetableSeries(Integer
+				.valueOf(request.getParameter("seriesID")));
 		model.addAttribute("timetable", timetable);
 		return "chooseEdit";
 	}
@@ -196,7 +193,8 @@ public class TimetableController {
 				eventName.add(events.get(i).getName());
 			}
 		}
-		Timetable t = (MonaleenTTV1) timetableService.getById(request.getParameter("courtID"));
+		Timetable t = (MonaleenTTV1) timetableService.getById(request
+				.getParameter("courtID"));
 		logger.info("TEST: " + t.getMonday());
 		int count = t.getSlots();
 		model.addAttribute("timetable", t);
@@ -205,7 +203,6 @@ public class TimetableController {
 		return "confirmEdit";
 	}
 
-
 	@RequestMapping("/finalizeEditTT")
 	public String finalizeEdit(Model model, HttpServletRequest request,
 			@ModelAttribute("timetable") MonaleenTTV1 t) {
@@ -213,8 +210,8 @@ public class TimetableController {
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 		return showTimetable(model);
 	}
-	
-	public Timetable constructTimetable(Timetable t, HttpServletRequest request){
+
+	public Timetable constructTimetable(Timetable t, HttpServletRequest request) {
 		List<String> monday = new ArrayList<String>();
 		List<String> tuesday = new ArrayList<String>();
 		List<String> wednesday = new ArrayList<String>();
@@ -243,23 +240,32 @@ public class TimetableController {
 		t.setFriday(friday);
 		t.setSaturday(saturday);
 		t.setSunday(sunday);
-		
+
 		return t;
 	}
-	
+
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
-		Timetable first = timetableService.getById(request.getParameter("courtID"));
-		List<Timetable> firstSeries = timetableService.getTimetableSeries(first.getSeries());
-		Timetable current = firstSeries.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
-		logger.info("GETTING POSITION: " + (Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		Timetable first = timetableService.getById(request
+				.getParameter("courtID"));
+		List<Timetable> firstSeries = timetableService.getTimetableSeries(first
+				.getSeries());
+		Timetable current = firstSeries.get((Calendar.getInstance().get(
+				Calendar.WEEK_OF_YEAR) - 1));
+		logger.info("GETTING POSITION: "
+				+ (Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
 		model = addDateToTimetable(model, String.valueOf(current.getId()));
-		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
+		model.addAttribute("series",
+				timetableService.getById(request.getParameter("courtID"))
+						.getSeries());
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("court", current);
-		logger.info("TT:" + firstSeries.get(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1).toString());
+		logger.info("TT:"
+				+ firstSeries.get(
+						Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1)
+						.toString());
 		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
@@ -269,20 +275,23 @@ public class TimetableController {
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
-			model.addAttribute("next",(current.getId() + 1));
+			model.addAttribute("next", (current.getId() + 1));
 		}
 		if (seriesMatch(courtID, prevCourt)) {
-				model.addAttribute("prev", (current.getId() - 1));
+			model.addAttribute("prev", (current.getId() - 1));
 		}
 		return "court";
 	}
-	
+
 	@RequestMapping("/changeCourt")
-	public String prevNext(Model model, HttpServletRequest request){
-		Timetable tt = timetableService.getById(request.getParameter("courtID"));
+	public String prevNext(Model model, HttpServletRequest request) {
+		Timetable tt = timetableService
+				.getById(request.getParameter("courtID"));
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
 		model = addDateToTimetable(model, String.valueOf(tt.getId()));
-		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
+		model.addAttribute("series",
+				timetableService.getById(request.getParameter("courtID"))
+						.getSeries());
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("court", tt);
@@ -292,16 +301,15 @@ public class TimetableController {
 				.getAuthentication().getName();
 		int left = bookingsLeft(loggedIn, String.valueOf(courtID));
 		model.addAttribute("bookings", left);
-	
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
-			model.addAttribute("next",(tt.getId() + 1));
+			model.addAttribute("next", (tt.getId() + 1));
 		}
 		if (seriesMatch(courtID, prevCourt)) {
 			model.addAttribute("prev", (tt.getId() - 1));
 		}
-		
+
 		return "court";
 	}
 
@@ -346,6 +354,15 @@ public class TimetableController {
 		if (timetableService.getById(String.valueOf(nextCourt)) == null) {
 			return false;
 		}
+		if (nextCourt > courtID) {
+			if (checkPosition(timetableService.getById(String.valueOf(courtID))) > Calendar
+					.getInstance().get(Calendar.WEEK_OF_YEAR)
+					+ timetableService.getById(String.valueOf(courtID))
+							.getPrev()) {
+				return false;
+			}
+		}
+
 		if (timetableService.getById(String.valueOf(courtID)).getSeries() == timetableService
 				.getById(String.valueOf(nextCourt)).getSeries()) {
 			return true;
@@ -354,7 +371,7 @@ public class TimetableController {
 	}
 
 	@RequestMapping(value = "/courtBooked")
-	public String courtBooked(Model model, String id) {
+	public String courtBooked(Model model, String id, HttpServletRequest request) {
 		model = addDateToTimetable(model, id);
 		model.addAttribute("court", timetableService.getById(id));
 		model.addAttribute("name", SecurityContextHolder.getContext()
@@ -380,17 +397,18 @@ public class TimetableController {
 
 	@RequestMapping("/deleteTimetable")
 	public String deleteTimetable(Model model) {
-		model.addAttribute("timetable", timetableService.getTimetableAllSeries());
+		model.addAttribute("timetable",
+				timetableService.getTimetableAllSeries());
 		return "deleteTimetable";
 	}
-	
 
 	@RequestMapping("/confirmTTDelete")
 	public String confirmTTDelete(Model model, HttpServletRequest request) {
 		Timetable t = timetableService.getById(request
 				.getParameter("timetableID"));
 		timetableService.deleteSeries(t.getSeries());
-		model.addAttribute("timetable", timetableService.getTimetableAllSeries());
+		model.addAttribute("timetable",
+				timetableService.getTimetableAllSeries());
 		return "deleteTimetable";
 	}
 
@@ -428,7 +446,9 @@ public class TimetableController {
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
 
-		if (roleService.getNoBookings(userService.getUserByUsername(loggedIn).getAuthority()) == eventService.checkBookingsUser(loggedIn, request.getParameter("ttid"))) {
+		if (roleService.getNoBookings(userService.getUserByUsername(loggedIn)
+				.getAuthority()) == eventService.checkBookingsUser(loggedIn,
+				request.getParameter("ttid"))) {
 			return "bookingExists";
 
 		}
@@ -455,13 +475,14 @@ public class TimetableController {
 							SecurityContextHolder.getContext()
 									.getAuthentication().getName())
 							.getBookings_left() + 1);
-			return courtBooked(model, request.getParameter("ttid"));
+			return courtBooked(model, request.getParameter("ttid"), request);
 		}
 	}
 
 	@RequestMapping("/unbookCourt")
 	public String unbookCourt(Model model, HttpServletRequest request) {
-		String loggedin = SecurityContextHolder.getContext().getAuthentication().getName();
+		String loggedin = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
 		logger.info("Parameter is " + request.getParameter("position"));
 		logger.info("Day is " + request.getParameter("day"));
 		logger.info("TTID is " + request.getParameter("ttid"));
@@ -472,9 +493,10 @@ public class TimetableController {
 		t.setList(list, "day");
 		unbookEvent(loggedin, t.getId());
 		timetableService.update(t);
-		userService.getUserByUsername(loggedin).setBookings_left(userService.getUserByUsername(loggedin).getBookings_left() - 1);
+		userService.getUserByUsername(loggedin).setBookings_left(
+				userService.getUserByUsername(loggedin).getBookings_left() - 1);
 		logger.info("UNBOOK SHOULD HAVE WORKED!");
-		return courtBooked(model, request.getParameter("ttid"));
+		return courtBooked(model, request.getParameter("ttid"), request);
 	}
 
 	@RequestMapping("/resetTimetable")
@@ -498,29 +520,33 @@ public class TimetableController {
 	@RequestMapping("/reset")
 	public String reset(Model model, HttpServletRequest request) {
 		logger.info("Showing Timetable Reset page....");
-		List<Timetable> timetable = timetableService.getTimetableSeries(Integer.valueOf(request.getParameter("seriesID")));
+		List<Timetable> timetable = timetableService.getTimetableSeries(Integer
+				.valueOf(request.getParameter("seriesID")));
 		model.addAttribute("timetable", timetable);
 		return "resetTimetable";
 	}
 
-	
-	
-	
 	@RequestMapping("/reportNoShow")
-	public String reportNoShow(Model model, HttpServletRequest request){
+	public String reportNoShow(Model model, HttpServletRequest request) {
 		I_Message message = new Email(mailSender);
-		String text = "Reported no show from " + request.getParameter("bookedUser");
-		message.set(SecurityContextHolder.getContext().getAuthentication().getName(), "monaleentennisclub@gmail.com", "No Show", text , null);
-		return reportUser(model, request.getParameter("bookedUser"), message, mailSender);
+		String text = "Reported no show from "
+				+ request.getParameter("bookedUser");
+		message.set(SecurityContextHolder.getContext().getAuthentication()
+				.getName(), "monaleentennisclub@gmail.com", "No Show", text,
+				null);
+		return reportUser(model, request.getParameter("bookedUser"), message,
+				mailSender);
 	}
-	
+
 	/**
 	 * Non Mapping Methods
+	 * 
 	 * @return
 	 */
-	
+
 	/**
 	 * Returns the real name of currently logged in user
+	 * 
 	 * @param email
 	 * @return
 	 */
@@ -530,6 +556,7 @@ public class TimetableController {
 
 	/**
 	 * Replaces a position in a List with the name of the person booking
+	 * 
 	 * @param list
 	 * @param position
 	 * @param book
@@ -571,8 +598,8 @@ public class TimetableController {
 			copy.getSunday().add(original.getSunday().get(i));
 		}
 	}
-	
-	public void checkEventExists(String event){
+
+	public void checkEventExists(String event) {
 		if (!eventService.exists(event)) {
 			logger.info("into create default event");
 			Event e = new Event();
@@ -583,41 +610,41 @@ public class TimetableController {
 			eventService.createEvent(e);
 		}
 	}
-	
-	public int bookingsLeft(String username, String id){
-		return roleService.getNoBookings(userService.getUserByUsername(
-				username).getAuthority())
+
+	public int bookingsLeft(String username, String id) {
+		return roleService.getNoBookings(userService
+				.getUserByUsername(username).getAuthority())
 				- eventService.checkBookingsUser(username, id);
 	}
-	
+
 	private void unbookEvent(String loggedin, int id) {
-		eventService.removeBooking(loggedin, id);	
+		eventService.removeBooking(loggedin, id);
 	}
-	
-	private String reportUser(Model model, String username, I_Message message, JavaMailSender mailSender){
+
+	private String reportUser(Model model, String username, I_Message message,
+			JavaMailSender mailSender) {
 		logger.info("Reporting NoShow");
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
 		String date = df.format(today);
 		date.replace("\\", "");
 		date.replace(" ", "");
-		Log log = new Log(SecurityContextHolder.getContext().getAuthentication().getName(), date, username, "noshow");
+		Log log = new Log(SecurityContextHolder.getContext()
+				.getAuthentication().getName(), date, username, "noshow");
 		if (logService == null) {
 			logger.info("Log Service is Null");
 		}
 		logger.info("About to attempt sending message");
-		if (message.send(mailSender)){
+		if (message.send(mailSender)) {
 			logService.createLog(log);
 			model.addAttribute("message", "User reported");
 			return "emailSent";
-		}
-		else{
+		} else {
 			log.setInformationType("Failed Attempt");
 			logService.createLog(log);
 			model.addAttribute("message", "Message Not Sent. Try again.");
 			return "emailSent";
 		}
 	}
-	
-	
+
 }
