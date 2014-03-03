@@ -3,13 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 Timetable Page
-<table class="members">
+<table class="members" align="center">
 	<tr>
-		<td>ID</td>
-		<td>Name</td>
-		<td>No Slots</td>
-		<td>Total Weeks</td>
-		<td>Enable</td>
+		<th>ID</th>
+		<th>Name</th>
+		<th>No Slots</th>
+		<th>Total Weeks</th>
+		<th>Enabled?</th>
+		<th>Action</th>
 	</tr>
 	<c:forEach var="row" items="${timetableEnabled}">
 		<sf:form method="post"

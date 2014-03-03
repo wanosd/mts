@@ -139,6 +139,7 @@ public class TimetableController {
 			test.setSeries(t.getSeries());
 			test.setSlots(t.getSlots());
 			test.setTotal(t.getTotal());
+			test.setPrev(t.getPrev());
 			test.setEnabled(false);
 			timetableService.create(test);
 		}
@@ -354,8 +355,8 @@ public class TimetableController {
 			return false;
 		}
 		if (nextCourt > courtID) {
-			if (checkPosition(timetableService.getById(String.valueOf(courtID))) > Calendar
-					.getInstance().get(Calendar.WEEK_OF_YEAR)
+			if (checkPosition(timetableService.getById(String.valueOf(courtID))) > (Calendar
+					.getInstance().get(Calendar.WEEK_OF_YEAR)-1)
 					+ timetableService.getById(String.valueOf(courtID))
 							.getPrev()) {
 				return false;
