@@ -52,7 +52,7 @@
 		<li class="linkslist"><a
 			href="${pageContext.request.contextPath}/news" class="home">news</a></li>
 		<li class="linkslist"><a href="" class="home">training</a></li>
-		<li class="linkslist"><a href="" class="home">faq/contact</a></li>
+		<li class="linkslist"><a href="${pageContext.request.contextPath}/contactus" class="home">faq/contact</a></li>
 
 	</ul>
 </div>

@@ -77,6 +77,12 @@ public class UserDAO {
 		logger.info("Selecting All Admin Members....");
 		return session().createQuery("from User where authority = 'ROLE_ADMIN'").list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> getCommittee() {
+		logger.info("Selecting All Admin Members....");
+		return session().createQuery("from User where authority = 'ROLE_COMMITTEE'").list();
+	}
 
 	/*
 	 * Method to get a list of all users in the database
@@ -280,6 +286,8 @@ public class UserDAO {
 	public List<User> getPendingUsersJDBC() {
 		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
 	}
+
+	
 
 	
 

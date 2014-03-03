@@ -62,7 +62,6 @@ public class UserService {
 		return getUserByUsername(email).getName();
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public List<User> getAdmins(){
 		return usersDAO.getAdmins();
 	}
@@ -70,6 +69,10 @@ public class UserService {
 	@Secured("ROLE_ADMIN")
 	public void createGrade(String name){
 		usersDAO.createGrade(name);
+	}
+
+	public List<User> getCommittee() {
+		return usersDAO.getCommittee();
 	}
 	
 	

@@ -231,4 +231,9 @@
 		<put-attribute name="title" value="Monaleen Tennis Club - Series Choice"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/seriesChoice.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="contactus" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Contact Us"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/contactus.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
