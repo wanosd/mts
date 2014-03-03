@@ -70,6 +70,10 @@ public class EventService {
 		eventDAO.removeBooking(loggedin, id);
 		
 	}
+
+	public void defaultEvents() {
+		
+	}
 	
 	
 	

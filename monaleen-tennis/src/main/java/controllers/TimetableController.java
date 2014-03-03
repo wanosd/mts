@@ -184,9 +184,8 @@ public class TimetableController {
 		for (int i = 0; i < events.size(); i++) {
 			if (events.get(i).getName().contains("@")) {
 				for (int k = 0; k < eventName.size(); k++) {
-					if (!eventName.contains(sortEmailtoName(events.get(i)
-							.getName()))) {
-						eventName.add(sortEmailtoName(events.get(i).getName()));
+					if (!eventName.contains(userService.emailToName(events.get(i).getName()))) {
+						eventName.add(userService.emailToName(events.get(i).getName()));
 					}
 				}
 			} else {
@@ -266,7 +265,7 @@ public class TimetableController {
 				+ firstSeries.get(
 						Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1)
 						.toString());
-		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
+		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -295,7 +294,7 @@ public class TimetableController {
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("court", tt);
-		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
+		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -376,7 +375,7 @@ public class TimetableController {
 		model.addAttribute("court", timetableService.getById(id));
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
-		model.addAttribute("realname", sortEmailtoName(SecurityContextHolder
+		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -545,16 +544,6 @@ public class TimetableController {
 	 */
 
 	/**
-	 * Returns the real name of currently logged in user
-	 * 
-	 * @param email
-	 * @return
-	 */
-	public String sortEmailtoName(String email) {
-		return userService.getUserByUsername(email).getName();
-	}
-
-	/**
 	 * Replaces a position in a List with the name of the person booking
 	 * 
 	 * @param list
@@ -566,7 +555,7 @@ public class TimetableController {
 			boolean book) {
 		if (book) {
 			list.set(Integer.valueOf(position),
-					sortEmailtoName(SecurityContextHolder.getContext()
+					userService.emailToName(SecurityContextHolder.getContext()
 							.getAuthentication().getName()));
 			return list;
 		} else {
@@ -574,17 +563,6 @@ public class TimetableController {
 			return list;
 		}
 
-	}
-
-	public boolean userIsAdmin() {
-		List<User> admin = userService.getAdmins();
-		for (int i = 0; i < admin.size(); i++) {
-			if (SecurityContextHolder.getContext().getAuthentication()
-					.getName().equals(admin.get(i).getUsername())) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public void copyList(MonaleenTTV1 copy, MonaleenTTV1 original) {

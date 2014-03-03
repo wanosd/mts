@@ -75,6 +75,10 @@ public class UserService {
 		return usersDAO.getCommittee();
 	}
 	
+	public String getNameFromEmail(String email){
+		return getUserByUsername(email).getName();
+	}
+	
 	
 
 	
