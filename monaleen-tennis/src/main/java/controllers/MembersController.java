@@ -413,7 +413,7 @@ public class MembersController {
 	}
 	
 	public String createLog(String username, String reason){
-		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
+		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmss");
 		Date today = Calendar.getInstance().getTime();
 		String date = df.format(today);
 		date.replace("\\", "");
