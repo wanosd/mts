@@ -6,20 +6,21 @@
 <sf:form id="details" method="post"
 	action="${pageContext.request.contextPath}/saveNewsStory"
 	commandName="news">
-	<table class="formtable">
+	<table class="formtable" align="center">
 		<tr>
-			<td>Summary</td>
+			<th>Summary</th>
 			<td><sf:input name="summary" path="summary"
 					type="text" /><br />
 			<sf:errors path="summary" cssClass="error"></sf:errors></td>
 		</tr>
 		<tr>
-			<td>Content</td>
+			<th>Content</th>
 			<td><sf:textarea name="content" path="content"
 					type="text" /><br />
 			<sf:errors path="content" cssClass="error"></sf:errors></td>
 		</tr>
 		<tr>
+		<th>Action</th>
 			<td><input value="Publish" type="submit" /></td>
 		</tr>
 
