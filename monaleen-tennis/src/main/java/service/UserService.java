@@ -37,7 +37,6 @@ public class UserService {
 		return usersDAO.exists(username);
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public User getUserByUsername(String username){
 		return usersDAO.getUserByUserName(username);
 	}
@@ -57,7 +56,6 @@ public class UserService {
 		usersDAO.changeUserDetails(formUser, username);
 	}
 	
-	@Secured("ROLE_ADMIN")
 	public String emailToName(String email){
 		return getUserByUsername(email).getName();
 	}

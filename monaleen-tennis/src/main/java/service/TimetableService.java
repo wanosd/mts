@@ -24,6 +24,7 @@ public class TimetableService {
 		timetableDAO.createTimetable(t);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public void update(Timetable t){
 		timetableDAO.updateTimetable(t);
 	}
