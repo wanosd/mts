@@ -83,7 +83,7 @@ public class MembersController {
 				map.put(logs.get(i).getInformationType(), 1);
 			}
 		}
-	    model = analyseTimetable(model);
+		model = analyseTimetable(model);
 		model.addAttribute("map", map);
 		logger.info("MAP" + map.toString());
 		return "adminAnalysis";
@@ -109,7 +109,9 @@ public class MembersController {
 		File file = new File(name.replace("@", "") + date + ".csv");
 		CSVCreator.createCSVToEmail(users, file);
 		logger.info("About to attempt sending message");
-		if (sendMessage(file)) {
+		if (sendMessage(file, SecurityContextHolder.getContext().getAuthentication().getName(),
+				"This is a copy of MTC Users. Please treat with confidence",
+				"Monaleen Tennis Club Users")) {
 			logService.createLog(log);
 			model.addAttribute("message", "Email successfully sent to : "
 					+ SecurityContextHolder.getContext().getAuthentication()
@@ -123,12 +125,11 @@ public class MembersController {
 		return "emailSent";
 	}
 
-	private boolean sendMessage(File file) {
-		String text = "This email is confidental. Please do not forward or make copies";
+	private boolean sendMessage(File file, String receiver, String text,
+			String subject) {
 		I_Message message = new Email(mailSender);
-		message.set("admin@monaleentennisclub.ie", SecurityContextHolder
-				.getContext().getAuthentication().getName(),
-				"Monaleen Tennis Club Users", text, file);
+		message.set("admin@monaleentennisclub.ie", receiver, subject, text,
+				file);
 		return message.send(mailSender);
 	}
 
@@ -168,6 +169,12 @@ public class MembersController {
 	public String approveMembers(Model model, HttpServletRequest request) {
 		logger.info("Moving to approveFinalize and back to approveMembers");
 		userService.enableUser(request.getParameter("username"));
+		sendMessage(
+				null,
+				request.getParameter("username"),
+				"You Account with Monaleen Tennis Club has been approved. You may now log in.",
+				"Monaleen Tennis Club: Account Approved");
+		createLog(request.getParameter("username"), "approveUser");
 		List<User> toApprove = userService.getPendingMembers();
 		/**
 		 * MTCAnalytics a = analyticsService.get(); if (a == null){ a = new
@@ -190,6 +197,12 @@ public class MembersController {
 	public String blockMembers(Model model, HttpServletRequest request) {
 		logger.info("Moving to blockFinalize and back to blockMembers");
 		userService.disableUser(request.getParameter("username"));
+		createLog(request.getParameter("username"), "suspendUser");
+		sendMessage(
+				null,
+				request.getParameter("username"),
+				"You Account with Monaleen Tennis Club has been disabled. Please contact admin for details.",
+				"Monaleen Tennis Club: Account Disabled");
 		List<User> toBlock = userService.getCurrentMembers();
 		toBlock = removeLoggedIn(toBlock);
 		model.addAttribute("toBlock", toBlock);
@@ -327,12 +340,6 @@ public class MembersController {
 		return "grades";
 	}
 
-	
-
-	
-
-	
-
 	public List<User> removeLoggedIn(List<User> users) {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -351,15 +358,18 @@ public class MembersController {
 			return users;
 		}
 	}
-	
-public Model analyseTimetable(Model model){
-		
+
+	public Model analyseTimetable(Model model) {
+
 		Map<String, Map<String, Integer>> attributes = new HashMap<String, Map<String, Integer>>();
 		List<Timetable> series = timetableService.getTimetableAllSeries();
-		List<Timetable> firstSeries = timetableService.getTimetableSeries(series.get(0).getSeries());
-		Timetable current = firstSeries.get((Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
-		Timetable next = firstSeries.get(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
-		if (next != null){
+		List<Timetable> firstSeries = timetableService
+				.getTimetableSeries(series.get(0).getSeries());
+		Timetable current = firstSeries.get((Calendar.getInstance().get(
+				Calendar.WEEK_OF_YEAR) - 1));
+		Timetable next = firstSeries.get(Calendar.getInstance().get(
+				Calendar.WEEK_OF_YEAR));
+		if (next != null) {
 			attributes.put("nextmon", iterateList(next.getMonday()));
 			attributes.put("nexttue", iterateList(next.getTuesday()));
 			attributes.put("nextwed", iterateList(next.getWednesday()));
@@ -378,32 +388,41 @@ public Model analyseTimetable(Model model){
 		model.addAllAttributes(attributes);
 		return model;
 	}
-	
-	public Map<String, Integer> iterateList(List<String> list){
+
+	public Map<String, Integer> iterateList(List<String> list) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("free", 0);
 		map.put("club", 0);
 		map.put("booked", 0);
-		for (int i = 0; i < list.size(); i++){
-			if (list.get(i).equals("Free Court")){
-					int j = map.get("free");
-					j++;
-					map.put("free", j);
-			}
-			else if (eventService.exists(list.get(i))){
-					int j = map.get("club");
-					j++;
-					map.put("club", j);
-			}
-			else{
-					int j = map.get("booked");
-					j++;
-					map.put("booked", j);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals("Free Court")) {
+				int j = map.get("free");
+				j++;
+				map.put("free", j);
+			} else if (eventService.exists(list.get(i))) {
+				int j = map.get("club");
+				j++;
+				map.put("club", j);
+			} else {
+				int j = map.get("booked");
+				j++;
+				map.put("booked", j);
 			}
 		}
 		return map;
 	}
-
+	
+	public String createLog(String username, String reason){
+		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
+		Date today = Calendar.getInstance().getTime();
+		String date = df.format(today);
+		date.replace("\\", "");
+		date.replace(" ", "");
+		Log log = new Log(SecurityContextHolder.getContext()
+				.getAuthentication().getName(), date, username, reason);
+		logService.createLog(log);
+		return date;
+	}
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -434,7 +453,5 @@ public Model analyseTimetable(Model model){
 	public void setTimetableService(TimetableService timetableService) {
 		this.timetableService = timetableService;
 	}
-	
-	
 
 }

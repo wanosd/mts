@@ -55,7 +55,6 @@ public class TimetableController {
 	/**
 	 * Autowiring for service objects
 	 */
-
 	@Autowired
 	public void setTimetableService(TimetableService timetableService) {
 		this.timetableService = timetableService;

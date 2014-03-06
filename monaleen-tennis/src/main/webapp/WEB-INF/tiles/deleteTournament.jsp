@@ -1,14 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
-<table class = "members">
+<c:if test="${empty tour }">
+<center>No Tournaments Currently Active</center>
+</c:if>
+
+
+<c:if test="${not empty tour }">
+<table class = "members" align="center">
 	<tr>
-		<td>ID</td>
-		<td>Name</td>
-		<td>Type</td>
-		<td>Singles/Doubles</td>
-		<td>Level (Senior/Junior)</td>
-		<td>Style</td>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Singles/Doubles</th>
+		<th>Level (Senior/Junior)</th>
+		<th>Style</th>
+		<th>Action</th>
 	</tr>
 
 	<c:forEach var="row" items="${tour}">
@@ -27,4 +34,5 @@
 		</sf:form>
 	</c:forEach>
 </table>
+</c:if>
 		

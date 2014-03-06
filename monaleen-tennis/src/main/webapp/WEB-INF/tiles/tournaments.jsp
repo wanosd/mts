@@ -31,14 +31,16 @@ $(document).ready(function() {
 </div>
 
 <div id="tables" align="justify">Tournament Page
-<table class = "members">
+<c:if test="${not empty regTour }">
+<table class = "members" align="center">
 	<tr>
-		<td>ID</td>
-		<td>Name</td>
-		<td>Type</td>
-		<td>Singles/Doubles</td>
-		<td>Level (Senior/Junior)</td>
-		<td>Style</td>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Singles/Doubles</th>
+		<th>Level (Senior/Junior)</th>
+		<th>Style</th>
+		<th>Registered Members</th>
+		<th>Action</th>
 	</tr>
 
 	<c:forEach var="row" items="${regTour}">
@@ -46,38 +48,37 @@ $(document).ready(function() {
 			action="${pageContext.request.contextPath}/tournamentUnregister"
 			commandName="regTour">
 			<tr>
-				<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.id}</td>
-				<td>${row.tournamentName}</td>
+				<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.tournamentName}</td>
 				<td>${row.tournamentGender}</td>
 				<td>${row.tournamentType}</td>
 				<td>${row.tournamentCategory}</td>
 				<td>${row.tournamentStyle}</td>
-				<td><a href="${pageContext.request.contextPath}/checkRegistered?id=${row.id}">Registered Members</a>
+				<td><a href="${pageContext.request.contextPath}/checkRegistered?id=${row.id}">View</a>
 				<td><input value="Unregister" type="submit" /></td>
 			</tr>
 		</sf:form>
 	</c:forEach>
 		
 </table>
+</c:if>
 
 <hr />
-
-<table class="members">
+<c:if test="${not empty unregTour }">
+<table class="members" align="center">
 	<tr>
-		<td>ID</td>
-		<td>Name</td>
-		<td>Type</td>
-		<td>Singles/Doubles</td>
-		<td>Level (Senior/Junior)</td>
-		<td>Style</td>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Singles/Doubles</th>
+		<th>Level (Senior/Junior)</th>
+		<th>Style</th>
+		<th>Action</th>
 	</tr>
 	<c:forEach var="row" items="${unregTour}">
 		<sf:form method="post"
 			action="${pageContext.request.contextPath}/tournamentRegister"
 			commandName="unregTour">
 			<tr>
-				<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.id}</td>
-				<td>${row.tournamentName}</td>
+				<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.tournamentName}</td>
 				<td>${row.tournamentGender}</td>
 				<td>${row.tournamentType}</td>
 				<td>${row.tournamentCategory}</td>
@@ -87,4 +88,5 @@ $(document).ready(function() {
 		</sf:form>
 	</c:forEach>
 </table>
+</c:if>
 </div>
