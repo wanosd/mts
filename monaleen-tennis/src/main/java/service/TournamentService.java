@@ -39,7 +39,7 @@ public class TournamentService {
 		return tournamentDAO.listAllTournaments();
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
+	@Secured({"ROLE_ADMIN", "ROLE_MEMBER", "ROLE_COMMITTEE", "ROLE_WARNING", "ROLE_SUSPEND"})
 	public void register(Tournament t) {
 		tournamentDAO.registerForTournament(t);
 	}
