@@ -4,23 +4,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import logs.EmailLog;
-import logs.Log;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 
-import service.LogService;
 import users.User;
 
-public class CSVCreator {
+public class CSVCreator implements I_Report {
 	
 	@Autowired
 	private MailSender mailSender;
@@ -118,6 +109,13 @@ public class CSVCreator {
 			writer.append(String.valueOf(list.get(i).getAuthority()));
 			writer.append('\n');
 		}
+	}
+
+
+
+	public void create() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

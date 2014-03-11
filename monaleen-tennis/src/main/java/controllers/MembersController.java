@@ -242,6 +242,23 @@ public class MembersController {
 			try {
 				member.setAuthority("ROLE_MEMBER");
 				userService.create(member);
+				DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
+				Date today = Calendar.getInstance().getTime();
+				String date = df.format(today);
+				date.replace("\\", "");
+				date.replace(" ", "");
+				Log log = new Log(member.getName(), date, "userReg",
+						"userReg");
+				if (sendMessage(null, userService.getAdmins().get(0).getUsername(),
+						"The following user: " +  member.getName() + " : " + member.getUsername() + " has registered on the site. Please review application.",
+						"MemberRegistration") && sendMessage(null, member.getUsername(), "Your registration has been received. You will receive confirmation when approved.", "Monaleen GAA Tennis Club Registration")) {
+					
+					logService.createLog(log);
+				} else {
+					log.setInformationType("userReg - Email Fail");
+					logService.createLog(log);
+					model.addAttribute("message", "Message Failed. Try Again Later.");
+				}
 				return "registerSuccess";
 			} catch (Exception e) {
 				logger.info("ERROR!!!!!!!!!!!" + e.getClass());
