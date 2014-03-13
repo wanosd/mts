@@ -265,12 +265,19 @@ public class TimetableController {
 				+ firstSeries.get(
 						Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1)
 						.toString());
-		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
-				.getContext().getAuthentication().getName()));
-		String loggedIn = SecurityContextHolder.getContext()
-				.getAuthentication().getName();
-		int left = bookingsLeft(loggedIn, String.valueOf(courtID));
-		model.addAttribute("bookings", left);
+		logger.info("NOT LOGGED IN: " + SecurityContextHolder.getContext().getAuthentication().getName());
+		if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
+			model.addAttribute("realname", userService.emailToName(SecurityContextHolder.getContext().getAuthentication().getName()));
+			String loggedIn = SecurityContextHolder.getContext()
+					.getAuthentication().getName();
+			int left = bookingsLeft(loggedIn, String.valueOf(courtID));
+			model.addAttribute("bookings", left);
+		}else{
+			model.addAttribute("realname", "Anonymous User");
+			model.addAttribute("bookings", 0);
+		}
+		
+		
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
