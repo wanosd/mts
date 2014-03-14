@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import reports.CSVCreator;
+import service.EmailService;
 import service.EventService;
 import service.LogService;
 import service.RoleService;
@@ -49,6 +50,7 @@ public class TimetableController {
 	private UserService userService;
 	private RoleService roleService;
 	private LogService logService;
+	private EmailService emailService;
 	private static Logger logger = Logger.getLogger(TimetableController.class);
 	private JavaMailSender mailSender;
 
@@ -83,6 +85,11 @@ public class TimetableController {
 	@Autowired
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
+	}
+
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
 	}
 
 	/**
@@ -540,8 +547,7 @@ public class TimetableController {
 		message.set(SecurityContextHolder.getContext().getAuthentication()
 				.getName(), "monaleentennisclub@gmail.com", "No Show", text,
 				null);
-		return reportUser(model, request.getParameter("bookedUser"), message,
-				mailSender);
+		return reportUser(model, request.getParameter("bookedUser"), message);
 	}
 
 	/**
@@ -606,8 +612,7 @@ public class TimetableController {
 		eventService.removeBooking(loggedin, id);
 	}
 
-	private String reportUser(Model model, String username, I_Message message,
-			JavaMailSender mailSender) {
+	private String reportUser(Model model, String username, I_Message message) {
 		logger.info("Reporting NoShow");
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
@@ -620,7 +625,7 @@ public class TimetableController {
 			logger.info("Log Service is Null");
 		}
 		logger.info("About to attempt sending message");
-		if (message.send(mailSender)) {
+		if (emailService.sendMessage(message, mailSender)) {
 			logService.createLog(log);
 			model.addAttribute("message", "User reported");
 			return "emailSent";
