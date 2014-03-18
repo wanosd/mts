@@ -20,18 +20,8 @@ public class Email implements I_Message {
 
 	private static MimeMessageHelper helper;
 
-	public Email(JavaMailSender mailSender) {
-		if (mailSender == null){
-			logger.info("MAIL SENDER NULL");
-		}
-		message = mailSender.createMimeMessage();
-		try {
-			helper = new MimeMessageHelper(message, true, "UTF-8");
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public Email() {
+			
 	}
 
 	public boolean send(JavaMailSender mailSender) {
@@ -42,10 +32,20 @@ public class Email implements I_Message {
 
 	}
 
-	public void set(String from, String to, String subject, String text,
+	public void set(JavaMailSender mailSender, String from, String to, String subject, String text,
 			File file) {
+		
+		if (mailSender == null){
+			logger.info("MAIL SENDER NULL");
+		}
+		message = mailSender.createMimeMessage();
+		try {
+			helper = new MimeMessageHelper(message, true, "UTF-8");
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logger.info("MIME Message created");
-
 		logger.info("MIME Helper Okay");
 		try {
 			helper.setFrom(from);

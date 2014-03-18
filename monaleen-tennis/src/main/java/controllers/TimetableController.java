@@ -308,12 +308,19 @@ public class TimetableController {
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("court", tt);
+		if (SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
+			model.addAttribute("realname", "anonymous");
+			model.addAttribute("bookings", 0);
+		}
+		else{
 		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
 		int left = bookingsLeft(loggedIn, String.valueOf(courtID));
 		model.addAttribute("bookings", left);
+		}
+		
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
@@ -367,6 +374,16 @@ public class TimetableController {
 		if (timetableService.getById(String.valueOf(nextCourt)) == null) {
 			return false;
 		}
+		if (nextCourt < courtID){
+			if (userService.getAdmins().contains(userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()))){
+				return true;
+			}
+			else if (checkPosition(timetableService.getById(String.valueOf(nextCourt))) < (Calendar
+					.getInstance().get(Calendar.WEEK_OF_YEAR)- 1 )){
+				return false;
+			}
+		}
+		
 		if (nextCourt > courtID) {
 			if (checkPosition(timetableService.getById(String.valueOf(courtID))) > (Calendar
 					.getInstance().get(Calendar.WEEK_OF_YEAR)-2)
@@ -375,6 +392,7 @@ public class TimetableController {
 				return false;
 			}
 		}
+		
 
 		if (timetableService.getById(String.valueOf(courtID)).getSeries() == timetableService
 				.getById(String.valueOf(nextCourt)).getSeries()) {
@@ -541,10 +559,10 @@ public class TimetableController {
 
 	@RequestMapping("/reportNoShow")
 	public String reportNoShow(Model model, HttpServletRequest request) {
-		I_Message message = new Email(mailSender);
+		I_Message message = new Email();
 		String text = "Reported no show from "
 				+ request.getParameter("bookedUser");
-		message.set(SecurityContextHolder.getContext().getAuthentication()
+		message.set(mailSender, SecurityContextHolder.getContext().getAuthentication()
 				.getName(), "monaleentennisclub@gmail.com", "No Show", text,
 				null);
 		return reportUser(model, request.getParameter("bookedUser"), message);

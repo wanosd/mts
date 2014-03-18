@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <h2>Stuff Admin needs to do</h2>
 
 Bugs / Major To Do
@@ -31,8 +33,10 @@ Bugs / Major To Do
 			class="adminLink">Create Tournament</a></td>
 		<td><a href="${pageContext.request.contextPath}/createNews"
 			class="adminLink">Add News Story</a></td>
-		<td><a href="${pageContext.request.contextPath}/createTimetable"
-			class="adminLink">Create Timetable</a></td>
+		<td>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a href="${pageContext.request.contextPath}/createTimetable" class="adminLink">Timetable</a>
+		</sec:authorize></td>
 		<td><a href="${pageContext.request.contextPath}/createEvent"
 			class="adminLink">Create Event</a></td>
 	</tr>
@@ -44,8 +48,10 @@ Bugs / Major To Do
 			class="adminLink">Enable/Disable Tournament</a></td>
 		<td><a href="${pageContext.request.contextPath}/deleteNews"
 			class="adminLink">Delete News Story</a></td>
-		<td><a href="${pageContext.request.contextPath}/deleteTimetable"
-			class="adminLink">Delete Timetable</a></td>
+		<td>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a href="${pageContext.request.contextPath}/deleteTimetable" class="adminLink">Delete Timetable</a>
+		</sec:authorize></td>
 		<td><a href="${pageContext.request.contextPath}/viewEvents"
 			class="adminLink">View and Enable Event</a></td>
 	</tr>
@@ -56,9 +62,10 @@ Bugs / Major To Do
 		<td><a href="${pageContext.request.contextPath}/deleteTournament"
 			class="adminLink">Delete Tournament</a></td>
 		<td>Edit News Story - TO DO!</td>
-		<td><a href="${pageContext.request.contextPath}/seriesChoice"
-			class="adminLink">Reset Current Timetable - Removes ALL bookings (To Fix)</a></td>
-		<td>Remove Event - TO DO!</td>
+		<td>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a href="${pageContext.request.contextPath}/seriesChoice" class="adminLink">Reset Current Timetable - Removes ALL bookings</a>
+		</sec:authorize></td>
 	</tr>
 	<%--Row 4 --%>
 	<tr>
@@ -82,7 +89,8 @@ Bugs / Major To Do
 	</tr>
 		<%--Row 6 --%>
 	<tr>
-		<td></td>
+		<td><a href="${pageContext.request.contextPath}/emailAllMembers"
+			class="adminLink">Email All Members</a></td>
 		<td></td>
 		<td></td>
 		<td><a href="${pageContext.request.contextPath}/adminAnalysis"

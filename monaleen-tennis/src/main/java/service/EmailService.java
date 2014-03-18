@@ -15,6 +15,9 @@ public class EmailService {
 		return message.send(mailSender);
 	}
 	
+	public boolean sendClubMessage(I_Message message, JavaMailSender mailSender){
+		return message.send(mailSender);
+	}
 	
 	
 	

@@ -23,7 +23,7 @@
 					<a href="<c:url value ='/j_spring_security_logout' />"
 						class="login" class="home">log out</a></td>
 				</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_ADMIN')"><td>
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')"><td>
 					<a href="${pageContext.request.contextPath}/admin" class="admin"
 						class="home">admin</a></td>
 				</sec:authorize>

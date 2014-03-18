@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import users.Role;
@@ -18,18 +19,22 @@ public class RoleService {
 		this.roleDAO = roleDAO;
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void create(Role role){
 		roleDAO.createRole(role);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public boolean exists(String name){
 		return roleDAO.exists(name);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void delete(Role role){
 		roleDAO.delete(role);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void update(Role role){
 		roleDAO.update(role);
 	}
@@ -37,6 +42,7 @@ public class RoleService {
 	public List<Role> getRoles() {
 		return roleDAO.getRoles();
 	}
+	
 	
 	public List<String> getRoleNames(){
 		return roleDAO.getRolesNames();

@@ -69,6 +69,22 @@ public class MembersController {
 	public String emailSent() {
 		return "emailSent";
 	}
+	
+	@RequestMapping("/emailAllMembers")
+	public String emailAllMembers(){
+		return "emailAllMembers";
+	}
+	
+	@RequestMapping("/sendAllEmail")
+	public String sendAllEmail(HttpServletRequest request){
+		I_Message message = new Email();
+		List<User> users = userService.getCurrentMembers();
+		for (int i = 0; i < users.size(); i++){
+			message.set(mailSender, "monaleentennisclub@gmail.com", users.get(i).getUsername(), request.getParameter("subject"),request.getParameter("message"), null);
+			message.send(mailSender);
+		}
+		return emailSent();
+	}
 
 	@RequestMapping("/adminAnalysis")
 	public String adminAnalysis(Model model) {
@@ -127,8 +143,8 @@ public class MembersController {
 
 	private boolean sendMessage(File file, String receiver, String text,
 			String subject) {
-		I_Message message = new Email(mailSender);
-		message.set("admin@monaleentennisclub.ie", receiver, subject, text,
+		I_Message message = new Email();
+		message.set(mailSender, "admin@monaleentennisclub.ie", receiver, subject, text,
 				file);
 		return message.send(mailSender);
 	}

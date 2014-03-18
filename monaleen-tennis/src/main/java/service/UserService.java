@@ -24,7 +24,7 @@ public class UserService {
 		return usersDAO.getUsers();
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public List<User> getPendingMembers(){
 		return usersDAO.getPendingUsers();
 	}
@@ -41,12 +41,12 @@ public class UserService {
 		return usersDAO.getUserByUserName(username);
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void enableUser(String username){
 		usersDAO.enableMember(username);
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void disableUser(String username){
 		usersDAO.disableMember(username);
 	}
@@ -64,7 +64,7 @@ public class UserService {
 		return usersDAO.getAdmins();
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void createGrade(String name){
 		usersDAO.createGrade(name);
 	}

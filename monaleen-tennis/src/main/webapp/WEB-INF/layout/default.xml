@@ -57,6 +57,11 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/createmembers.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="emailAllMembers" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Email All Members"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/emailAllMembers.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="registerSuccess" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Registration Successful"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/registerSuccess.jsp"></put-attribute>

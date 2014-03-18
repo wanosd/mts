@@ -20,7 +20,7 @@ public class TournamentService {
 		this.tournamentDAO = tournamentDAO;
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void create(Tournament t) {
 		tournamentDAO.createTournament(t);
 	}
@@ -29,12 +29,12 @@ public class TournamentService {
 		return tournamentDAO.listOpenTournaments();
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public List<Tournament> getClosedTournaments(){
 		return tournamentDAO.listClosedTournaments();
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public List<Tournament> getAllTournaments(){
 		return tournamentDAO.listAllTournaments();
 	}
@@ -68,6 +68,7 @@ public class TournamentService {
 		return tournamentDAO.exists(tournamentName);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void deleteTournament(Tournament t){
 		tournamentDAO.deleteTournament(t);
 	}

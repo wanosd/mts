@@ -8,5 +8,5 @@ public interface I_Message {
 
 	public boolean send(JavaMailSender mailSender);
 	
-	public void set(String from, String to, String subject, String text, File file) ;
+	public void set(JavaMailSender mailSender, String from, String to, String subject, String text, File file) ;
 }

@@ -27,65 +27,66 @@
 		<security:intercept-url pattern="/gotoCourt" access="permitAll" />
 		<security:intercept-url pattern="/timetable" access="permitAll" />
 				<security:intercept-url pattern="/reportNoShow" access="permitAll" />
-		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/approveMembers" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/emailMembersToAddress" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/admin" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/approveMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/emailMembersToAddress" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 				<security:intercept-url pattern="/adminProfileUpdate" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/createTimetable" access="hasRole('ROLE_ADMIN')" />
-				<security:intercept-url pattern="/seriesChoice" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/adminAnalysis" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/blockMembers" access="hasRole('ROLE_ADMIN')" />
+				<security:intercept-url pattern="/seriesChoice" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/adminAnalysis" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/blockMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/deleteTimetable" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/blockFinalize" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/blockFinalize" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/adminEditProfile" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/approveFinalize" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/approveFinalize" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/finalizeEditTT" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/displayUsers" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/createTournament" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/viewAllMembers" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/tourStatusChange" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/saveNewsStory" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/displayUsers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/createTournament" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/viewAllMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/tourStatusChange" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/saveNewsStory" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/timetableDefaults" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/fillTimetable" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/finalizeTimetable" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/createEvent" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/saveEvent" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/viewEvents" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/deleteNews" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/confirmNewsDelete" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/createEvent" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/emailAllMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/sendAllEmail" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/saveEvent" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/viewEvents" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/deleteNews" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/confirmNewsDelete" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/chooseUserAdmin" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/chooseUserAdmin" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/changeEventStatus" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/deleteTournament" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/confirmDelete" access="hasRole('ROLE_ADMIN')" />
+	    <security:intercept-url pattern="/changeEventStatus" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+	    <security:intercept-url pattern="/deleteTournament" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+	    <security:intercept-url pattern="/confirmDelete" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/confirmTTDelete" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/timetableStatus" access="hasRole('ROLE_ADMIN')" />
+	    <security:intercept-url pattern="/timetableStatus" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/resetTimetable" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/reset" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/chooseEdit" access="hasRole('ROLE_ADMIN')" />
 	    	    <security:intercept-url pattern="/deleteRole" access="hasRole('ROLE_ADMIN')" />
 	    	    	    <security:intercept-url pattern="/updateRole" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/editTimetable" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/confirmEdit" access="hasRole('ROLE_ADMIN')" />
-	    <security:intercept-url pattern="/timetableStatusChange" access="hasRole('ROLE_ADMIN')" />
+	    <security:intercept-url pattern="/editTimetable" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+	    <security:intercept-url pattern="/confirmEdit" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+	    <security:intercept-url pattern="/timetableStatusChange" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/accessdenied" access="permitAll" />
 		<security:intercept-url pattern="/loggedout" access="permitAll" />
 		<security:intercept-url pattern="/register" access="permitAll" />
-		<security:intercept-url pattern="/registerTournament" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/createNewRole" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/saveNewRole" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/tournamentStatus" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/tourStartChange" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/registerTournament" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/createNewRole" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/saveNewRole" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/tournamentStatus" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/tourStartChange" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/registerSuccess" access="permitAll" />
-		<security:intercept-url pattern="/tournamentSuccess" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/createNews" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/tournamentSuccess" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/createNews" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/members" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/checkRegistered" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/bookCourt" access="isAuthenticated()" />
-	    	    <security:intercept-url pattern="/unbookCourt" access="isAuthenticated()" />
-	       <security:intercept-url pattern="/courtBooked" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/unbookCourt" access="isAuthenticated()" />
+	    <security:intercept-url pattern="/courtBooked" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/bookingExists" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/editdetails" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/tournamentRegister" access="isAuthenticated()" />

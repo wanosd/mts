@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import dao.EventDAO;
@@ -18,14 +19,17 @@ public class EventService {
 		this.eventDAO = eventDAO;
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void createEvent(I_Event e){
 		eventDAO.createNewEvent(e);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void updateEvent(I_Event e){
 		eventDAO.updateEvent(e);
 	}
 	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void deleteEvent(I_Event e){
 		eventDAO.deleteEvent(e);
 	}
