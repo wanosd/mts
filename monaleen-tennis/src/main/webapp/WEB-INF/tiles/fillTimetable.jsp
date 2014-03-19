@@ -11,31 +11,31 @@ This is the template for all timetables in the year. It can be changed individua
 	
 	<c:forEach begin="0" end="${count - 1}" varStatus="loop">
 	<tr>
-		<td><sf:select path="monday[${loop.index}]" id="monday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="monday[${loop.index}]" id="monday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 		
-		<td><sf:select path="tuesday[${loop.index}]" id="tuesday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="tuesday[${loop.index}]" id="tuesday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 		
-		<td><sf:select path="wednesday[${loop.index}]" id="wednesday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="wednesday[${loop.index}]" id="wednesday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 		
-		<td><sf:select path="thursday[${loop.index}]" id="thursday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="thursday[${loop.index}]" id="thursday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 		
-		<td><sf:select path="friday[${loop.index}]" id="friday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="friday[${loop.index}]" id="friday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 		
-		<td><sf:select path="saturday[${loop.index}]" id="saturday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="saturday[${loop.index}]" id="saturday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 		
-		<td><sf:select path="sunday[${loop.index}]" id="sunday${loop.index }" multiple="false">
+		<td><sf:select cssStyle="width:100px" path="sunday[${loop.index}]" id="sunday${loop.index }" multiple="false">
 			<sf:options items="${events }"/>
 		</sf:select></td>
 			</tr>
