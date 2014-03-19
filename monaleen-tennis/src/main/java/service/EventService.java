@@ -19,7 +19,6 @@ public class EventService {
 		this.eventDAO = eventDAO;
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
 	public void createEvent(I_Event e){
 		eventDAO.createNewEvent(e);
 	}

@@ -9,6 +9,7 @@
 <tr><td>Contact Number</td><td><sf:input name = "contact_num" path="contact_num" type="text"/><br/><sf:errors path="contact_num" cssClass="error"></sf:errors></td></tr>
 <tr><td>Emergency Contact Name</td><td><sf:input name = "em_con_name" path="em_con_name" type="text"/><br/><sf:errors path="em_con_name" cssClass="error"></sf:errors></td></tr>
 <tr><td>Emergency Contact Number</td><td><sf:input name = "em_con_num" path="em_con_num" type="text"/><br/><sf:errors path="em_con_num" cssClass="error"></sf:errors></td></tr>
+<sf:hidden name = "authority" path="authority"/>
 <tr><td><input value="Change Details" type="submit"/></td></tr>
 
 </table>

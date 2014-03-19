@@ -26,13 +26,13 @@
 		<security:intercept-url pattern="/court" access="permitAll" />
 		<security:intercept-url pattern="/gotoCourt" access="permitAll" />
 		<security:intercept-url pattern="/timetable" access="permitAll" />
-				<security:intercept-url pattern="/reportNoShow" access="permitAll" />
+		<security:intercept-url pattern="/reportNoShow" access="permitAll" />
 		<security:intercept-url pattern="/admin" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/approveMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/emailMembersToAddress" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
-				<security:intercept-url pattern="/adminProfileUpdate" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/adminProfileUpdate" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/createTimetable" access="hasRole('ROLE_ADMIN')" />
-				<security:intercept-url pattern="/seriesChoice" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/seriesChoice" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/adminAnalysis" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/blockMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/deleteTimetable" access="hasRole('ROLE_ADMIN')" />

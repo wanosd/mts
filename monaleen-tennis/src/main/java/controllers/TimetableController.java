@@ -617,6 +617,9 @@ public class TimetableController {
 	}
 
 	public int bookingsLeft(String username, String id) {
+		logger.info("User Role Bookings: " +  roleService.getNoBookings(userService
+				.getUserByUsername(username).getAuthority()));
+		logger.info("Event Service Check Bookings of Court" + eventService.checkBookingsUser(username, id));
 		return roleService.getNoBookings(userService
 				.getUserByUsername(username).getAuthority())
 				- eventService.checkBookingsUser(username, id);
@@ -651,5 +654,4 @@ public class TimetableController {
 			return "emailSent";
 		}
 	}
-
 }

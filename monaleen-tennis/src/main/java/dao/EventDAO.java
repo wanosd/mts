@@ -102,6 +102,9 @@ private static Logger logger = Logger.getLogger(EventDAO.class);
 	@SuppressWarnings("unchecked")
 	public int checkBookingsUserCourt(String loggedin, String id) {
 		List<Event> event = session().createQuery("from Event where name = '" + loggedin + "' AND courtid = '" + id + "'").list();
+		if (event == null){
+			return 0;
+		}
 		return event.size();
 	}
 
