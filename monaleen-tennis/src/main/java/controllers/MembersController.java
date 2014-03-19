@@ -33,6 +33,7 @@ import email.*;
 import analytics.MTCAnalytics;
 import reports.CSVCreator;
 import service.AnalyticsService;
+import service.EmailService;
 import service.EventService;
 import service.LogService;
 import service.RoleService;
@@ -49,9 +50,9 @@ public class MembersController {
 	private UserService userService;
 	private LogService logService;
 	private RoleService roleService;
-	private AnalyticsService analyticsService;
 	private EventService eventService;
 	private TimetableService timetableService;
+	private EmailService emailService;
 	private static Logger logger = Logger.getLogger(MembersController.class);
 
 	@Autowired
@@ -78,11 +79,7 @@ public class MembersController {
 	@RequestMapping("/sendAllEmail")
 	public String sendAllEmail(HttpServletRequest request){
 		I_Message message = new Email();
-		List<User> users = userService.getCurrentMembers();
-		for (int i = 0; i < users.size(); i++){
-			message.set(mailSender, "monaleentennisclub@gmail.com", users.get(i).getUsername(), request.getParameter("subject"),request.getParameter("message"), null);
-			message.send(mailSender);
-		}
+		emailService.sendClubMessage(userService.getCurrentMembers(), message, mailSender, request.getParameter("subject"),request.getParameter("message"));
 		return emailSent();
 	}
 
@@ -144,9 +141,7 @@ public class MembersController {
 	private boolean sendMessage(File file, String receiver, String text,
 			String subject) {
 		I_Message message = new Email();
-		message.set(mailSender, "admin@monaleentennisclub.ie", receiver, subject, text,
-				file);
-		return message.send(mailSender);
+		return emailService.sendMessageFile(message, mailSender, "admin@monaleentennisclub.ie", receiver, subject, text, file);
 	}
 
 	@RequestMapping("/viewAllMembers")
@@ -473,11 +468,6 @@ public class MembersController {
 	}
 
 	@Autowired
-	public void setAnalyticsService(AnalyticsService analyticsService) {
-		this.analyticsService = analyticsService;
-	}
-
-	@Autowired
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
 	}
@@ -486,5 +476,12 @@ public class MembersController {
 	public void setTimetableService(TimetableService timetableService) {
 		this.timetableService = timetableService;
 	}
+
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
+	
+	
 
 }

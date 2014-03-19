@@ -559,13 +559,9 @@ public class TimetableController {
 
 	@RequestMapping("/reportNoShow")
 	public String reportNoShow(Model model, HttpServletRequest request) {
-		I_Message message = new Email();
 		String text = "Reported no show from "
 				+ request.getParameter("bookedUser");
-		message.set(mailSender, SecurityContextHolder.getContext().getAuthentication()
-				.getName(), "monaleentennisclub@gmail.com", "No Show", text,
-				null);
-		return reportUser(model, request.getParameter("bookedUser"), message);
+		return reportUser(model, request.getParameter("bookedUser"), "No Show" , text);
 	}
 
 	/**
@@ -630,7 +626,7 @@ public class TimetableController {
 		eventService.removeBooking(loggedin, id);
 	}
 
-	private String reportUser(Model model, String username, I_Message message) {
+	private String reportUser(Model model, String username, String subject, String text) {
 		logger.info("Reporting NoShow");
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
@@ -643,7 +639,8 @@ public class TimetableController {
 			logger.info("Log Service is Null");
 		}
 		logger.info("About to attempt sending message");
-		if (emailService.sendMessage(message, mailSender)) {
+		I_Message message = new Email();
+		if (emailService.sendMessage(message, mailSender, SecurityContextHolder.getContext().getAuthentication().getName(), "monaleentennisclub@gmail.com" , subject, text)) {
 			logService.createLog(log);
 			model.addAttribute("message", "User reported");
 			return "emailSent";
