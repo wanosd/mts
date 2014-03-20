@@ -272,7 +272,7 @@ public class MembersController {
 				}
 				return "registerSuccess";
 			} catch (Exception e) {
-				logger.info("ERROR!!!!!!!!!!!" + e.getClass());
+				model.addAttribute("message","Error. Cause: " + e.getClass());
 				return "error";
 			}
 
@@ -287,6 +287,39 @@ public class MembersController {
 		User user = userService.getUserByUsername(auth.getName());
 		model.addAttribute("member", user);
 		return "profile";
+	}
+	
+
+	@RequestMapping(value = "/profileUpdated", method = RequestMethod.POST)
+	public String doEditProfile(Model model,
+			@ModelAttribute("member") User member, BindingResult result) {
+		logger.info("Showing Profile Updated.....");
+		if (result.hasErrors()) {
+			logger.info("Errors found in BindingResult object....");
+			return "profile";
+		}
+		if (userService.exists(member.getUsername())) {
+			result.rejectValue("username", "Duplicate Key",
+					"This email address has already been used");
+			return "profile";
+		} else {
+			try {
+				logger.info("About to  update user");
+				member.setAuthority(userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getAuthority());
+				if (member.getAuthority() == null){
+					model.addAttribute("message", "ROLE SET TO NULL. CANNOT PERFORM THIS OPERATION");
+					return "error";
+				}
+				member.setAuthority(userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getAuthority());
+				userService.editProfile(member, SecurityContextHolder
+						.getContext().getAuthentication().getName());
+				logger.info("User Updated");
+				return "profileUpdated";
+			} catch (Exception e) {
+				model.addAttribute("message","Database update failed. Cause: " + e.getClass());
+				return "error";
+			}
+		}
 	}
 
 	@RequestMapping("/displayUsers")
@@ -325,37 +358,12 @@ public class MembersController {
 				logger.info("User Updated");
 				return "profileUpdated";
 			} catch (Exception e) {
-				logger.info("Database update failed. Cause: " + e.getClass());
+				model.addAttribute("message","Database update failed. Cause: " + e.getClass());
 				return "error";
 			}
 		}
 	}
 
-	@RequestMapping(value = "/profileUpdated", method = RequestMethod.POST)
-	public String doEditProfile(Model model,
-			@ModelAttribute("member") User member, BindingResult result) {
-		logger.info("Showing Profile Updated.....");
-		if (result.hasErrors()) {
-			logger.info("Errors found in BindingResult object....");
-			return "profile";
-		}
-		if (userService.exists(member.getUsername())) {
-			result.rejectValue("username", "Duplicate Key",
-					"This email address has already been used");
-			return "profile";
-		} else {
-			try {
-				logger.info("About to  update user");
-				userService.editProfile(member, SecurityContextHolder
-						.getContext().getAuthentication().getName());
-				logger.info("User Updated");
-				return "profileUpdated";
-			} catch (Exception e) {
-				logger.info("Database update failed. Cause: " + e.getClass());
-				return "error";
-			}
-		}
-	}
 
 	@RequestMapping("/createGrade")
 	public String createGrade() {

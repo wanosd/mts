@@ -30,7 +30,6 @@ public class TimetableService {
 	}
 	
 	public List<Timetable> getAllTimetables(){
-		
 		return timetableDAO.listTimetables();
 	}
 	

@@ -37,4 +37,8 @@ public class NewsService {
 	public News getNewsStory(String id){
 		return newsDAO.getNewsStory(id);
 	}
+
+	public News getLatestStory() {
+		return newsDAO.getLatestStory();
+	}
 }

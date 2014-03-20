@@ -49,4 +49,9 @@ public class NewsDAO {
 		return session().createQuery("from News").list();
 	}
 
+	public News getLatestStory() {
+		List<News> news = getNews();
+		return news.get(news.size()-1);
+	}
+
 }
