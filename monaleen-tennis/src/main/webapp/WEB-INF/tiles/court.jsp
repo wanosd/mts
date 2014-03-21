@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 You have ${bookings } bookings left!
 
@@ -12,13 +13,28 @@ You have ${bookings } bookings left!
 		<td class="nothing">
 			<table>
 				<tr>
+					<th>Time</th>
+				</tr>
+
+				<c:forEach var="row" varStatus="loop" items="${court.monday}">
+					
+							<tr class="timetable">
+								<td class="inner">${loop.index} to ${loop.index + 1}</td>
+							</tr>
+				</c:forEach>
+			</table>
+		</td>
+		
+		<td class="nothing">
+			<table>
+				<tr>
 					<th>Monday</th>
 				</tr>
 
 				<c:forEach var="row" varStatus="loop" items="${court.monday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -30,7 +46,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
@@ -68,7 +84,7 @@ You have ${bookings } bookings left!
 				<c:forEach var="row" varStatus="loop" items="${court.tuesday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -80,7 +96,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
@@ -119,7 +135,7 @@ You have ${bookings } bookings left!
 				<c:forEach var="row" varStatus="loop" items="${court.wednesday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -131,7 +147,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
@@ -170,7 +186,7 @@ You have ${bookings } bookings left!
 				<c:forEach var="row" varStatus="loop" items="${court.thursday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -182,7 +198,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
@@ -221,7 +237,7 @@ You have ${bookings } bookings left!
 				<c:forEach var="row" varStatus="loop" items="${court.friday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -233,7 +249,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
@@ -271,7 +287,7 @@ You have ${bookings } bookings left!
 				<c:forEach var="row" varStatus="loop" items="${court.saturday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -283,7 +299,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
@@ -321,7 +337,7 @@ You have ${bookings } bookings left!
 				<c:forEach var="row" varStatus="loop" items="${court.sunday}">
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
-							<tr>
+							<tr class="timetable">
 								<td class="inner"><form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
@@ -333,7 +349,7 @@ You have ${bookings } bookings left!
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="timetable">
 								<td class="inner">${row}
 								<c:choose>
 										<c:when test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">

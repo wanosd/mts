@@ -406,8 +406,9 @@ th,td
 
     td
     {
-        padding: 5px 10px;
+        padding: 5px 5px;
     }
+    
 
     th
     {
@@ -415,13 +416,25 @@ th,td
         color: white;
         padding: 5px 10px;
     }
+    
+    td.inner{
+    width: 100px;
+
+    }
+   
 
     td:hover.inner
     {
         cursor: pointer;
         background: #666;
         color: white;
+        width: 100px;
     }
+    
+    
+    tr.timetable {
+ 		height: 40px;
+	}
 	td.nothing{
 		
 	}
