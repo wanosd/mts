@@ -406,20 +406,28 @@ th,td
 
     td
     {
-        padding: 5px 5px;
+     
     }
     
+    .nooutline{
+   
+    }
 
     th
     {
         background: #666;
         color: white;
-        padding: 5px 10px;
+        padding: 5px 5px;
     }
     
     td.inner{
     width: 100px;
 
+    }
+    
+    th.inner{
+    width: 100px;
+    background-color:#969D9E;
     }
    
 

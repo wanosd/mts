@@ -40,31 +40,31 @@
 	</tr>
 	<tr><th>Monday</th>
 	<c:forEach var="entry" items="${monday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Tuesday</th>
 	<c:forEach var="entry" items="${tuesday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Wednesday</th>
 	<c:forEach var="entry" items="${wednesday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Thursday</th>
 	<c:forEach var="entry" items="${thursday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Friday</th>
 	<c:forEach var="entry" items="${friday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Saturday</th>
 	<c:forEach var="entry" items="${saturday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Sunday</th>
 	<c:forEach var="entry" items="${sunday}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 </table>
 
@@ -81,31 +81,31 @@
 	</tr>
 	<tr><th>Monday</th>
 	<c:forEach var="entry" items="${nextmon}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Tuesday</th>
 	<c:forEach var="entry" items="${nexttue}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Wednesday</th>
 	<c:forEach var="entry" items="${nextwed}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Thursday</th>
 	<c:forEach var="entry" items="${nextthur}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Friday</th>
 	<c:forEach var="entry" items="${nextfri}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Saturday</th>
 	<c:forEach var="entry" items="${nextsat}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 	<tr><th>Sunday</th>
 	<c:forEach var="entry" items="${nextsun}">
-	<td>${entry.key} ${entry.value}</td>
+	<td>${entry.value}</td>
 	</c:forEach></tr>
 </table>
 </c:if>
