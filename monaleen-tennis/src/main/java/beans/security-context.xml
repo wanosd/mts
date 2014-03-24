@@ -19,6 +19,7 @@
 		<security:intercept-url pattern="/createmembers" access="permitAll" />
 		<security:intercept-url pattern="/contactus" access="permitAll" />
 		<security:intercept-url pattern="/membership" access="permitAll" />
+		<security:intercept-url pattern="/denied" access="permitAll" />
 		<security:intercept-url pattern="/tournaments" access="permitAll" />
 		<security:intercept-url pattern="/timetable" access="permitAll" />
 		<security:intercept-url pattern="/changeCourt" access="permitAll" />
@@ -64,8 +65,8 @@
 	    <security:intercept-url pattern="/resetTimetable" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/reset" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/chooseEdit" access="hasRole('ROLE_ADMIN')" />
-	    	    <security:intercept-url pattern="/deleteRole" access="hasRole('ROLE_ADMIN')" />
-	    	    	    <security:intercept-url pattern="/updateRole" access="hasRole('ROLE_ADMIN')" />
+	    <security:intercept-url pattern="/deleteRole" access="hasRole('ROLE_ADMIN')" />
+	    <security:intercept-url pattern="/updateRole" access="hasRole('ROLE_ADMIN')" />
 	    <security:intercept-url pattern="/editTimetable" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/confirmEdit" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 	    <security:intercept-url pattern="/timetableStatusChange" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
@@ -94,6 +95,7 @@
 	    <security:intercept-url pattern="/alreadyReg" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/profile" access="isAuthenticated()" />
 	    <security:intercept-url pattern="/profileUpdated" access="isAuthenticated()" />
+	     <security:intercept-url pattern="/error" access="permitAll" />
 		<security:intercept-url pattern="/**" access="denyAll" />
 		<security:form-login login-page="/login" authentication-failure-url="/login?error=true" />
 		<security:logout logout-success-url="/loggedout" />

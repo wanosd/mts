@@ -2,6 +2,7 @@ package controllers;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -19,10 +20,11 @@ public class ErrorHandler {
 		System.out.println(e.getCause() + " @@@@ " + e.getClass());
 		return "error";
 	}
-	/**
+	
 	@ExceptionHandler(Exception.class)
-	public String handleOtherException(Exception e){
-		System.out.println(e.getCause() + " @@@@ " + e.getClass());
+	public String handleOtherException(Exception e, Model model){
+		model.addAttribute("message", "An error has occured of type: " + e.getClass());
 		return "error";
-	}**/
+		
+	}
 }
