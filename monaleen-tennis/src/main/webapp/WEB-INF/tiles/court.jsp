@@ -4,10 +4,16 @@
 
 You have ${bookings } bookings left!
 
-<p>Court Name: ${court.name}</p>
-<p>Current Date: ${date }</p>
-<p>Week Beginning: ${testDate }</p>
-<p>Court LookAhead: ${court.prev }</p>
+
+<table align="center">
+<tr><th>Court Name</th><th>Current Week</th><th>Timetable for Week Beginning</th></tr>
+<tr><td>${court.name }</td>
+<td><form id="timetable" action="/monaleen-tennis/gotoCourt" method="post">
+				<input type="hidden" value="${root}" name="courtID" />
+<input value="${date }" type="submit" />
+</form>
+</td><td>${testDate }</td></tr>
+</table>
 <table width="100%">
 	<tr>
 		<td class="nooutline">
@@ -35,7 +41,16 @@ You have ${bookings } bookings left!
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr class="timetable">
-								<td class="inner" bgcolor="#50a842"><form
+								
+								<c:choose>
+						
+									<c:when test="${dayOfWeek > 1 }">
+											<td class="inner" bgcolor="#000000">
+									<font color="white">-------</font></td>
+									</c:when>
+									<c:otherwise>
+									<td class="inner" bgcolor="#50a842">
+									<form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
 										<input type="hidden" value="${loop.index}" name="position" />
@@ -43,6 +58,9 @@ You have ${bookings } bookings left!
 											type="hidden" value="${court.id }" name="ttid" /> <input
 											type="submit" value="Book">
 									</form></td>
+									</c:otherwise>
+								</c:choose>
+							
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -85,7 +103,15 @@ You have ${bookings } bookings left!
 					<c:choose>
 						<c:when test='${row eq "Free Court"}'>
 							<tr class="timetable">
-								<td class="inner" bgcolor="#50a852"><form
+								
+								<c:choose>
+								<c:when test="${dayOfWeek > 2}">
+									<td class="inner" bgcolor="#000000">
+									<font color="white">-------</font></td>
+									</c:when>
+								<c:otherwise>
+								<td class="inner" bgcolor="#50a852">
+									<form
 										action="${pageContext.request.contextPath}/bookCourt"
 										method="POST">
 										<input type="hidden" value="${loop.index}" name="position" />
@@ -93,6 +119,9 @@ You have ${bookings } bookings left!
 											type="hidden" value="${court.id }" name="ttid" /> <input
 											type="submit" value="Book">
 									</form></td>
+									</c:otherwise>
+								</c:choose>	
+									
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -390,6 +419,7 @@ You have ${bookings } bookings left!
 					commandName="timetable">
 					<input type="hidden" value="${court.prev}" name="prev" />
 					<input type="hidden" value="${prev}" name="courtID" />
+			<input type="hidden" value="${root}" name="root" />
 					<input value="Previous Week" type="submit" />
 				</sf:form>
 			</c:if></td>
@@ -403,6 +433,7 @@ You have ${bookings } bookings left!
 					commandName="timetable">
 								<input type="hidden" value="${court.prev}" name="prev" />
 					<input type="hidden" value="${next}" name="courtID" />
+					<input type="hidden" value="${root}" name="root" />
 					<input value="Next Week" type="submit" />
 				</sf:form>
 			</c:if></td>

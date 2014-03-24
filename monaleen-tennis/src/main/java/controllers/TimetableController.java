@@ -253,6 +253,7 @@ public class TimetableController {
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
+		model.addAttribute("root", request.getParameter("courtID"));
 		Timetable first = timetableService.getById(request
 				.getParameter("courtID"));
 		List<Timetable> firstSeries = timetableService.getTimetableSeries(first
@@ -261,6 +262,10 @@ public class TimetableController {
 				Calendar.WEEK_OF_YEAR) - 1));
 		logger.info("GETTING POSITION: "
 				+ (Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
+		int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+		int week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+		model.addAttribute("dayOfWeek", day_of_week);
+		model.addAttribute("week", week);
 		model = addDateToTimetable(model, String.valueOf(current.getId()));
 		model.addAttribute("series",
 				timetableService.getById(request.getParameter("courtID"))
@@ -301,6 +306,7 @@ public class TimetableController {
 		Timetable tt = timetableService
 				.getById(request.getParameter("courtID"));
 		int courtID = Integer.valueOf(request.getParameter("courtID"));
+		model.addAttribute("root", request.getParameter("root"));
 		model = addDateToTimetable(model, String.valueOf(tt.getId()));
 		model.addAttribute("series",
 				timetableService.getById(request.getParameter("courtID"))
