@@ -46,6 +46,7 @@
 		<security:intercept-url pattern="/viewAllMembers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/tourStatusChange" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/saveNewsStory" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
+		<security:intercept-url pattern="/warnUser" access="hasAnyRole('ROLE_ADMIN', 'ROLE_COMMITTEE')" />
 		<security:intercept-url pattern="/timetableDefaults" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/fillTimetable" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/finalizeTimetable" access="hasRole('ROLE_ADMIN')" />

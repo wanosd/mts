@@ -76,6 +76,19 @@ public class UserService {
 	public String getNameFromEmail(String email){
 		return getUserByUsername(email).getName();
 	}
+
+	public User getUserByID(int id) {
+		return usersDAO.getUserByID(id);
+	}
+	
+	@Secured({"ROLE_ADMIN", "ROLE_COMMITTEE"})
+	public User getUserByName(String username){
+		return usersDAO.getUserByName(username);
+	}
+	
+	public void updateUser(User user){
+		usersDAO.update(user);
+	}
 	
 	
 

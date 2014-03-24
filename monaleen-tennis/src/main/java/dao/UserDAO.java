@@ -62,6 +62,12 @@ public class UserDAO {
 		user.setBookings_left(0);
 		session().save(user);
 	}
+	
+	public void update(User user) {
+		session().update(user);
+		
+	}
+
 
 	/*
 	 * Method to get a list of all users in the database
@@ -108,6 +114,16 @@ public class UserDAO {
 	public User getUserByName(String name) {
 		Criteria crit = session().createCriteria(User.class);
 		crit.add(Restrictions.eq("name", name)); 
+		User user = (User) crit.uniqueResult();
+		return user;
+	}
+	
+	/**
+	 * Method to search for a user by ID
+	 */
+	public User getUserByID(int id) {
+		Criteria crit = session().createCriteria(User.class);
+		crit.add(Restrictions.eq("id", id)); 
 		User user = (User) crit.uniqueResult();
 		return user;
 	}
@@ -286,6 +302,9 @@ public class UserDAO {
 	public List<User> getPendingUsersJDBC() {
 		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
 	}
+
+	
+
 
 	
 

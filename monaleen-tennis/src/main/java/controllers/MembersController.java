@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import logs.Log;
 
 import org.apache.log4j.Logger;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -365,10 +366,47 @@ public class MembersController {
 	}
 
 
-	@RequestMapping("/createGrade")
-	public String createGrade() {
-		return "createGrade";
+	@RequestMapping("/warnUser")
+	public String warnUser(Model model, HttpServletRequest request){
+		logger.info("WARN USER " + request.getParameter("member"));
+		User user = userService.getUserByName(request.getParameter("member"));
+		String emailText = "Your account has changed being restricted due to no shows. You are now at level ";
+		String emailText2 = ". Your allowed bookings per court per week is now: ";
+		if (user == null){
+			model.addAttribute("message", "An error has occured. Try again later.");
+			return adminAnalysis(model);
+		}
+		if (user.getAuthority().equalsIgnoreCase("ROLE_ADMIN") || user.getAuthority().equalsIgnoreCase("ROLE_COMMITTEE")){
+			model.addAttribute("message", "A committee member or admin cannot have their role changed here. Please change their role via the Profile screen.");
+			return adminAnalysis(model);
+		}
+		else if(user.getAuthority().equalsIgnoreCase("ROLE_MEMBER")){
+			user.setAuthority("ROLE_WARNING");
+			userService.updateUser(user);
+			I_Message message = new Email();
+			emailService.sendMessage(message, mailSender, SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername(), "Monaleen GAA Tennis: Account Restriction", emailText + user.getAuthority() + emailText2 + roleService.getNoBookings(user.getAuthority()));
+			model.addAttribute("message", "User " + user.getName() + " role changed to " + user.getAuthority());
+			return adminAnalysis(model);
+		}
+		else if(user.getAuthority().equalsIgnoreCase("ROLE_WARNING")){
+			user.setAuthority("ROLE_SUSPEND");
+			userService.updateUser(user);
+			I_Message message = new Email();
+			emailService.sendMessage(message, mailSender, SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername(), "Monaleen GAA Tennis: Account Restriction", emailText + user.getAuthority() + emailText2 + roleService.getNoBookings(user.getAuthority()));
+			model.addAttribute("message", "User " + user.getName() + " role changed to " + user.getAuthority());
+			return adminAnalysis(model);
+		}
+		else{
+			user.setAuthority("ROLE_WARNING");
+			userService.updateUser(user);
+			I_Message message = new Email();
+			emailService.sendMessage(message, mailSender, SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername(), "Monaleen GAA Tennis: Account Restriction", emailText + user.getAuthority() + emailText2 + roleService.getNoBookings(user.getAuthority()));
+			model.addAttribute("message", "User " + user.getName() + " role changed to " + user.getAuthority());
+			return adminAnalysis(model);
+		}
 	}
+	
+	
 
 	@RequestMapping("/saveGrade")
 	public String saveGrade(Model model, HttpServletRequest request) {
