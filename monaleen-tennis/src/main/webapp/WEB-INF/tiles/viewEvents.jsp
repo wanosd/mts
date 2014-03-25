@@ -26,6 +26,7 @@
 
 </c:forEach>
 </table>
+<center><font color="red">${message }</font></center>
 </c:if>
 
 

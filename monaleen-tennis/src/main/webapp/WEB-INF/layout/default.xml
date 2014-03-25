@@ -7,7 +7,7 @@
 	<definition name="users.base" template="/WEB-INF/templates/default.jsp">
 		<put-attribute name="title" value="Monaleen Tennis Club - Home Page"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp"></put-attribute>
-		<put-attribute name="links" value="/WEB-INF/tiles/links.jsp"></put-attribute>
+		<put-attribute name="adbanner" value="/WEB-INF/tiles/adbanner.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/content.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp"></put-attribute>
 	</definition>
@@ -29,6 +29,7 @@
 	
 	<definition name="membership" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Membership"></put-attribute>
+		<put-attribute name="adbanner" value="/WEB-INF/tiles/ad1.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/membership.jsp"></put-attribute>
 	</definition>
 	

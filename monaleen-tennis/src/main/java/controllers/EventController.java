@@ -77,13 +77,20 @@ public class EventController {
 	public String changeEventStatus(Model model, HttpServletRequest request) {
 		Event e = (Event) eventService.getEventById(Integer.valueOf(request
 				.getParameter("eventID")));
+		if (e.getName().equalsIgnoreCase("Free Court")){
+			model.addAttribute("message", "You cannot modify the Free Court event");
+			return viewEvent(model);
+		}
+		
 		if (e.isEnabled()) {
 			e.setEnabled(false);
 			eventService.updateEvent(e);
+			model.addAttribute("message", e.getName() + " disabled successfully");
 			return viewEvent(model);
 		} else {
 			e.setEnabled(true);
 			eventService.updateEvent(e);
+			model.addAttribute("message", e.getName() + " enabled successfully");
 			return viewEvent(model);
 		}
 	}

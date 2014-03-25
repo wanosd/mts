@@ -20,12 +20,11 @@
 <tiles:insertAttribute name="header"></tiles:insertAttribute>
 </div>
 
-<%--
-<div class="links">
-<tiles:insertAttribute name="links"></tiles:insertAttribute>
+
+<div id="adbanner">
+<tiles:insertAttribute name="adbanner"></tiles:insertAttribute>
 </div>
 <hr/>
- --%>
 
 <div id="main_content">
 <tiles:insertAttribute name="content"></tiles:insertAttribute>

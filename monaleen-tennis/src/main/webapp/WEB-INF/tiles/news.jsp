@@ -6,11 +6,11 @@
 	<hr>
 	
 	<c:forEach var="row" items="${news}">
-	<table align="center">
+	<table align="center" width="600px" border="1">
 	
     <tr><th>${row.summary}</th></tr>
     <tr><td>${row.content}</td></tr>
-    <tr><td><i>${row.author}</i></td></tr>
+    <tr><td>Posted By: <i>${row.author}</i></td></tr>
 	</table>
-	<hr>
+	</br>
 	</c:forEach>
