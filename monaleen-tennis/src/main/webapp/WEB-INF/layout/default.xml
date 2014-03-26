@@ -22,6 +22,16 @@
 		<put-attribute name="content" value="/WEB-INF/tiles/accessdenied.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="sortPreview" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Sort Preview"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/sortpreview.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="testdatabases" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Test"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/testdatabase.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="admin" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Admin"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/admin.jsp"></put-attribute>

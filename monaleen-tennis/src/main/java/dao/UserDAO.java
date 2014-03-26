@@ -59,13 +59,15 @@ public class UserDAO {
 	@Transactional
 	public void createUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setBookings_left(0);
 		session().save(user);
 	}
 	
 	public void update(User user) {
-		session().update(user);
-		
+		session().update(user);		
+	}
+	
+	public void delete(User user) {
+		session().delete(user);	
 	}
 
 
@@ -148,7 +150,6 @@ public class UserDAO {
 		System.out.println("USER RETRIEVED : " + formUser.toString());
 		crit.add(Restrictions.eq("username", username)); // Restrictions.idEq for primary key integer
 		User user = (User) crit.uniqueResult();
-		logger.info(user.toString());
 		user.setAd_line1(formUser.getAd_line1());
 		user.setAd_line2(formUser.getAd_line2());
 		user.setAd_city(formUser.getAd_city());
@@ -237,11 +238,8 @@ public class UserDAO {
 		params.addValue("em_con_name", user.getEm_con_name());
 		params.addValue("em_con_num", user.getEm_con_num());
 		params.addValue("role", "ROLE_MEMBER");
-
-	
-
 		return jdbc
-				.update("insert into users (username, password, name, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled. authority) values (:username, :password, :name, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false, :role)",
+				.update("insert into users (username, name, password, gender, member_type, grade, ad_line1, ad_line2, ad_city, ad_county, contact_num, em_con_name, em_con_num, enabled, authority, bookings_left) values (:username, :name, :password, :gender, :member_type, :grade, :ad_line1, :ad_line1, :ad_city, :ad_county, :contact_num, :em_con_name, :em_con_num, false, :role, 0)",
 						params) == 1;
 	}
 
@@ -292,6 +290,14 @@ public class UserDAO {
 		jdbc.update("update users set username = :email where name = :name",
 				params);
 	}
+	
+	public void enableUserJDBC(boolean enabled, String username) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("enabled", enabled);
+		params.addValue("username", username);
+		jdbc.update("update users set enabled = :enabled where username = :username",
+				params);
+	}
 
 	public boolean existsJDBC(String username) {
 		return jdbc.queryForObject(
@@ -302,6 +308,15 @@ public class UserDAO {
 	public List<User> getPendingUsersJDBC() {
 		return jdbc.query("select * from users where enabled != 1", new UserRowMapper());
 	}
+
+	public void deleteUserJDBC(User user) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("username", user.getUsername());
+		jdbc.update("delete from users where username = :username",
+				params);
+	}
+
+	
 
 	
 

@@ -22,8 +22,14 @@ public class HomeController {
 	public String showHome(Model model) {
 		logger.info("Showing Home Page....");
 		News news = newsService.getLatestStory();
+		if (news != null){
 		model.addAttribute("newsHeader", news.getSummary());
 		model.addAttribute("newsContent", news.getContent());
+		}
+		else{
+			model.addAttribute("newsHeader", "No Recent News");
+			model.addAttribute("newsContent", "");
+		}
 		return "index";
 	}
 

@@ -413,6 +413,49 @@ public class MembersController {
 		userService.createGrade(request.getParameter("grade"));
 		return "grades";
 	}
+	
+	//Security blocks this currentlys
+	@RequestMapping("/testdatabases")
+	public String testdatabases(Model model){
+		User user = new User();
+		user.setName("Database");
+		user.setPassword("password");
+		user.setGender("M");
+		user.setMember_type("Junior");
+		user.setGrade("Graded");
+		user.setAd_line1("12345");
+		user.setAd_line2("12345");
+		user.setAd_city("12345");
+		user.setAd_county("12345");
+		user.setContact_num("0851234567");
+		user.setEm_con_name("Emer");
+		user.setEm_con_num("0851234567");
+		user.setEnabled(false);
+		user.setAuthority("TEST_USER");
+		user.setBookings_left(5);
+		
+		long jStart = System.nanoTime();
+		model.addAttribute("jdbcStart", jStart);
+		for (int i = 0; i < 10000; i++){
+			user.setUsername(i + "@test.ie");
+			userService.createJDBC(user);
+			userService.enableUserJDBC(user);
+			userService.deleteUserJDBC(user);
+		}
+		model.addAttribute("jdbcFinish", (System.nanoTime() - jStart));
+		
+		long hStart = System.nanoTime();
+		model.addAttribute("hibernateStart", hStart);
+		for (int i = 0; i < 10000; i++){
+			user.setUsername(i + "@test.ie");
+			userService.create(user);
+			userService.enableUser(user.getUsername());
+			userService.delete(user);
+		}
+		model.addAttribute("hibernateFinish", (System.nanoTime() - hStart));
+
+		return "testdatabases";
+	}
 
 	public List<User> removeLoggedIn(List<User> users) {
 		Authentication auth = SecurityContextHolder.getContext()

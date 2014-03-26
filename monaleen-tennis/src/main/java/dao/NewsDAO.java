@@ -51,7 +51,12 @@ public class NewsDAO {
 
 	public News getLatestStory() {
 		List<News> news = getNews();
+		if (news.size() == 0){
+			return null;
+		}
+		else{
 		return news.get(news.size()-1);
+		}
 	}
 
 }

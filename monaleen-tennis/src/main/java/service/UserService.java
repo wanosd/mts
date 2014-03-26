@@ -89,7 +89,27 @@ public class UserService {
 	public void updateUser(User user){
 		usersDAO.update(user);
 	}
+
+	public void delete(User user) {
+		usersDAO.delete(user);
+		
+	}
 	
+	public void createJDBC(User user){
+		usersDAO.createUserJDBC(user);
+	}
+	
+	public void enableUserJDBC(User user){
+		usersDAO.enableUserJDBC(true, user.getUsername());
+	}
+	
+	public void deleteUserJDBC(User user){
+		usersDAO.deleteUserJDBC(user);
+	}
+
+	public List<User> getAllMembersJDBC() {
+		return usersDAO.getAllUsersJDBC();
+	}
 	
 
 	

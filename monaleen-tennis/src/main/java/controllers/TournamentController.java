@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import events.Event;
+import events.tournaments.BasicTournamentSort;
+import events.tournaments.I_TournamentSorter;
 import events.tournaments.Tournament;
 import service.EventService;
 import service.TournamentService;
@@ -258,6 +260,22 @@ public class TournamentController {
 			}
 		}
 		return false;
+	}
+	
+	@RequestMapping("/sortPreview")
+	public String teamPreview(Model model, HttpServletRequest request){
+		Tournament t = tournamentService.getTournamentById(request.getParameter("tournamentID"));
+		I_TournamentSorter sorter = new BasicTournamentSort();
+		if (sorter.check(t)){
+			model.addAttribute("teams", sorter.sort(t.getUsername()));
+			return "sortPreview";
+		}
+		else{
+			model.addAttribute("Not enough persons registered for tournament for a preview or it's a singles tournament");
+			return "error";
+		}
+		
+		
 	}
 
 	@Autowired
