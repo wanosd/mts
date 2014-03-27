@@ -273,6 +273,7 @@ public class TimetableController {
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("court", current);
+		model.addAttribute("position", firstSeries.indexOf(current) + 1);
 		logger.info("TT:"
 				+ firstSeries.get(
 						Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1)
@@ -314,6 +315,8 @@ public class TimetableController {
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("court", tt);
+		int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+		model.addAttribute("dayOfWeek", day_of_week);
 		if (SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
 			model.addAttribute("realname", "anonymous");
 			model.addAttribute("bookings", 0);
