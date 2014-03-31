@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
-<h2>Current Events</h2>
+<center><h2>Current Events</h2></center>
 <c:if test="${not empty eventsEnabled }">
 <table class="members" align="center">
 		<tr><th>Enabled Events</th></tr>

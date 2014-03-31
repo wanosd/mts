@@ -1,8 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+	<center>
+<sec:authorize access="isAuthenticated()">
 You have ${bookings } bookings left! Position: ${position } Week: ${week }
+</sec:authorize>
+<sec:authorize access="!isAuthenticated()">
+Please <a href="${pageContext.request.contextPath}/createmembers" class="home">Register</a> to book a court slot.
+</sec:authorize>
+</center>
 <table align="center">
 	<tr>
 		<th>Court Name</th>
@@ -30,7 +38,7 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 				<c:forEach var="row" varStatus="loop" items="${court.monday}">
 
 					<tr class="timetable">
-						<th class="inner">${loop.index+8}to ${loop.index+9.5}</th>
+						<th class="inner">${loop.index+9}:00to ${loop.index+10}:00</th>
 					</tr>
 				</c:forEach>
 			</table>
@@ -84,14 +92,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="monday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="monday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
@@ -148,14 +158,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="tuesday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="tuesday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
@@ -210,14 +222,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="wednesday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="wednesday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
@@ -272,14 +286,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="thursday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="thursday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 
@@ -334,14 +350,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="friday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="friday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
@@ -395,14 +413,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="saturday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="saturday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
@@ -456,14 +476,16 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 										</c:when>
 
 										<c:otherwise>
-											<form
-												action="${pageContext.request.contextPath}/reportNoShow"
-												method="POST">
-												<input type="hidden" value="${row}" name="bookedUser" /> <input
-													type="hidden" value="sunday" name="day" /> <input
-													type="hidden" value="${court.id }" name="ttid" /> <input
-													type="submit" value="Report User">
-											</form>
+											<sec:authorize access="isAuthenticated()">
+												<form
+													action="${pageContext.request.contextPath}/reportNoShow"
+													method="POST">
+													<input type="hidden" value="${row}" name="bookedUser" /> <input
+														type="hidden" value="sunday" name="day" /> <input
+														type="hidden" value="${court.id }" name="ttid" /> <input
+														type="submit" value="Report User">
+												</form>
+											</sec:authorize>
 										</c:otherwise>
 									</c:choose></td>
 							</tr>

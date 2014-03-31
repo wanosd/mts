@@ -45,3 +45,14 @@
 </table>
 <hr>
 <div align="center"><%@include file="maps.jsp"%></div>
+
+<hr>
+
+<center><h3>Web Service</h3></center>
+
+<center>
+<p>
+We provide a JSON web service for apps at <a href="${pageContext.request.contextPath}/jsoncurrentday" class="home">${pageContext.request.contextPath}/jsoncurrentday</a>. This currently provides the listing of what bookings are made on courts for the current day.
+</p>
+
+</center>

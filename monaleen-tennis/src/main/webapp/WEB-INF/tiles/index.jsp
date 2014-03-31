@@ -22,22 +22,19 @@
 
 	<div id="left_nav">
 		<ul>
-			<li><a href="home.html" title="">Coaching</a></li>
-			<li><a href="services.html" title="">Social Events</a></li>
-			<li><a href="#" title="">Online Timetable</a></li>
-			<li><a href="#" title="">Local and Inter Club Tournaments</a></li>
+			<li><a href="${pageContext.request.contextPath}/training" title="">Coaching</a></li>
+			<li><a href="${pageContext.request.contextPath}/news" title="">Social Events</a></li>
+			<li><a href="${pageContext.request.contextPath}/timetable" title="">Online Timetable</a></li>
+			<li><a href="${pageContext.request.contextPath}/tournaments" title="">Local and Inter Club Tournaments</a></li>
 		</ul>
 	</div>
 
 	<p class="clear">
-		<img src="${pageContext.request.contextPath}/static/css/images/green/pic1.jpg" alt="" title="" class="left_img">
-		"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-		eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-		minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-		aliquip ex ea commodo consequat.
+		<img src="${pageContext.request.contextPath}/static/css/images/green/ul_logo.gif" alt="" title="" class="left_img">
+		This web application was developed as part of a final year project for Computer Systems, LM051, at the University of Limerick.
 	</p>
 	<div class="read_more_link">
-		<a href="">read more</a>
+		<a href="http://www.csis.ul.ie/currentcourse/LM051/">read more about this course</a>
 	</div>
 
 
@@ -69,21 +66,15 @@
 	</div>
 
 	<div class="search_box">
-		<div class="search_title">Dolore magna aliqua</div>
-		<input class="search_input" type="text"> <input
-			src="${pageContext.request.contextPath}/static/css/images/green/search.gif" class="submit" type="image">
-		<div class="subsearch">"Lorem ipsum dolor sit amet.</div>
+		<div class="search_title">Any Questions?!</div><img
+			src="${pageContext.request.contextPath}/static/css/images/green/search.gif">
+		<div class="subsearch">Contact us on .....</div>
 
 	</div>
 
 
 	<div class="contact_information">
-		<h4>Free Customers Support</h4>
-		<p>
-			<img src="${pageContext.request.contextPath}/static/css/images/green/phone_icon.gif" alt="" title=""
-				class="box_img"> 0700 679 122 489<br> 0700 679 122 489
-		</p>
-		<br> <br>
+		<h4>Support</h4>
 		<p>
 			<img src="${pageContext.request.contextPath}/static/css/images/green/contact_icon.gif" alt="" title="" class="box_img">
 			monaleentennisgaaclub@gmail.com

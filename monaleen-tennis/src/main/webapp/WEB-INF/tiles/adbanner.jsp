@@ -12,9 +12,10 @@
 		<li>Security</li>
 		<li>Productivity</li>
 		<li>Extensibility</li>
-		<li>Maintainability</li>
 		<li>Usability</li>
-		</ul></p>
+		<li>Performance</li>
+		</ul>
+		</p>
 		<div class="read_more">
 			<a href="#">read more</a>
 		</div>
