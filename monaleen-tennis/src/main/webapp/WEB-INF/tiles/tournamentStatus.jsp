@@ -77,11 +77,6 @@ Tournament Page
 
 		</c:forEach>
 	</table>
-	<form method="post"
-		action="${pageContext.request.contextPath}/sortPreview">
-		<input type="hidden" value="${row.id}" name="tournamentID" />${row.id}<input
-			value="Preview" type="submit" />
-	</form>
 
 </c:if>
 
@@ -101,19 +96,19 @@ Tournament Page
 			<th>Action</th>
 		</tr>
 		<c:forEach var="row" items="${tournamentStarted}">
-			<sf:form method="post"
-				action="${pageContext.request.contextPath}/tourStartChange"
-				commandName="tournamentStarted">
+			
 				<tr>
-					<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.id}</td>
+					<td>${row.id}</td>
 					<td>${row.tournamentName}</td>
 					<td>${row.tournamentGender}</td>
 					<td>${row.tournamentType}</td>
 					<td>${row.tournamentCategory}</td>
 					<td>${row.tournamentStyle}</td>
-					<td><input value="Make Inactive" type="submit" /></td>
+					<td><sf:form method="post"
+				action="${pageContext.request.contextPath}/tourStartChange"
+				commandName="tournamentStarted"><input type="hidden" value="${row.id}" name="tournamentID" /><input value="Make Inactive" type="submit" /></sf:form></td>
 				</tr>
-			</sf:form>
+		
 		</c:forEach>
 	</table>
 </c:if>
@@ -133,19 +128,19 @@ Tournament Page
 			<th>Action</th>
 		</tr>
 		<c:forEach var="row" items="${tournamentUnstarted}">
-			<sf:form method="post"
-				action="${pageContext.request.contextPath}/tourStartChange"
-				commandName="tournamentUnstarted">
+			
 				<tr>
-					<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.id}</td>
+					<td>${row.id}</td>
 					<td>${row.tournamentName}</td>
 					<td>${row.tournamentGender}</td>
 					<td>${row.tournamentType}</td>
 					<td>${row.tournamentCategory}</td>
 					<td>${row.tournamentStyle}</td>
-					<td><input value="Activate Tournament" type="submit" /></td>
+					<td><sf:form method="post"
+				action="${pageContext.request.contextPath}/tourStartChange"
+				commandName="tournamentUnstarted"><input value="Activate Tournament" type="submit" /><input type="hidden" value="${row.id}" name="tournamentID" /></sf:form></td>
 				</tr>
-			</sf:form>
+			
 		</c:forEach>
 	</table>
 </c:if>

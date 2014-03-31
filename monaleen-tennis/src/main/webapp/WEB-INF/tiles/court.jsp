@@ -30,7 +30,7 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 				<c:forEach var="row" varStatus="loop" items="${court.monday}">
 
 					<tr class="timetable">
-						<th class="inner">${loop.index+8} to ${loop.index+9.5}</th>
+						<th class="inner">${loop.index+8}to ${loop.index+9.5}</th>
 					</tr>
 				</c:forEach>
 			</table>
@@ -72,12 +72,6 @@ You have ${bookings } bookings left! Position: ${position } Week: ${week }
 							<tr class="timetable">
 								<td class="inner" bgcolor="#D94330"><font color="white">${row}</font>
 									<c:choose>
-									<c:when test="${position < week }">
-										<td class="inner" bgcolor="#000000"><font color="white">${row}</font></td>
-									</c:when>
-									<c:when test="${dayOfWeek > 1 && position <= week }">
-										<td class="inner" bgcolor="#000000"><font color="white">-------</font></td>
-									</c:when>
 										<c:when
 											test="${name eq pageContext['request'].userPrincipal.name && row eq realname }">
 											<form action="${pageContext.request.contextPath}/unbookCourt"

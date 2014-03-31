@@ -14,11 +14,14 @@
 	</security:authentication-manager>
 
 	<security:http use-expressions="true">
+	
 		<security:intercept-url pattern="/static/**" access="permitAll" />
 		<security:intercept-url pattern="/images/**" access="permitAll" />
 		<security:intercept-url pattern="/createmembers" access="permitAll" />
+		<security:intercept-url pattern="/jsoncurrentday" access="permitAll" />
 		<security:intercept-url pattern="/contactus" access="permitAll" />
 		<security:intercept-url pattern="/membership" access="permitAll" />
+		<security:intercept-url pattern="/mobile" access="permitAll" />
 		<security:intercept-url pattern="/denied" access="permitAll" />
 		<security:intercept-url pattern="/tournaments" access="permitAll" />
 		<security:intercept-url pattern="/timetable" access="permitAll" />

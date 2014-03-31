@@ -271,7 +271,7 @@ public class TournamentController {
 			return "sortPreview";
 		}
 		else{
-			model.addAttribute("Not enough persons registered for tournament for a preview or it's a singles tournament");
+			model.addAttribute("message", "Not enough persons registered for tournament for a preview or it's a singles tournament");
 			return "error";
 		}
 		

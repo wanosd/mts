@@ -45,6 +45,11 @@ public class HomeController {
 		return "error";
 	}
 	
+	@RequestMapping("/mobile")
+	public String showMobile(Model model){
+		return "mobile";
+	}
+	
 	@Autowired
 	public void setNewsSerivce(NewsService newsService) {
 		this.newsService = newsService;
