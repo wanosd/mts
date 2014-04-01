@@ -9,11 +9,19 @@
 
 	<context:property-placeholder location="properties/jdbc.properties" />
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driver}"></property>
-		<property name="url" value="${jdbc.url}"></property>
-		<property name="username" value="${jdbc.user}"></property>
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.user}"></property>
 		<property name="password" value="${jdbc.password}"></property>
+		<property name="initialPoolSize" value="5"></property>
+		<property name="minPoolSize" value="5"></property>
+		<property name="maxPoolSize" value="15" />
+		<property name="checkoutTimeout" value="1000" /> <!-- Wartezeit auf freie Pool-Connection -->
+		<property name="maxStatements" value="50"></property>
+		<property name="automaticTestTable" value="C3P0_TEST_TABLE"></property>
+		<property name="testConnectionOnCheckin" value="true"></property>
+		<property name="idleConnectionTestPeriod" value="60"></property> <!-- in Sekunden -->
 	</bean>
 </beans>

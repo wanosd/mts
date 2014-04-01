@@ -4,7 +4,7 @@
 <sf:form id="details" method="post"
 	action="${pageContext.request.contextPath}/finalizeEditTT"
 	commandName="timetable">
-	<input name="id" type="hidden" value="${timetable.id }"/>	
+	<input name="id" type="hidden" value="${timetable.id }"/>
 	<c:forEach begin="0" end="${count - 1}" varStatus="loop">
 		<sf:select path="monday[${loop.index}]" id="monday${loop.index }" multiple="false" cssStyle="width:120px">
 			<sf:options items="${events }"/>

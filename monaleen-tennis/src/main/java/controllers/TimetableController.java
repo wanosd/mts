@@ -212,7 +212,17 @@ public class TimetableController {
 	@RequestMapping("/finalizeEditTT")
 	public String finalizeEdit(Model model, HttpServletRequest request,
 			@ModelAttribute("timetable") MonaleenTTV1 t) {
-		timetableService.update(t);
+		Timetable save = timetableService.getById(request.getParameter("id"));
+		logger.info("TT: Updating");
+		logger.info(t.toString());
+		save.setMonday(t.getMonday());
+		save.setTuesday(t.getTuesday());
+		save.setWednesday(t.getWednesday());
+		save.setThursday(t.getThursday());
+		save.setFriday(t.getFriday());
+		save.setSaturday(t.getSaturday());
+		save.setSunday(t.getSunday());
+		timetableService.update(save);
 		model.addAttribute("timetable", timetableService.getEnabledTimetables());
 		return showTimetable(model);
 	}
@@ -252,8 +262,8 @@ public class TimetableController {
 
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
-		int courtID = Integer.valueOf(request.getParameter("courtID"));
-		model.addAttribute("root", request.getParameter("courtID"));
+
+		
 		Timetable first = timetableService.getById(request
 				.getParameter("courtID"));
 		List<Timetable> firstSeries = timetableService.getTimetableSeries(first
@@ -264,21 +274,16 @@ public class TimetableController {
 				+ (Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1));
 		int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
 		int week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+		int courtID = Integer.valueOf(request.getParameter("courtID"));
+		model.addAttribute("root", request.getParameter("courtID"));
 		model.addAttribute("dayOfWeek", day_of_week);
 		model.addAttribute("week", week);
 		model = addDateToTimetable(model, String.valueOf(current.getId()));
-		model.addAttribute("series",
-				timetableService.getById(request.getParameter("courtID"))
-						.getSeries());
-		model.addAttribute("name", SecurityContextHolder.getContext()
-				.getAuthentication().getName());
+		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
+		model.addAttribute("name", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("court", current);
 		model.addAttribute("position", firstSeries.indexOf(current) + 1);
-		logger.info("TT:"
-				+ firstSeries.get(
-						Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1)
-						.toString());
-		logger.info("NOT LOGGED IN: " + SecurityContextHolder.getContext().getAuthentication().getName());
+		logger.info("TT:"+ firstSeries.get(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1).toString());
 		if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
 			model.addAttribute("realname", userService.emailToName(SecurityContextHolder.getContext().getAuthentication().getName()));
 			String loggedIn = SecurityContextHolder.getContext()
@@ -289,7 +294,6 @@ public class TimetableController {
 			model.addAttribute("realname", "Anonymous User");
 			model.addAttribute("bookings", 0);
 		}
-		
 		
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
@@ -335,8 +339,14 @@ public class TimetableController {
 		if (seriesMatch(courtID, nextCourt)) {
 			model.addAttribute("next", (tt.getId() + 1));
 		}
+		else{
+			model.addAttribute("next", null);
+		}
 		if (seriesMatch(courtID, prevCourt)) {
 			model.addAttribute("prev", (tt.getId() - 1));
+		}
+		else{
+			model.addAttribute("prev", null);
 		}
 
 		return "court";
@@ -412,12 +422,28 @@ public class TimetableController {
 
 	@RequestMapping(value = "/courtBooked")
 	public String courtBooked(Model model, String id, HttpServletRequest request) {
+		int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+		int week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+		Timetable first = timetableService.getById(request
+				.getParameter("ttid"));
+		List<Timetable> firstSeries = timetableService.getTimetableSeries(first
+				.getSeries());
+		Timetable current = firstSeries.get((Calendar.getInstance().get(
+				Calendar.WEEK_OF_YEAR) - 1));
 		model = addDateToTimetable(model, id);
 		model.addAttribute("court", timetableService.getById(id));
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
 		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
 				.getContext().getAuthentication().getName()));
+		model.addAttribute("root", request.getParameter("ttid"));
+		model.addAttribute("dayOfWeek", day_of_week);
+		model.addAttribute("week", week);
+	
+		model.addAttribute("series",timetableService.getById(request.getParameter("ttid")).getSeries());
+		model.addAttribute("name", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("court", current);
+		model.addAttribute("position", firstSeries.indexOf(current) + 1);
 		String loggedIn = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
 		int left = bookingsLeft(loggedIn, String.valueOf(id));

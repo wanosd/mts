@@ -66,6 +66,7 @@ Please <a href="${pageContext.request.contextPath}/createmembers" class="home">R
 											<form action="${pageContext.request.contextPath}/bookCourt"
 												method="POST">
 												<input type="hidden" value="${loop.index}" name="position" />
+												
 												<input type="hidden" value="monday" name="day" /> <input
 													type="hidden" value="${court.id }" name="ttid" /> <input
 													type="submit" value="Book">

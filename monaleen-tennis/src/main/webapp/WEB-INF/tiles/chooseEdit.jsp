@@ -16,9 +16,6 @@
 			<c:if test="${(loop.index % 4) == 0 && loop.index ne 0}">
 				<tr>
 			</c:if>
-			
-				
-			<option value="${row.id }">${row.name }</option>
 			<td><input type="hidden" value="${row.id}" name="courtID" />${row.name}</td>
 			<td><input value="Select" type="submit" /></td>
 

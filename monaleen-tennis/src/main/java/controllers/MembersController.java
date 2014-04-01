@@ -414,7 +414,7 @@ public class MembersController {
 		return "grades";
 	}
 	
-	//Security blocks this currentlys
+	//Security blocks this currently
 	@RequestMapping("/testdatabases")
 	public String testdatabases(Model model){
 		User user = new User();
@@ -477,7 +477,8 @@ public class MembersController {
 	}
 
 	public Model analyseTimetable(Model model) {
-
+		
+		Map<String, Map<String, Map<String, Integer>>> overall = new HashMap<String, Map<String,Map<String,Integer>>>();
 		Map<String, Map<String, Integer>> attributes = new HashMap<String, Map<String, Integer>>();
 		List<Timetable> series = timetableService.getTimetableAllSeries();
 		List<Timetable> firstSeries = timetableService
@@ -502,6 +503,10 @@ public class MembersController {
 		attributes.put("friday", iterateList(current.getFriday()));
 		attributes.put("saturday", iterateList(current.getSaturday()));
 		attributes.put("sunday", iterateList(current.getSunday()));
+		
+		overall.put("court1", attributes);
+		
+		model.addAllAttributes(overall);
 		model.addAllAttributes(attributes);
 		return model;
 	}
