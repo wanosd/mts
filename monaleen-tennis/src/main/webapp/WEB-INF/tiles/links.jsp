@@ -20,7 +20,7 @@
 		<li class="linkslist"><a href="" class="home">Membership</a></li>
 		<li class="linkslist"><a href="${pageContext.request.contextPath}/tournaments" class="home">Tournaments</a></li>
 		<li class="linkslist"><a href="${pageContext.request.contextPath}/news" class="home">News</a></li>
-		<li class="linkslist"><a href="" class="home">Training</a></li>
+		<li class="linkslist"><a href="${pageContext.request.contextPath}/training" class="home">Training</a></li>
 		<li class="linkslist"><a href="" class="home">FAQ/Contact</a></li>
 	</ul>
 </div>

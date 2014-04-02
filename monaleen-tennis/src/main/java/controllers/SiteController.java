@@ -41,5 +41,15 @@ public class SiteController {
 		return "membership";
 	}
 	
+	@RequestMapping("/mobile")
+	public String showMobile(Model model){
+		return "mobile";
+	}
+	
+	@RequestMapping("/training")
+	public String showTraining(Model model){
+		return "training";
+	}
+	
 	
 }

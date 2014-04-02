@@ -58,10 +58,10 @@
 
 	<div class="products_box">
 <img src="${pageContext.request.contextPath}/static/css/images/green/box_icon.gif" alt="" title="" class="box_img">
-		<h3>Whatever</h3>
-		<p>Stuff</p>
+		<h3>Training</h3>
+		<p>No training scheduled.</p>
 		<div class="read_more_link">
-			<a href="#">read more</a>
+			<a href="${pageContext.request.contextPath}/training">read more</a>
 		</div>
 	</div>
 

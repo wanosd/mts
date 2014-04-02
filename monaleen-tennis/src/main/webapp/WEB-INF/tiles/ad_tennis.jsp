@@ -6,7 +6,7 @@
 	</div>
 	<div class="text_content">
 		<h1>Final Year Project - Chris O'Brien</h1>
-		<p class="green">The Membership page will show all the requirements need to become a member of the club. 
+		<p class="green">The timetable page displays the available slots for booking. This page is only usable for logged in users. 
 		<ul>
 		<li>Security</li>
 		<li>Productivity</li>
@@ -15,7 +15,7 @@
 		<li>Usability</li>
 		</ul></p>
 		<div class="read_more">
-			<a href="#">read more</a>
+			
 		</div>
 	</div>
 

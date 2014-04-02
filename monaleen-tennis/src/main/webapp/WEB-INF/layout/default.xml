@@ -18,8 +18,13 @@
 	</definition>
 	
 	<definition name="mobile" extends="users.base">
-		<put-attribute name="title" value="Monaleen Tennis Club - Home Page"></put-attribute>
+		<put-attribute name="title" value="Monaleen Tennis Club - Mobile Page"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/mobile.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="training" extends="users.base">
+		<put-attribute name="title" value="Monaleen Tennis Club - Training"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/tiles/training.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="denied" extends="users.base">
@@ -115,6 +120,7 @@
 	
 	<definition name="tournaments" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Tournaments"></put-attribute>
+		<put-attribute name="adbanner" value="/WEB-INF/tiles/ad_tour.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/tournaments.jsp"></put-attribute>
 	</definition>
 	
@@ -145,6 +151,7 @@
 	
 	<definition name="timetable" extends="users.base">
 		<put-attribute name="title" value="Monaleen Tennis Club - Timetable"></put-attribute>
+		<put-attribute name="adbanner" value="/WEB-INF/tiles/ad_tennis.jsp"></put-attribute>
 		<put-attribute name="content" value="/WEB-INF/tiles/timetable.jsp"></put-attribute>
 	</definition>
 	

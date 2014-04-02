@@ -19,6 +19,7 @@
 		<security:intercept-url pattern="/images/**" access="permitAll" />
 		<security:intercept-url pattern="/createmembers" access="permitAll" />
 		<security:intercept-url pattern="/jsoncurrentday" access="permitAll" />
+			<security:intercept-url pattern="/training" access="permitAll" />
 		<security:intercept-url pattern="/contactus" access="permitAll" />
 		<security:intercept-url pattern="/membership" access="permitAll" />
 		<security:intercept-url pattern="/mobile" access="permitAll" />

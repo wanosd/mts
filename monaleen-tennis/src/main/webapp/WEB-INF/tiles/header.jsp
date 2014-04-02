@@ -55,7 +55,7 @@
 			href="${pageContext.request.contextPath}/tournaments" class="home">tournaments</a></li>
 		<li class="linkslist"><a
 			href="${pageContext.request.contextPath}/news" class="home">news</a></li>
-		<li class="linkslist"><a href="" class="home">training</a></li>
+		<li class="linkslist"><a href="${pageContext.request.contextPath}/training" class="home">training</a></li>
 		<li class="linkslist"><a href="${pageContext.request.contextPath}/contactus" class="home">faq/contact</a></li>
 
 	</ul>
