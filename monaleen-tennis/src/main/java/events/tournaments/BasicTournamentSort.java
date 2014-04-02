@@ -27,6 +27,9 @@ public class BasicTournamentSort implements I_TournamentSorter {
 		if ((t.getUsername().size()) < 4){
 			return false;
 		}
+		if (t.getTournamentType().equalsIgnoreCase("s")){
+			return false;
+		}
 		else{
 			return true;
 		}

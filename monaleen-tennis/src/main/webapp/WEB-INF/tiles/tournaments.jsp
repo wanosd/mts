@@ -6,7 +6,9 @@
 
 <div id="tables" align="justify">
 	<c:if test="${not empty regTour }">
-		<center><h2>Tournaments Currently Registered For</h2></center>
+		<center>
+			<h2>Tournaments Currently Registered For</h2>
+		</center>
 		<table class="members" align="center">
 			<tr>
 				<th>Name</th>
@@ -35,12 +37,12 @@
 							<input type="hidden" value="${row.id}" name="tournamentID" />
 							<input value="Unregister" type="submit" />
 						</sf:form></td>
-						<td><sf:form method="post"
-						action="${pageContext.request.contextPath}/sortPreview"
-						commandName="tournamentEnabled">
-						<input type="hidden" value="${row.id}" name="tournamentID" />
-						<input value="Preview" type="submit" />
-					</sf:form></td>
+					<td><sf:form method="post"
+							action="${pageContext.request.contextPath}/sortPreview"
+							commandName="tournamentEnabled">
+							<input type="hidden" value="${row.id}" name="tournamentID" />
+							<input value="Preview" type="submit" />
+						</sf:form></td>
 				</tr>
 
 			</c:forEach>
@@ -50,7 +52,9 @@
 
 	<hr />
 	<c:if test="${not empty unregTour }">
-		<center><h2>Tournaments Not Registered For</h2></center>
+		<center>
+			<h2>Tournaments Not Registered For</h2>
+		</center>
 		<table class="members" align="center">
 			<tr>
 				<th>Name</th>
@@ -61,19 +65,20 @@
 				<th>Action</th>
 			</tr>
 			<c:forEach var="row" items="${unregTour}">
-				<sf:form method="post"
-					action="${pageContext.request.contextPath}/tournamentRegister"
-					commandName="unregTour">
-					<tr>
-						<td><input type="hidden" value="${row.id}"
-							name="tournamentID" />${row.tournamentName}</td>
-						<td>${row.tournamentGender}</td>
-						<td>${row.tournamentType}</td>
-						<td>${row.tournamentCategory}</td>
-						<td>${row.tournamentStyle}</td>
-						<td><input value="Register" type="submit" /></td>
-					</tr>
-				</sf:form>
+
+				<tr>
+					<td><input type="hidden" value="${row.id}" name="tournamentID" />${row.tournamentName}</td>
+					<td>${row.tournamentGender}</td>
+					<td>${row.tournamentType}</td>
+					<td>${row.tournamentCategory}</td>
+					<td>${row.tournamentStyle}</td>
+					<td><sf:form method="post"
+							action="${pageContext.request.contextPath}/tournamentRegister"
+							commandName="unregTour">
+							<input type="hidden" value="${row.id}" name="tournamentID" />
+							<input value="Register" type="submit" />
+						</sf:form></td>
+				</tr>	
 			</c:forEach>
 		</table>
 	</c:if>

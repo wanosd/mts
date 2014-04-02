@@ -4,9 +4,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 	<center>
-<sec:authorize access="isAuthenticated()">
-You have ${bookings } bookings left! Position: ${position } Week: ${week }
-</sec:authorize>
 <sec:authorize access="!isAuthenticated()">
 Please <a href="${pageContext.request.contextPath}/createmembers" class="home">Register</a> to book a court slot.
 </sec:authorize>
@@ -16,6 +13,7 @@ Please <a href="${pageContext.request.contextPath}/createmembers" class="home">R
 		<th>Court Name</th>
 		<th>Current Week</th>
 		<th>Timetable for Week Beginning</th>
+		<th>Bookings Left</th>
 	</tr>
 	<tr>
 		<td>${court.name }</td>
@@ -25,6 +23,7 @@ Please <a href="${pageContext.request.contextPath}/createmembers" class="home">R
 					value="${date }" type="submit" />
 			</form></td>
 		<td>${testDate }</td>
+		<td>${bookings }
 	</tr>
 </table>
 <table width="100%">

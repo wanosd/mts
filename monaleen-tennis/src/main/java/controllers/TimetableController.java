@@ -191,8 +191,10 @@ public class TimetableController {
 		for (int i = 0; i < events.size(); i++) {
 			if (events.get(i).getName().contains("@")) {
 				for (int k = 0; k < eventName.size(); k++) {
-					if (!eventName.contains(userService.emailToName(events.get(i).getName()))) {
-						eventName.add(userService.emailToName(events.get(i).getName()));
+					if (!eventName.contains(userService.emailToName(events.get(
+							i).getName()))) {
+						eventName.add(userService.emailToName(events.get(i)
+								.getName()));
 					}
 				}
 			} else {
@@ -263,7 +265,6 @@ public class TimetableController {
 	@RequestMapping(value = "/gotoCourt", method = RequestMethod.POST)
 	public String chooseCourt(Model model, HttpServletRequest request) {
 
-		
 		Timetable first = timetableService.getById(request
 				.getParameter("courtID"));
 		List<Timetable> firstSeries = timetableService.getTimetableSeries(first
@@ -279,22 +280,32 @@ public class TimetableController {
 		model.addAttribute("dayOfWeek", day_of_week);
 		model.addAttribute("week", week);
 		model = addDateToTimetable(model, String.valueOf(current.getId()));
-		model.addAttribute("series",timetableService.getById(request.getParameter("courtID")).getSeries());
-		model.addAttribute("name", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("series",
+				timetableService.getById(request.getParameter("courtID"))
+						.getSeries());
+		model.addAttribute("name", SecurityContextHolder.getContext()
+				.getAuthentication().getName());
 		model.addAttribute("court", current);
 		model.addAttribute("position", firstSeries.indexOf(current) + 1);
-		logger.info("TT:"+ firstSeries.get(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1).toString());
-		if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
-			model.addAttribute("realname", userService.emailToName(SecurityContextHolder.getContext().getAuthentication().getName()));
+		logger.info("TT:"
+				+ firstSeries.get(
+						Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1)
+						.toString());
+		if (!SecurityContextHolder.getContext().getAuthentication().getName()
+				.equals("anonymousUser")) {
+			model.addAttribute(
+					"realname",
+					userService.emailToName(SecurityContextHolder.getContext()
+							.getAuthentication().getName()));
 			String loggedIn = SecurityContextHolder.getContext()
 					.getAuthentication().getName();
 			int left = bookingsLeft(loggedIn, String.valueOf(courtID));
 			model.addAttribute("bookings", left);
-		}else{
+		} else {
 			model.addAttribute("realname", "Anonymous User");
 			model.addAttribute("bookings", 0);
 		}
-		
+
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
@@ -321,31 +332,31 @@ public class TimetableController {
 		model.addAttribute("court", tt);
 		int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
 		model.addAttribute("dayOfWeek", day_of_week);
-		if (SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
+		if (SecurityContextHolder.getContext().getAuthentication().getName()
+				.equals("anonymousUser")) {
 			model.addAttribute("realname", "anonymous");
 			model.addAttribute("bookings", 0);
+		} else {
+			model.addAttribute(
+					"realname",
+					userService.emailToName(SecurityContextHolder.getContext()
+							.getAuthentication().getName()));
+			String loggedIn = SecurityContextHolder.getContext()
+					.getAuthentication().getName();
+			int left = bookingsLeft(loggedIn, String.valueOf(courtID));
+			model.addAttribute("bookings", left);
 		}
-		else{
-		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
-				.getContext().getAuthentication().getName()));
-		String loggedIn = SecurityContextHolder.getContext()
-				.getAuthentication().getName();
-		int left = bookingsLeft(loggedIn, String.valueOf(courtID));
-		model.addAttribute("bookings", left);
-		}
-		
+
 		int nextCourt = courtID + 1;
 		int prevCourt = courtID - 1;
 		if (seriesMatch(courtID, nextCourt)) {
 			model.addAttribute("next", (tt.getId() + 1));
-		}
-		else{
+		} else {
 			model.addAttribute("next", null);
 		}
 		if (seriesMatch(courtID, prevCourt)) {
 			model.addAttribute("prev", (tt.getId() - 1));
-		}
-		else{
+		} else {
 			model.addAttribute("prev", null);
 		}
 
@@ -393,25 +404,26 @@ public class TimetableController {
 		if (timetableService.getById(String.valueOf(nextCourt)) == null) {
 			return false;
 		}
-		if (nextCourt < courtID){
-			if (userService.getAdmins().contains(userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()))){
+		if (nextCourt < courtID) {
+			if (userService.getAdmins().contains(
+					userService.getUserByUsername(SecurityContextHolder
+							.getContext().getAuthentication().getName()))) {
 				return true;
-			}
-			else if (checkPosition(timetableService.getById(String.valueOf(nextCourt))) < (Calendar
-					.getInstance().get(Calendar.WEEK_OF_YEAR)- 1 )){
+			} else if (checkPosition(timetableService.getById(String
+					.valueOf(nextCourt))) < (Calendar.getInstance().get(
+					Calendar.WEEK_OF_YEAR) - 1)) {
 				return false;
 			}
 		}
-		
+
 		if (nextCourt > courtID) {
 			if (checkPosition(timetableService.getById(String.valueOf(courtID))) > (Calendar
-					.getInstance().get(Calendar.WEEK_OF_YEAR)-2)
+					.getInstance().get(Calendar.WEEK_OF_YEAR) - 2)
 					+ timetableService.getById(String.valueOf(courtID))
 							.getPrev()) {
 				return false;
 			}
 		}
-		
 
 		if (timetableService.getById(String.valueOf(courtID)).getSeries() == timetableService
 				.getById(String.valueOf(nextCourt)).getSeries()) {
@@ -424,8 +436,7 @@ public class TimetableController {
 	public String courtBooked(Model model, String id, HttpServletRequest request) {
 		int day_of_week = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
 		int week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-		Timetable first = timetableService.getById(request
-				.getParameter("ttid"));
+		Timetable first = timetableService.getById(request.getParameter("ttid"));
 		List<Timetable> firstSeries = timetableService.getTimetableSeries(first
 				.getSeries());
 		Timetable current = firstSeries.get((Calendar.getInstance().get(
@@ -434,14 +445,18 @@ public class TimetableController {
 		model.addAttribute("court", timetableService.getById(id));
 		model.addAttribute("name", SecurityContextHolder.getContext()
 				.getAuthentication().getName());
-		model.addAttribute("realname", userService.emailToName(SecurityContextHolder
-				.getContext().getAuthentication().getName()));
+		model.addAttribute(
+				"realname",
+				userService.emailToName(SecurityContextHolder.getContext()
+						.getAuthentication().getName()));
 		model.addAttribute("root", request.getParameter("ttid"));
 		model.addAttribute("dayOfWeek", day_of_week);
 		model.addAttribute("week", week);
-	
-		model.addAttribute("series",timetableService.getById(request.getParameter("ttid")).getSeries());
-		model.addAttribute("name", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("series",
+				timetableService.getById(request.getParameter("ttid"))
+						.getSeries());
+		model.addAttribute("name", SecurityContextHolder.getContext()
+				.getAuthentication().getName());
 		model.addAttribute("court", current);
 		model.addAttribute("position", firstSeries.indexOf(current) + 1);
 		String loggedIn = SecurityContextHolder.getContext()
@@ -457,7 +472,6 @@ public class TimetableController {
 		if (seriesMatch(courtID, prevCourt)) {
 			model.addAttribute("prev", Integer.valueOf(id) - 1);
 		}
-
 		return "court";
 	}
 
@@ -596,7 +610,8 @@ public class TimetableController {
 	public String reportNoShow(Model model, HttpServletRequest request) {
 		String text = "Reported no show from "
 				+ request.getParameter("bookedUser");
-		return reportUser(model, request.getParameter("bookedUser"), "No Show" , text);
+		return reportUser(model, request.getParameter("bookedUser"), "No Show",
+				text);
 	}
 
 	/**
@@ -616,7 +631,8 @@ public class TimetableController {
 	public List<String> replaceValue(List<String> list, String position,
 			boolean book) {
 		if (book) {
-			list.set(Integer.valueOf(position),
+			list.set(
+					Integer.valueOf(position),
 					userService.emailToName(SecurityContextHolder.getContext()
 							.getAuthentication().getName()));
 			return list;
@@ -652,9 +668,11 @@ public class TimetableController {
 	}
 
 	public int bookingsLeft(String username, String id) {
-		logger.info("User Role Bookings: " +  roleService.getNoBookings(userService
-				.getUserByUsername(username).getAuthority()));
-		logger.info("Event Service Check Bookings of Court" + eventService.checkBookingsUser(username, id));
+		logger.info("User Role Bookings: "
+				+ roleService.getNoBookings(userService.getUserByUsername(
+						username).getAuthority()));
+		logger.info("Event Service Check Bookings of Court"
+				+ eventService.checkBookingsUser(username, id));
 		return roleService.getNoBookings(userService
 				.getUserByUsername(username).getAuthority())
 				- eventService.checkBookingsUser(username, id);
@@ -664,7 +682,8 @@ public class TimetableController {
 		eventService.removeBooking(loggedin, id);
 	}
 
-	private String reportUser(Model model, String username, String subject, String text) {
+	private String reportUser(Model model, String username, String subject,
+			String text) {
 		logger.info("Reporting NoShow");
 		DateFormat df = new SimpleDateFormat("ddmmyyyyHHmmss");
 		Date today = Calendar.getInstance().getTime();
@@ -678,7 +697,9 @@ public class TimetableController {
 		}
 		logger.info("About to attempt sending message");
 		I_Message message = new Email();
-		if (emailService.sendMessage(message, mailSender, SecurityContextHolder.getContext().getAuthentication().getName(), "monaleentennisclub@gmail.com" , subject, text)) {
+		if (emailService.sendMessage(message, mailSender, SecurityContextHolder
+				.getContext().getAuthentication().getName(),
+				"monaleentennisclub@gmail.com", subject, text)) {
 			logService.createLog(log);
 			model.addAttribute("message", "User reported");
 			return "emailSent";

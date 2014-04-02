@@ -18,10 +18,10 @@
 		<property name="initialPoolSize" value="5"></property>
 		<property name="minPoolSize" value="5"></property>
 		<property name="maxPoolSize" value="15" />
-		<property name="checkoutTimeout" value="1000" /> <!-- Wartezeit auf freie Pool-Connection -->
+		<property name="checkoutTimeout" value="1000" />
 		<property name="maxStatements" value="50"></property>
 		<property name="automaticTestTable" value="C3P0_TEST_TABLE"></property>
 		<property name="testConnectionOnCheckin" value="true"></property>
-		<property name="idleConnectionTestPeriod" value="60"></property> <!-- in Sekunden -->
+		<property name="idleConnectionTestPeriod" value="3000"></property> <!-- in Sekunden -->
 	</bean>
 </beans>

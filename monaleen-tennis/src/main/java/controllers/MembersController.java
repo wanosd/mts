@@ -223,6 +223,11 @@ public class MembersController {
 
 	@RequestMapping("/createmembers")
 	public String createMembers(Model model) {
+		if (!SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")){
+			model.addAttribute("message", "You are already registered!");
+			return "error";
+		}
+		
 		roleService.defaultRoles();
 		logger.info("Showing Create Members Page....");
 		model.addAttribute("member", new User());
