@@ -6,8 +6,8 @@
 	</div>
 	<div class="text_content">
 		<h1>Final Year Project - Chris O'Brien</h1>
-		<p>The tournament page displays a list of enabled tournaments.</p>
-		<p>Tournaments have two statuses 
+		<p class="green">The tournament page displays a list of enabled tournaments.</p>
+		<p class="green">Tournaments have two statuses 
 		<ul>
 		<li>Enabled/Disabled - This controls whether users can register for a tournament while the tournament is pending. </li>
 		<li>Activated/Deactivated - This closes registration, but lists the tournament as an active one.</li>
